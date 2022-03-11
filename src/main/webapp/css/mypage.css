@@ -1,0 +1,11 @@
+.tb_sort_wrap {margin-bottom:15px;min-height:34px;margin-top: 20px;}
+
+.myinfo {
+    float: left;
+    width: 308px;
+    padding: 30px 118px;
+}
+
+.myinfo a {
+    text-decoration: underline;  text-underline-position:under;
+}
