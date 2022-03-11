@@ -31,10 +31,11 @@ public class JoinController extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html;charset=UTF-8");
         
-
 		// 한글 처리
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
+        
+    	String destPage = "/jsp/main.jsp";
 
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();  
@@ -42,9 +43,12 @@ public class JoinController extends HttpServlet {
 		String name = request.getParameter("userName");
 		String id = request.getParameter("userId");
 		String pwd = request.getParameter("userPwd");
+		String rePwd = request.getParameter("reUserPwd");
 		String hpno = request.getParameter("userHpno");
 		String email1 = request.getParameter("email1");
 		String email2 = request.getParameter("email2");   
+		
+		int result = 0; // 회원가입을 실패하면 0 
 		
 		if (email2 == null) {
 			email2 = request.getParameter("emaildomain");
@@ -52,13 +56,19 @@ public class JoinController extends HttpServlet {
 	    
         try {
     	    int checkHpno = userDAO.checkHpno(hpno); // 전화번호 중복 확인 
-            int result = userDAO.joinUser(id, pwd, name, hpno, email1, email2);
     	    
-        	String destPage = "/jsp/join.jsp";
+//    	    if (name == "" || id == "" || pwd != rePwd || hpno == "" || email1 == "") {
+//    	    	result = 0;
+//    	    	System.out.println("양식을 다시 입력해주세요.");
+//    	    } else {
+//    	    	
+//    	    }
+    	    result = userDAO.joinUser(id, pwd, name, hpno, email1, email2);
+    	    
         	session.setAttribute("userId", id);
+    	    
         	
-            if (result == 1 && checkHpno == 1) {
-                destPage = "/jsp/main.jsp";
+            if (result == 1) { //  && checkHpno == 1)
 
             	out.print("{\"result\": 1}"); // 회원가입 성공 
             } else {
@@ -69,6 +79,8 @@ public class JoinController extends HttpServlet {
                 
                 result = 0;
             	out.print("{\"result\": 0}"); // 회원가입 실패 
+            	
+            	destPage = "/jsp/join.jsp";
             }
             
             RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);

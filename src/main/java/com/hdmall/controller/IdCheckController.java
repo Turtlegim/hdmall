@@ -60,4 +60,3 @@ public class IdCheckController extends HttpServlet {
 	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}//end class
 }//end class
-

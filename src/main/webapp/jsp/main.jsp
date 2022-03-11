@@ -122,7 +122,7 @@
 
 		function goMainPage() {
 			sessionStorage.setItem("selMainSwiperPos", 1);
-			location.href = "main.jsp";
+			location.href = "${action}/hdmall/jsp/main.jsp";
 		}
         
         $(document).on('click', '#logoutBtn', function () {
@@ -181,7 +181,7 @@
 				<a> <%=userName%>님 </a>
 				<a href="${action}/hdmall/logout" id="logoutBtn">로그아웃</a>
 			<%}else { %> 
-				<a href="${action}/hdmall/login" id="loginBtn">로그인</a>
+				<a href="${action}/hdmall/jsp/login.jsp" id="loginBtn">로그인</a>
 			<%} %>
 				<ul>
 					<li class="item_01">
@@ -373,7 +373,8 @@
 						</div>
 				</footer>
 			</div>
-
+		</div>
+	</div>
 </body>
 
 </html>

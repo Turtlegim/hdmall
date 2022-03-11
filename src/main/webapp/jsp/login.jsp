@@ -67,9 +67,9 @@
         });
 
         function goMainPage() {
-            sessionStorage.setItem("selMainSwiperPos", 1);
-            location.href = "main.jsp";
-        }
+			sessionStorage.setItem("selMainSwiperPos", 1);
+			location.href = "${action}/hdmall/jsp/main.jsp";
+		}
 
         // join.jsp 에게 로그인 화면에서 넘어왔다는 것을 알려주는 함수 - 03.07 경민영
         function sendJoin() {

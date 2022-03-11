@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import com.hdmall.vo.ProductVO;
 
-import utill.DBManager;
+import util.DBManager;
 
 public class ProductDAO {
 

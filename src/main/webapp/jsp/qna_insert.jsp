@@ -3,7 +3,7 @@
     <!DOCTYPE html>
     <html lang="ko">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-        <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+     	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
         <head>
             <meta charset="utf-8">
@@ -85,10 +85,10 @@
                         <a href="like.html">찜하기</a>
                     </li>
                     <li class="item_03">
-                        <a href="mypage.html">마이현대</a>
+                        <a href="${action}/hdmall/jsp/mypage.jsp">마이현대</a>
                     </li>
                     <li class="item_04">
-                        <a href="q&a_insert.html">고객센터</a>
+                        <a href="${action}/hdmall/jsp/qna_insert.jsp">고객센터</a>
                     </li>
                 </ul>
             </div>

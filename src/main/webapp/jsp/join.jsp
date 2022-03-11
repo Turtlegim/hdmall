@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:set var="userId" value="${param.userId }"/>
+<c:set var="userId" value="${param.userId}"/>
 
 <head>
     <meta charset="utf-8">
@@ -38,10 +38,10 @@
     <link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
 
     <script>
-        function goMainPage() {
-            sessionStorage.setItem("selMainSwiperPos", 1);
-            location.href = "main.jsp";
-        }
+	    function goMainPage() {
+			sessionStorage.setItem("selMainSwiperPos", 1);
+			location.href = "${action}/hdmall/jsp/main.jsp";
+		}
         
         $(document).on('click', '#idCheck', function () {
         	var userId = document.getElementById("userId").value;
@@ -75,6 +75,8 @@
                 $('.h1_type').text('회원정보관리');
                 $('.h4_type').text('회원정보 수정');
                 $('.f_size01').text('회원정보 수정을 위한 필수 입력 정보입니다.');
+                
+                // 여기서부터 회원정보관리 코드 수정 
                 $('#userName').attr('value', '경민영');
                 $('#userId').attr('value', 'kmy9035');
                 $('#userHpNo').attr('value', '01040129035');
@@ -97,10 +99,6 @@
             form.email2.focus();
             
             return;
-        }
-        
-        function joinInfoCheck() {
-        	if(document.)
         }
     </script>
 
@@ -131,7 +129,15 @@
             </h1> <!-- 로고 이미지 src 변경 부분 -->
 
             <div class="default_menu">
-            	<a href="${action}/hdmall/login" id="loginBtn">로그인</a>
+            	<%
+					String userName = (String)session.getAttribute("userName");
+				%>
+				<%if (userName != null) { %>
+					<a> <%=userName%>님 </a>
+					<a href="${action}/hdmall/logout" id="logoutBtn">로그아웃</a>
+				<%}else { %> 
+					<a href="${action}/hdmall/login" id="loginBtn">로그인</a>
+				<%} %>
                 <ul>
                     <li class="item_01">
                         <a href="like.html">찜하기</a>
@@ -291,8 +297,7 @@
                                     <div>
                                         <input type="text" id="userId" name="userId" maxlength="20" class="engNumber"
                                             style="width: 488px;">
-                                        <label id="mbshId" for="mbshId">아이디<span>(4~20자의 영문 대소문자, 숫자만
-                                                사용)</span></label>
+                                        <label id="mbshId" for="mbshId">아이디</label>
                                         <p class="t_error" style="display:none;"></p>
 
                                         <button type="button" class="btn_basic2 small" id="idCheck"
@@ -303,14 +308,14 @@
                                 <div class="join_row placeholder_wrap" id="divPwd">
                                     <input type="password" id="userPwd" name="userPwd" maxlength="20"
                                         onkeypress="javascript:noSpaceEvnt(event);">
-                                    <label for="mbshPwd">비밀번호<span>(8~20자 이내 영문자, 숫자, 특수문자 3가지 조합)</span></label>
+                                    <label for="mbshPwd">비밀번호</label>
                                     <p class="t_error" style="display:none;"></p>
                                 </div>
 
                                 <div class="join_row placeholder_wrap" id="divRePwd">
                                     <input type="password" id="reUserPwd" name="reUserPwd" maxlength="20"
                                         onkeypress="javascript:noSpaceEvnt(event);">
-                                    <label for="mbshPwd">비밀번호 확인<span>(8~20자 이내 영문자, 숫자, 특수문자 3가지 조합)</span></label>
+                                    <label for="mbshPwd">비밀번호 확인</label>
                                     <p class="t_error" style="display:none;"></p>
                                 </div>
 
