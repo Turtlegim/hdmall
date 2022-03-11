@@ -76,7 +76,7 @@ public class ProductListController extends HttpServlet {
 				count = productDAO.getAllCount();				
 				request.setAttribute("count", count);
 				
-				destPage =  "/product/productcategory.jsp";
+				destPage =  "/jsp/productcategory.jsp";
 			}
 			else {	
 
@@ -86,7 +86,7 @@ public class ProductListController extends HttpServlet {
 				count = productDAO.getCategoryCount(cate_no);				
 				request.setAttribute("count", count);
 				
-				destPage = "/product/productcategory.jsp";
+				destPage = "/jsp/productcategory.jsp";
 			}
 			
 			RequestDispatcher dispatch = request.getRequestDispatcher(destPage);

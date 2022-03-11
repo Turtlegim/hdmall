@@ -54,7 +54,7 @@ public class ProductDetailController extends HttpServlet {
 			ProductVO productVO = productDAO.getProduct(prod_id);
 			request.setAttribute("productVO", productVO); 
 			
-			destPage = "/product/productdetail.jsp";
+			destPage = "/jsp/productdetail.jsp";
 			
 			RequestDispatcher dispatch = request.getRequestDispatcher(destPage);
 			dispatch.forward(request, response);

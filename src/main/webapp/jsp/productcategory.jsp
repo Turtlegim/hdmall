@@ -144,7 +144,7 @@
         });
     </script>
 
- 	<include file="${action}/hdmall/jsp/header.jsp">    
+<%@ include file="header.jsp" %> 
     <div id="wrap">
         <main id="container">
             <meta name="google-site-verification" content="rYjJmYP3q9lxBYCTSa_Tg3h1N9l3yZjJGp0AFaKCZlM" />
@@ -241,4 +241,4 @@
             }
         </script> -->
     </div>
-<include file="{action}/hdmall/jsp/footer.jsp">    
+<%@ include file="footer.jsp" %>    

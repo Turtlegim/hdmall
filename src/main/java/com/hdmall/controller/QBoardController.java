@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import com.hdmall.dao.*;
 import com.hdmall.vo.*;
 
-
 @WebServlet("/QBoardIns")
 public class QBoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -50,8 +49,8 @@ public class QBoardController extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		String loginUser = (String) session.getAttribute("userId");
-		String title = request.getParameter("title"); // ¹®ÀÇ Á¦¸ñ get 
-        String context = request.getParameter("context"); //¹®ÀÇ ³»¿ë get  
+		String title = request.getParameter("title"); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ get 
+        String context = request.getParameter("context"); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ get  
         
 
         
@@ -63,9 +62,9 @@ public class QBoardController extends HttpServlet {
 		String destpage ="/jsp/qna_insert.jsp";
 		
 		if(result == 0) {
-			 request.setAttribute("message", "¹®ÀÇµî·Ï¿¡ ½ÇÆÐÇß½À´Ï´Ù.");
+			 request.setAttribute("message", "ï¿½ï¿½ï¿½Çµï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 		} else {
-			 request.setAttribute("message", "¹®ÀÇ¸¦ µî·ÏÇÏ¿´½À´Ï´Ù.");
+			 request.setAttribute("message", "ï¿½ï¿½ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		}
 		
         RequestDispatcher dispatcher = request.getRequestDispatcher(destpage);

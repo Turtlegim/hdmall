@@ -141,7 +141,7 @@
             </script>
 
 
- <include file="${action}/hdmall/jsp/header.jsp">  
+<%@ include file="header.jsp" %>  
 
         <!-- container -->
         <main id="container">
