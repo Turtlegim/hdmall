@@ -1,8 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>현대백화점인터넷면세점</title>
@@ -99,6 +104,48 @@
 				delay: 4000,
 			},
 		});
+
+		$(function () {
+			$(".btn_gnb").on("click", function () {
+				$("#gnb > ul > li").removeClass("open").css("display", "");
+				$("#gnb > ul > li > ul").css("display", "none");
+				$(".serviceMenu").parent().removeClass("open");
+				$(".serviceMenu").parent().addClass("open");
+				$(".serviceMenu").css("display", "block");
+
+				//카테고리 JSONP load
+				if ($(".serviceCtgList > li").length < 1) {
+					loadCtgList();
+				}
+			});
+		});
+
+		function goMainPage() {
+			sessionStorage.setItem("selMainSwiperPos", 1);
+			location.href = "main.jsp";
+		}
+        
+        $(document).on('click', '#logoutBtn', function () {
+        	var userName = session.getElementById("userName");
+        	
+        	$.ajax({
+                url: "${action}/hdmall/logout",
+                method: "post", //요청방식은 post
+                data: {"userName": userName},
+                success: function(result) {
+                	if(result.result == 1) {
+            			alert("로그아웃 성공");
+               	 	} else if(result.result == 0) {
+            			alert("로그아웃 실패");		
+               	   	} else {
+            			console.log('develop : 서버 오류');
+               	   	}
+                },
+                error:function(error){
+                   	alert("AJAX요청 실패 : 에러코드 = " + error.status); // status 에러확인 
+                }
+             });
+   		});
 	</script>
 
 	<style>
@@ -120,42 +167,22 @@
 </head>
 
 <body>
-	<script type="text/javascript">
-		$(window).load(function () {
-			fnLnbCountInfo();
-			orderStatusInfo();
-
-		});
-
-		$(function () {
-			$(".btn_gnb").on("click", function () {
-				$("#gnb > ul > li").removeClass("open").css("display", "");
-				$("#gnb > ul > li > ul").css("display", "none");
-				$(".serviceMenu").parent().removeClass("open");
-				$(".serviceMenu").parent().addClass("open");
-				$(".serviceMenu").css("display", "block");
-
-				//카테고리 JSONP load
-				if ($(".serviceCtgList > li").length < 1) {
-					loadCtgList();
-				}
-			});
-		});
-
-		function goMainPage() {
-			sessionStorage.setItem("selMainSwiperPos", 1);
-			location.href = "main.html";
-		}
-	</script>
-
 	<header id="header">
 		<section class="box">
 			<a href="javascript:" class="btn_gnb">Navigation Drawer</a>
-			<h1 onclick="goMainPage();" style="cursor: pointer; height: 48px"><img id="mainLogo" src="../image/logo.png">
+			<h1 onclick="goMainPage();" style="cursor: pointer; height: 48px"><img id="mainLogo" src="${action}/hdmall/image/logo.png">
 			</h1> <!-- 로고 이미지 src 변경 부분 -->
 
 			<div class="default_menu">
-				<a href="login.html">로그인</a>
+			<%
+				String userName = (String)session.getAttribute("userName");
+			%>
+			<%if (userName != null) { %>
+				<a> <%=userName%>님 </a>
+				<a href="${action}/hdmall/logout" id="logoutBtn">로그아웃</a>
+			<%}else { %> 
+				<a href="${action}/hdmall/login" id="loginBtn">로그인</a>
+			<%} %>
 				<ul>
 					<li class="item_01">
 						<a href="like.html">찜하기</a>
@@ -299,8 +326,8 @@
 		<!-- 메인 상단 이미지 스와이프 START 03.07 경민영 -->
 		<div class="swiper">
 			<div class="swiper-wrapper">
-				<div class="swiper-slide"><img class="img_main" src="../image/main1.png" alt=""></div>
-				<div class="swiper-slide"><img class="img_main" src="../image/main2.png" alt=""></div>
+				<div class="swiper-slide"><img class="img_main" src="${action}/hdmall/image/main1.png" alt=""></div>
+				<div class="swiper-slide"><img class="img_main" src="${action}/hdmall/image/main2.png" alt=""></div>
 			</div>
 
 			<script>

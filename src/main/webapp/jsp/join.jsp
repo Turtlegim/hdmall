@@ -1,5 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="userId" value="${param.userId }"/>
 
 <head>
     <meta charset="utf-8">
@@ -28,28 +34,39 @@
     <link rel="stylesheet" href="/inc/user/css/V2Join.css?20210420">
     <link rel="stylesheet" href="/assets/app/css/swiper.min.css">
     <link rel="stylesheet" href="/assets/app/css/screen.ui.css?version=202202170001" />
-    <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/myhundai.css ">
+    <link rel="stylesheet" href="${action}/hdmall/css/footer.css">
+    <link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
 
     <script>
-        function email_change(form) {
-            var value = form.emaildomain[form.emaildomain.selectedIndex].value;
-            if (value != "") {
-                form.email2.disabled = true;
-                form.email2.value = value;
-            } else {
-                form.email2.disabled = false;
-            }
-
-            form.email2.value = value;
-            form.email2.focus();
-            return;
-        }
-
         function goMainPage() {
             sessionStorage.setItem("selMainSwiperPos", 1);
-            location.href = "main.html";
+            location.href = "main.jsp";
         }
+        
+        $(document).on('click', '#idCheck', function () {
+        	var userId = document.getElementById("userId").value;
+        	
+	       	if(userId == ""){
+     		  	alert("아이디를 입력주세요.");
+     		} else { // IdCheckController 요청
+     			$.ajax({
+                    url: "${action}/hdmall/idCheck",
+                    method: "post", // 요청방식은 post
+                    data: {"userId": userId},
+                    success: function(result) {
+                    	if(result.result == 1) {
+                			alert("중복된 아이디입니다.");
+                   	 	} else if(result.result == 0) {
+                			alert("사용 가능 아이디입니다.");	
+                   	   	} else {
+                			console.log('develop : 서버 오류');
+                   	   	}
+                    }, error:function(error){
+                       	alert("AJAX요청 실패 : 에러코드=" + error.status); // status 에러확인 
+                    }
+                 });
+   			}
+   		});
 
         // join.html form 재사용을 위한 함수 - 03.07 경민영
         $(document).ready(function () {
@@ -66,6 +83,25 @@
                 document.getElementById("mbshHpNo").style.display = 'none';
             }
         });
+        
+        function email_change(form) {
+            var value = form.emaildomain[form.emaildomain.selectedIndex].value;
+            if (value != "") {
+                form.email2.disabled = true;
+            } else {
+                form.email2.disabled = false;
+            }
+			
+            form.email2.value = value;
+            alert(value);
+            form.email2.focus();
+            
+            return;
+        }
+        
+        function joinInfoCheck() {
+        	if(document.)
+        }
     </script>
 
     <style>
@@ -90,11 +126,12 @@
     <header id="header">
         <section class="box">
             <a href="javascript:" class="btn_gnb">Navigation Drawer</a>
-            <h1 onclick="goMainPage();" style="cursor: pointer; height: 48px"><img id="mainLogo" src="../image/logo.png">
+            <h1 onclick="goMainPage();" style="cursor: pointer; height: 48px"><img id="mainLogo"
+                    src="${action}/hdmall/image/logo.png">
             </h1> <!-- 로고 이미지 src 변경 부분 -->
 
             <div class="default_menu">
-                <a href="login.html">로그인</a>
+            	<a href="${action}/hdmall/login" id="loginBtn">로그인</a>
                 <ul>
                     <li class="item_01">
                         <a href="like.html">찜하기</a>
@@ -188,51 +225,6 @@
                                 html += "</div>";
                                 html += "</div>";
                             }
-
-                            $(".mainPopWrap").html(html);
-                            callMainPopSwiper();
-
-                            if (hiddenYn == "Y") {
-                                $(".hidden_menu").removeClass("open");
-                                $(".item").slideUp(200);
-                            }
-
-                            if ($(".main_popup").length > 0) {
-                                $('.modal_wrap').addClass('active');	//팝업 띄우기
-                            }
-
-                            if (cookieChkYn == "Y") {
-                                // 메인팝업
-                                $(".main_popup").each(function () {
-                                    var seq = $(this).data("seq");
-                                    $(".today_close.chk").show();
-                                    $("#btn_hidden_layer_" + seq).attr("hiddenYn", "N");
-                                    if (getCookie("closePop" + seq) == "Y") {	// 팝업 오픈
-                                        $("#main_bottom_pop" + seq).remove();
-                                        if ($(".main_popup").length < 1) {
-                                            $('.modal_wrap').removeClass('active');
-                                        }
-                                    }
-                                });
-                            } else {
-                                // 메인팝업 오픈
-                                $(".main_popup").each(function () {
-                                    var seq = $(this).data("seq");
-                                    $(".today_close.chk").hide();
-                                    $("#btn_hidden_layer_" + seq).attr("hiddenYn", "Y");
-                                });
-                            }
-
-                            if (hiddenYn == "Y") {
-                                $(".ui-resizable").css("position", "fixed")
-                            }
-
-                            $(".main_popup").each(function () {
-                                var seq = $(this).data("seq");
-                                if ($("#main_bottom_pop" + seq).find("li").length == 1) {
-                                    $("#mainPop_" + seq).hide();
-                                }
-                            });
                         }
                     });
                 }
@@ -281,43 +273,49 @@
     <main id="container_join" class="container_join">
         <section>
             <div id="wrap">
-                <div style="width: 614px; margin: 0 auto; margin-top: 80px; margin-bottom: 80px;">
+                <div style="width: 614px; margin: 0 auto; margin-top: 5px; margin-bottom: 80px;">
                     <h1 class="h1_type" id="state">회원가입</h1>
                     <div id="login01">
-                        <form name="frmIntgLgin" method="post" action="" autocomplete="off">
+                        <form name="join" method="post" action="${action}/hdmall/join" autocomplete="off">
                             <br><br>
                             <h3 class="h4_type">회원정보 입력<span class="small_txt">(필수)</span></h3>
                             <p class="f_size01">회원가입을 위한 필수입력 정보입니다.</p>
                             <div class="join_form">
                                 <div class="join_row with_btn placeholder_wrap" id="divName">
-                                    <input type="text" id="userName" name="userName" value="" maxlength="20">
+                                    <input type="text" id="userName" name="userName" maxlength="20">
                                     <label id="mbshName" for="mbshName">이름</label>
                                     <p class="t_error" style="display:none;"></p>
                                 </div>
 
-                                <div class="join_row with_btn placeholder_wrap" id="divId">
-                                    <input type="text" id="userId" name="mbshMst[mbshId]" value="" maxlength="20"
-                                        class="engNumber" onfocusout="checkDupId();">
-                                    <label id="mbshId" for="mbshId">아이디<span>(4~20자의 영문 대소문자, 숫자만 사용)</span></label>
-                                    <p class="t_error" style="display:none;"></p>
+                                <div class="join_row placeholder_wrap" id="divId">
+                                    <div>
+                                        <input type="text" id="userId" name="userId" maxlength="20" class="engNumber"
+                                            style="width: 488px;">
+                                        <label id="mbshId" for="mbshId">아이디<span>(4~20자의 영문 대소문자, 숫자만
+                                                사용)</span></label>
+                                        <p class="t_error" style="display:none;"></p>
+
+                                        <button type="button" class="btn_basic2 small" id="idCheck"
+                                            style="width: 124px; height: 60px; float: right;">중복확인</button>
+                                     </div>
                                 </div>
 
                                 <div class="join_row placeholder_wrap" id="divPwd">
-                                    <input type="password" id="userPwd" name="mbshMst[mbshPwd]" maxlength="20"
+                                    <input type="password" id="userPwd" name="userPwd" maxlength="20"
                                         onkeypress="javascript:noSpaceEvnt(event);">
                                     <label for="mbshPwd">비밀번호<span>(8~20자 이내 영문자, 숫자, 특수문자 3가지 조합)</span></label>
                                     <p class="t_error" style="display:none;"></p>
                                 </div>
 
                                 <div class="join_row placeholder_wrap" id="divRePwd">
-                                    <input type="password" id="reUserPwd" name="reMbshPwd" maxlength="20"
+                                    <input type="password" id="reUserPwd" name="reUserPwd" maxlength="20"
                                         onkeypress="javascript:noSpaceEvnt(event);">
                                     <label for="mbshPwd">비밀번호 확인<span>(8~20자 이내 영문자, 숫자, 특수문자 3가지 조합)</span></label>
                                     <p class="t_error" style="display:none;"></p>
                                 </div>
 
                                 <div class="join_row placeholder_wrap" id="divHpNo">
-                                    <input type="text" id="userHpNo" name="reMBshHpNo" maxlength="20"
+                                    <input type="text" id="userHpno" name="userHpno"
                                         onkeypress="javascript:noSpaceEvnt(event);">
                                     <label id="mbshHpNo" for="userHpNo">전화번호<span>('-'없이 입력)</span></label>
                                     <p class="t_error" style="display:none;"></p>
@@ -325,7 +323,7 @@
 
                                 <div>
                                     <div class="join_row placeholder_wrap"
-                                        style="width: 194px; height: 60px; float: left; margin-right: 2px;">
+                                        style="width: 194px; float: left; margin-right: 2px;">
                                         <input type="text" name="email1" id="email1" class="frm_input" maxlength="20"
                                             onkeypress="javascript:noSpaceEvnt(event);">
                                         <label for="userEmail">이메일</label>
@@ -337,12 +335,12 @@
                                         @</div>
 
                                     <div class="join_row placeholder_wrap"
-                                        style="width: 194px; height: 60px; float: left; margin-left :2px">
+                                        style="width: 194px; float: left; margin-left :2px">
                                         <input type="text" name="email2" id="email2" class="frm_input">
                                     </div>
 
                                     <div>
-                                        <select name="emaildomain" class="frm_input" onChange="email_change(this.form);"
+                                        <select id="emaildomain" name="emaildomain" class="frm_input" onChange="email_change(this.form);"
                                             style="width: 202px; height: 60px; text-align: center; float: left;">
                                             <option value="">직접입력</option>
                                             <option value="naver.com">naver.com</option>
@@ -352,16 +350,15 @@
                                 </div>
 
                                 <br><br><br><br>
-                                <div class="btn_login"><button type="button" class="btn_basic2 big"
-                                        id="btnLgin1">가입하기</button>
+                                <div class="btn_login">
+                                    <button type="submit" class="btn_basic2 big" id="joinBtn">가입하기</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
+            </div>
         </section>
-
-        </div>
     </main>
     <!-- footer start 배지현 (03.0) -->
     <div id="wrap_1">
@@ -371,7 +368,7 @@
                     <div class="copyright">
                         <div class="logo">
                             <h1 onclick="goMainPage();" style="cursor: pointer; height: 48px"><img id="mainLogo"
-                                    src="../image/footerLogo.png"></h1> <!-- 로고 이미지 src 변경 부분 -->
+                                    src="${action}/hdmall/image/footerLogo.png"></h1> <!-- 로고 이미지 src 변경 부분 -->
                             <strong>현대 IT&E 1차 프로젝트(2조) </strong>
                         </div>
                         <ul>
@@ -399,4 +396,5 @@
         </footer>
     </div>
 </body>
+
 </html>

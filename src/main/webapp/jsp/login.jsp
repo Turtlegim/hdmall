@@ -1,87 +1,56 @@
-<!DOCTYPE html>
-<html lang="ko">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <head>
-	<meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
     <title>현대백화점인터넷면세점</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="title" content="현대백화점인터넷면세점">
-    <meta name="description" content="내 여행 최고의 목적지 현대백화점인터넷면세점! 세일, 사은행사, 쿠폰, 적립금, 럭키딜, 타임세일, 나만의 면세쇼핑을 즐겨보세요.">
-    <meta name="metaKeywords"
-        content="현대면세점, 현대백화점인터넷면세점, 현대인터넷면세점, 현대백화점면세점, 현대면세, 인터넷현대면세점, 현대온라인면세점, 현대백화점온라인면세점, 현대백화점DUTYFREE,현대무역센터면세점, 현대무역센터점, 현대동대문면세점, 현대동대문점, 현대인천공항면세점, 현대인천공항점, 면세쇼핑몰, 인터넷면세점, 온라인면세점, 인천공항면세점, 인천공항면세, 공항면세, 공항면세점, 공항쇼핑, dutyfree, 면세할인, 면세점할인, 면세가격, 면세점할인방법, 면세추천, 면세선물, 면세점선물, 면세점선물추천, 현대면세점인도장, 면세점인도장, 면세점상품수령, 쇼핑, 쇼핑몰, 명품쇼핑, 해외여행, 인천공항, 출장, 출국, 신혼여행, 허니문, 여행선물, 선물인터넷면세점주문, 인터넷면세점주문가능시간, 출국3시간전, 출국전쇼핑, 출국전인터넷쇼핑, 쿠폰, 할인쿠폰, 면세쿠폰, 면세점쿠폰, 현대면세점쿠폰, 적립금, 면세점적립금, 면세적립금, 현대면세점적립금,화장품, 향수, 가방, 명품, 해외명품, 브랜드, 면세점주류, 면세점담배, 면세점홍삼, 면세점화장품, 면세점향수, 면세점명품, 면세점시계, 면세점가방, 명품가방, 면세점정품">
-    <meta property="og:title" content="현대백화점인터넷면세점">
-    <meta property="og:image" content="https://cdn.hddfs.com/front/images/KO/common/hddfs_og.png">
     <script src="https://cdn.hddfs.com/front/js/KO/jquery-1.12.4.min.js?ver=18"></script>
     <script src="https://cdn.hddfs.com/front/js/KO/jquery-ui.js?ver=18"></script>
-    <script src="https://cdn.hddfs.com/front/js/KO/lottie.min.js?ver=18"></script>
-    <script src="https://cdn.hddfs.com/front/js/KO/swiper-bundle.min.js?ver=18"></script>
+    <script src="https://cdn.hddfs.com/front/js/KO/jquery.bxslider.js?ver=18"></script>
+    <script src="https://cdn.hddfs.com/front/js/KO/swiper.min.js?ver=18"></script>
     <script src="https://cdn.hddfs.com/front/js/KO/jquery.lazyload.min.js?ver=18"></script>
     <script src="https://cdn.hddfs.com/front/js/KO/jquery.lazyloadxt.min.js?ver=18"></script>
     <script src="https://cdn.hddfs.com/front/js/KO/common.ui.js?ver=18"></script>
-    <script src="https://cdn.hddfs.com/front/js/KO/main.ui.js?ver=18"></script>
-    <link rel="shortcut icon" href="https://cdn.hddfs.com/front/images/KO/common/favicon_H.ico">
+    <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/crew.source.js?ver=18"></script>
+    <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/form/form.source.js?ver=18"></script>
+    <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/common.js?ver=18"></script>
+    <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/SsoAjax.js?ver=18"></script>
+    <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/SsoHttpRequest.js?ver=18"></script>
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/jquery-ui.css?ver=18">
-    <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/swiper-bundle.min.css?ver=18">
+    <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/swiper.min.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/common.css?ver=18">
-    <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/layout.css?ver=18">
+    <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/member.css?ver=18">
+    <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/popup.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/main.css?ver=18">
-    <link rel="stylesheet" href="../css/q&a_default.css">
-    <link rel="stylesheet" href="../css/myhundai.css">
-    <link rel="stylesheet" href="../css/footer.css">
-    
-    <script language="javascript">
-        // 현재 요청경로
-        var ctx_curr = "//www.hddfs.com/shop";
-        var ctx_shop = "https://www.hddfs.com/shop";
-        var isLogin = false;
-        var SERVER_IMAGE = "https://cdn.hddfs.com/front";
-        var SERVER_IMAGE_MNG = "https://cdn.hddfs.com/files/";
-        var SERVER_SCRIPT_JSON = "https://cdn.hddfs.com/files";
-        var USER_AUTO_LOGOUT_TIME = 1800;
-        var gUmbMbshUrl = "https://www.h-point.co.kr"; // 통합멤버쉽 주소
-    </script>
+    <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/layout.css?ver=18">
+    <link rel="shortcut icon" href="https://cdn.hddfs.com/front/images/KO/common/favicon_H.ico">
+    <link rel="stylesheet" href="${action}/hdmall/css/footer.css">
+    <link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
 
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/crew.source.js?ver=18"></script>
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/form/form.source.js?ver=18"></script>
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/sns.js?ver=18"></script>
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/jquery.cookie.js?ver=18"></script>
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/common.js?ver=18"></script>
-
-    <!-- S: 다이퀘스트 스크립트 추가 -->
-    <script type="text/javascript"
-        src="https://cdn.hddfs.com/front/js/KO/diquest/dqAutoCompleteCommon.js?ver=18"></script>
-    <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/diquest/dqHeader.js?ver=18"></script>
-    <!-- E: 다이퀘스트 스크립트 추가 -->
-
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/cloud-zoom.1.0.2.js?ver=18"></script>
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/SsoAjax.js?ver=18"></script>
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/SsoHttpRequest.js?ver=18"></script>
-
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/makePCookie.js?ver=18"></script>
-
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/hash.js?ver=18"></script>
-
+    
+    <script
+  		src="https://code.jquery.com/jquery-3.4.1.min.js"
+  		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  		crossorigin="anonymous"></script>
+  		
+	<script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
+    
     <script>
-        function getParameterByName(name) {
-            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(document.referrer);
-            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-        }
-
-        var Naver_Previous_Query = getParameterByName('oquery');
-    </script>
-
-<body>
-    <script type="text/javascript">
-        $(window).load(function () {
-            //fnLnbCountInfo();
-            //orderStatusInfo();	
-        });
-
         $(function () {
             $(".btn_gnb").on("click", function () {
                 $("#gnb > ul > li").removeClass("open").css("display", "");
@@ -99,7 +68,12 @@
 
         function goMainPage() {
             sessionStorage.setItem("selMainSwiperPos", 1);
-            location.href = "main.html";
+            location.href = "main.jsp";
+        }
+
+        // join.jsp 에게 로그인 화면에서 넘어왔다는 것을 알려주는 함수 - 03.07 경민영
+        function sendJoin() {
+            localStorage.setItem('join', 'fromLogin');
         }
     </script>
 
@@ -118,17 +92,40 @@
             max-height: 100%;
             max-width: 100%;
         }
+        
+		#checked-container {
+			text-align : center;
+			padding-top : 50px;
+		}
+		
+		#checked {
+			color : red;   
+			font-weight : bold;
+		}
     </style>
-    </head>
+</head>
 
+<body>
+	<%
+		Cookie[] cookie = request.getCookies();
+		String userId = "";
+		if(cookie != null){
+		    for(int i = 0; i < cookie.length; i++){
+		        if(cookie[i].getName().trim().equals("userId")){
+		            System.out.println(cookie[i].getValue());
+		            userId = cookie[i].getValue();
+		        }
+		    }
+		}
+	%>
     <header id="header">
         <section class="box">
             <a href="javascript:" class="btn_gnb">Navigation Drawer</a>
-            <h1 onclick="goMainPage();" style="cursor: pointer; height: 48px"><img id="mainLogo" src="../image/logo.png">
+            <h1 onclick="goMainPage();" style="cursor: pointer; height: 48px"><img id="mainLogo" src="${action}/hdmall/image/logo.png">
             </h1> <!-- 로고 이미지 src 변경 부분 -->
-
+			
             <div class="default_menu">
-                <a href="login.html">로그인</a>
+            	<a href="${action}/hdmall/login" id="loginBtn">로그인</a>
                 <ul>
                     <li class="item_01">
                         <a href="like.html">찜하기</a>
@@ -267,162 +264,48 @@
             </nav>
     </header>
 
-    <div id="wrap">
-        <!-- 하단부 레이아웃을 위해서는 wrap 꼭 남겨두기 -->
-        <!-- container -->
-        <main id="container" class="container">
-            <style type="text/css">
-                span.file_span:hover {
-                    text-decoration: underline;
-                    cursor: pointer;
-                }
-            </style>
-
-            <script type="text/javascript">
-                //상담등록 중복호출 방지
-                var gSaveCallYn = "N";
-
-                $(function () {
-                    //제목 input box 숫자, 한글, 영문만 입력
-                    $("#counTitl").on('keypress', function (event) {
-                        var vEventKey = event.key;
-                        var vRegExpFormat = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\s]+$/
-
-                        if (vRegExpFormat.test(vEventKey)) {
-                            return true;
-                        } else {
-                            alert("제목은 영문, 숫자, 한글만 입력 가능합니다.");
-                            vEventKey.value = "";
-                            return false;
-                        }
-                    });
-
-                    //validation
-                    function checkValid() {
-                        if (!$("#counForm").validateForm()) {
-                            return;
-                        }
-                        return true;
-                    }
-
-                    //문의저장
-                    function fnSaveCoun() {
-
-                        if (gSaveCallYn == "Y") {
-                            alert("처리 중입니다.");
-                            return false;
-                        }
-
-                        // validation
-                        if (checkValid()) {
-
-                            //금칙어 체크
-                            $.ajax({
-                                async: true,
-                                url: "//www.hddfs.com/shop/om/consmCoun/checkProhWrd.json",
-                                dataType: "json",
-                                type: "POST",
-                                data: { counTitl: $('#counTitl').val(), counCont: $('#counCont').val() },
-                                success: function (data, textStatus, jqXHR) {
-                                    if (!crew.ajaxValidate(data)) { return; }
-
-                                    if (data.resultCode == 1) {
-                                        if (!confirm("1:1 상담 문의를 접수하시겠습니까?")) {
-                                            return false;
-                                        }
-                                        //값 세팅
-                                        //fnSetCounInfo();
-                                        $("form[name='counForm']").submit();
-                                        gSaveCallYn = "Y";
-                                    }
-                                },
-                                error: function (jqXHR, textStatus, errorThrown) {
-                                    alert('처리중 오류가 발생하였습니다.');
-                                }
-                            });
-                        }
-                    }
-
-                    //글자수 체크
-                    function checkLength(obj) {
-                        if ($(obj).val().length > 500) {
-                            $(obj).val($(obj).val().substring(0, 500));
-                        }
-                    }
-                });
-            </script>
-
-            <section>
-                <div style="width: 760px; margin: 0 auto; margin-top: 60px">
-                    <div>
-                        <h3 class="h3_type line">
-                            문의사항
-                        </h3>
-                        <ul class="dot_list mgts">
-                            <li>문의하신 내용에 대한 답변은 마이페이지&gt; 문의내역 에서 확인하실 수 있습니다.</li><br>
-                        </ul>
-                        <form id="counForm" name="counForm" method="post" enctype="multipart/form-data"
-                            action="https://www.hddfs.com/shop/om/consmCoun/addCounQust.do">
-                            <input type="hidden" name="wrtrNm" value="배지현">
-                            <input type="hidden" name="mbshNo" value="2203990001801">
-                            <input type="hidden" name="regMngrId" value="2203990001801">
-                            <input type="hidden" name="finaUpdMngrId" value="2203990001801">
-                            <input type="hidden" id="checkOrderYn" value="N">
-                            <input type="hidden" id="orderNo" name="orderNo">
-                            <input type="hidden" id="mailAddr" name="mailAddr">
-                            <input type="hidden" id="onlnGoosCd" name="onlnGoosCd">
-                            <input type="hidden" id="onlnBranCd" name="onlnBranCd">
-                            <input type="hidden" id="refNo" name="refNo">
-                            <input type="hidden" id="counCnclResnCd" name="counCnclResnCd">
-                            <div class="counsel_write">
-                                <table class="tb_write01 vm">
-                                    <caption>문의사항</caption>
-                                    <colgroup>
-                                        <col style="width:160px">
-                                        <col style="width:auto">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">성명</th>
-                                            <td>배지현</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">제목<em class="essential">*</em></th>
-                                            <td>
-                                                <input type="text" class="required" valMsg="제목을 입력해주세요." id="counTitl"
-                                                    name="counTitl" value="" placeholder="제목을 입력해주세요."
-                                                    style="width:100%" maxlength="50" onpaste="false;">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">내용<em class="essential">*</em></th>
-                                            <td>
-                                                <div class="textarea_wrap">
-                                                    <textarea placeholder="최대 500자까지 입력 가능합니다." id="counCont"
-                                                        name="counCont" maxlength="500" class="required"
-                                                        valMsg="내용을 입력해주세요." onkeyup="checkLength(this);"
-                                                        onblur="checkLength(this);"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="sh_btn_box">
-                                    <button type="button" class="btn_basic1" id="cancelCoun"
-                                        onclick="javascript:fnClearForm();">취소</button>
-                                    <button type="button" class="btn_basic2" id="saveCoun"
-                                        onclick="javascript:fnSaveCoun();">확인</button>
+    <main id="container_join" class="container_join">
+        <section>
+            <div id="wrap">
+                <div style="width: 430px; margin: 0 auto; margin-top: 10px; margin-bottom: 150px;">
+                    <h1 class="h1_type">로그인</h1>
+                    <div id="login01">
+                        <form method="post" action="${action}/hdmall/login" autocomplete="off">
+                            <div class="join_form">
+                                <div class="join_row">
+                         
+                                    <input type="text" id="userId" name="userId" value="<%= userId %>" placeholder="아이디"
+                                        onkeypress="javascript:noSpaceEvnt(event);" maxlength="20"
+                                        style="ime-mode:inactive;" autocomplete="off">
                                 </div>
+                                <div class="join_row placeholder_wrap">
+                                    <input type="password" id="userPwd" name="userPwd" placeholder="비밀번호"
+                                        onkeypress="javascript:noSpaceEvnt(event);" maxlength="100" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="id_save">
+                                <span class="checkbox small">
+                                    <input type="checkbox" name="id_rem" id="id_rem" <% if(userId.length() > 1) out.println("checked"); %> >
+                                    <label for="umbSaveId">아이디 저장</label>
+                                </span>
+                            </div>
+                            <div class="btn_login">
+                            	<button type="submit" class="btn_basic2 big"
+                                    id="btnLgin">로그인</button>
                             </div>
                         </form>
                     </div>
+                    <div class="txt_btn tl">
+                            <p>회원가입 시 더 많은 혜택이 제공됩니다.<a href="${action}/hdmall/jsp/join.jsp" class="btn_basic1" onclick="sendJoin()">회원가입</a>
+                            </p>
+                    </div>
                 </div>
-            </section>
-        </main>
-    </div>
+            </div>
+        </section>
+    </main>
 
     <!-- footer start 배지현 (03.0) -->
-    <div id="wrap">
+    <div class="wrap">
         <footer id="footer">
             <div class="policy">
                 <div class="copy">
@@ -456,5 +339,4 @@
         </footer>
     </div>
 </body>
-
 </html>
