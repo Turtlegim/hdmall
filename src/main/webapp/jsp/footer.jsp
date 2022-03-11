@@ -33,6 +33,7 @@
                         <!--//award-->
                     </div>
                 </div>
+                </div>xs
         </footer>
     </div>
 </body>

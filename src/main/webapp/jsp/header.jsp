@@ -1,23 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<%
+	String userId = (String)session.getAttribute("userId");
+	String userName = (String)session.getAttribute("userName");
+%>
 
  <header id="header">
-	<section class="box">
-		<a href="javascript:" class="btn_gnb">Navigation Drawer</a>
-		<h1 onclick="goMainPage();" style="cursor: pointer; height: 48px">
-			<img id="mainLogo" src="${contextPath}/image/logo.png">
-		</h1>	
+		<section class="box">
+			<a href="javascript:" class="btn_gnb">Navigation Drawer</a>
+			<h1 onclick="goMainPage();" style="cursor: pointer; height: 48px"><img id="mainLogo" src="${action}/hdmall/image/logo.png">
+			</h1> <!-- 로고 이미지 src 변경 부분 -->
 
-		<div class="default_menu">
-			<a href="login.html">로그인</a>
-			<ul>
-				<li class="item_01"><a href="like.html">찜하기</a></li>
-				<li class="item_03"><a href="mypage.html">마이현대</a></li>
-				<li class="item_04"><a href="q&a_insert.html">고객센터</a></li>
-				<li class="exchange_rate exchageRateTxt"></li>
-			</ul>
-		</div>
+			<div class="default_menu">
+			<%if (userName != null) { %>
+				<a> <%=userName%>님 </a>
+				<a href="${action}/hdmall/logout" id="logoutBtn">로그아웃</a>
+			<%}else { %> 
+				<a href="${action}/hdmall/jsp/login.jsp" id="loginBtn">로그인</a>
+			<%} %>
+				<ul>
+                <li class="item_01">
+                    <a href="${contextPath}/like">찜하기</a>
+                </li>
+                <li class="item_03">
+                    <a href="${action}/hdmall/jsp/mypage.jsp">마이현대</a>
+                </li>
+                <li class="item_04">
+                    <a href="${contextPath}/QBoardIns">고객센터</a>
+                </li>
+                <li class="exchange_rate exchageRateTxt"></li>
+            </ul>
+        </div>
 
 		<!-- 히든메뉴 START -->
 		<script type="text/javascript">
@@ -101,7 +115,7 @@
                         }
                     });
                 }
-            </script>
+        </script>
 
 		<nav class="navication">
 			<div id="gnb">
@@ -109,9 +123,9 @@
 				<ul class="depth_01">
 					<li><strong>전체서비스</strong>
 						<ul class="depth_02 serviceMenu">
-							<li><a href="best.html"> 베스트</a></li>
+							<li><a href="${contextPath}/best"> 베스트</a></li>
 							<li><a href="${contextPath}/productList?cate_no=신상품"> 신상품</a></li>
-							<li><a href="q&a_insert.html"> 고객센터</a></li>
+							<li><a href="${contextPath}/QBoardIns"> 고객센터</a></li>
 						</ul></li>
 					<li><strong>카테고리</strong>
 						<ul class="depth_02 serviceCtgList">
@@ -124,5 +138,6 @@
 			</div>
 			<button class="gnb_close">닫기</button>
 		</nav>
+		</section>
 </header>
 <!-- 히든메뉴 END 03.05 경민영 -->

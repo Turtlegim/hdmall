@@ -63,6 +63,7 @@ public class JoinController extends HttpServlet {
 //    	    } else {
 //    	    	
 //    	    }
+    	    
     	    result = userDAO.joinUser(id, pwd, name, hpno, email1, email2);
     	    
         	session.setAttribute("userId", id);

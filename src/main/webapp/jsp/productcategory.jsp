@@ -13,10 +13,12 @@
 	String cate = (String)request.getAttribute("cate");
 	int count = (int)request.getAttribute("count");
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
+	<meta name="google-site-verification" content="rYjJmYP3q9lxBYCTSa_Tg3h1N9l3yZjJGp0AFaKCZlM"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>현대백화점인터넷면세점</title>
@@ -127,7 +129,7 @@
 
         function goMainPage() {
             sessionStorage.setItem("selMainSwiperPos", 1);
-            location.href = "main.html";
+            location.href = "${action}/hdmall/jsp/main.jsp";
         }
 
         $(function () {
@@ -147,7 +149,6 @@
 <%@ include file="header.jsp" %> 
     <div id="wrap">
         <main id="container">
-            <meta name="google-site-verification" content="rYjJmYP3q9lxBYCTSa_Tg3h1N9l3yZjJGp0AFaKCZlM" />
 
             <article class="location">
                 <section class="box">
@@ -210,7 +211,7 @@
                                     	<a href = "${contextPath}/productdetail?prod_id=${new_pro_view.id}"> 
                                         	<p class="ti_brand">${ new_pro_view.name}</p>
                                         </a>
-                                        <p class="tx_ex goosNm">${ new_pro_view.context}</p>
+                                        	<p class="tx_ex goosNm">${ new_pro_view.context}</p>
                                     </div>
                                 </li>
                                 </c:forEach>

@@ -7,6 +7,7 @@
 <%
   request.setCharacterEncoding("UTF-8");
 %> 
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -123,7 +124,7 @@
 
             function goMainPage() {
                 sessionStorage.setItem("selMainSwiperPos", 1);
-                location.href = "main.html";
+                location.href = "${action}/hdmall/jsp/main.jsp";
             }
             
             $(function () {
@@ -144,7 +145,7 @@
 <%@ include file="header.jsp" %>  
 
         <!-- container -->
-        <main id="container">
+    <main id="container">
             <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/productdetail.css">
             <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/product.css">
             <script src="https://cdn.hddfs.com/front/js/KO/product.js"></script>
@@ -219,15 +220,13 @@
                             ">찜하기 <span id="likeheart">♥</span></button>
                             <div id="wrap"> </div>
                         </div>
-                        <ul class="layercall">
+                        <ul class="layercall"></ul>
                     </div>
                 </section>
             </article>
+            </main>
     </div>
-
-    <script src="https://cdn.hddfs.com/front/js/KO/productdetail.js"></script>
-
-    </main>
+    	<script src="https://cdn.hddfs.com/front/js/KO/productdetail.js"></script>
 
     <script type="text/javascript">
         function sellerInfo() {
