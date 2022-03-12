@@ -76,7 +76,6 @@
             }
 			
             form.email2.value = value;
-            alert(value);
             form.email2.focus();
             
             return;

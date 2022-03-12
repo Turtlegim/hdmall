@@ -7,11 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-/**
- * Servlet implementation class QBoardListController
- */
 @WebServlet("/QBoardList")
 public class QBoardListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -39,5 +34,4 @@ public class QBoardListController extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

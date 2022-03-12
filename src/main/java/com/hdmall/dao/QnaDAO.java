@@ -22,7 +22,6 @@ public class QnaDAO {
 	}
 	
 	/* 문의사항 등록 */
-	
 	public int insertQna(String session_id, String context, String title) {
 
 		String query = "insert into QBOARD_T"
@@ -50,8 +49,6 @@ public class QnaDAO {
 		}
 		return result;
 	}
-
-	
 	
 	/* my_page 자기가 문의한 list */
 		public ArrayList<QBoardVO> listQBoard(String session_id,int page){
@@ -99,6 +96,5 @@ public class QnaDAO {
 			DBManager.close(conn,pstmt,rs);
 		}
 		return lists;	
-	}
-			
+	}		
 }

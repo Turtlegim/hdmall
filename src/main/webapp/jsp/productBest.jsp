@@ -204,13 +204,13 @@ img {
 						<div class="tabsort_wrap tab-style">
 							<ul class="tab_round">
 								<li class="tab_item" id="all">
-								    <a href="${contextPath }/best">전체</a>
+								    <a href="${contextPath}/best">전체</a>
 							    </li>
 								<li class="tab_item" id="female">
-								    <a href="${contextPath }/best?cate_no=여성캐쥬얼">여성캐쥬얼</a>
+								    <a href="${contextPath}/best?cate_no=여성캐쥬얼">여성캐쥬얼</a>
 								</li>
 								<li class="tab_item" id="male">
-								    <a href="${contextPath }/best?cate_no=남성캐쥬얼">남성캐쥬얼</a>
+								    <a href="${contextPath}/best?cate_no=남성캐쥬얼">남성캐쥬얼</a>
 								</li>
 							</ul>
 						</div>

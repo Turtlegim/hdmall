@@ -3,7 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-  request.setCharacterEncoding("UTF-8");
+  	request.setCharacterEncoding("UTF-8");
 %> 
 
 <c:set  var="id"  value="hong"  scope="page" />
@@ -176,7 +176,6 @@
                         </div>
 
                         <div class="sorting_wrap">
-                        	
                             <span class="txt_total">총 <strong id="goosListTotCnt">${ count }</strong>개</span>
                             <input type="hidden" name="reGoosListTotCnt" id="reGoosListTotCnt" value="5763" />
                             <input type="hidden" name="reGoosListTotPage" id="reGoosListTotPage" value="145" />

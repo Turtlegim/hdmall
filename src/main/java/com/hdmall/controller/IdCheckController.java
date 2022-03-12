@@ -9,9 +9,6 @@ import javax.servlet.http.*;
 
 import com.hdmall.dao.*;
  
-/**
- * Servlet implementation class MemberController
- */
 @WebServlet("/idCheck")
 public class IdCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

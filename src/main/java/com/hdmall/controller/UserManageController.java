@@ -1,4 +1,5 @@
 package com.hdmall.controller;
+
 import java.io.*;
 import java.sql.SQLException;
  
@@ -7,10 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import com.hdmall.dao.*;
-import com.hdmall.vo.*;
- 
-@WebServlet("/logout")
-public class LogoutController extends HttpServlet {
+
+@WebServlet("/userManage")
+public class UserManageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	UserDAO userDAO;
 
@@ -25,36 +25,49 @@ public class LogoutController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-        HttpSession session = request.getSession();
-        
 		response.setContentType("text/html;charset=UTF-8");
+        
+		// 한글 처리
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+        
+    	String destPage = "/jsp/mypage.jsp";
+
+        PrintWriter out = response.getWriter();
+        
+		String pwd = request.getParameter("userPwd");
+		String name = request.getParameter("userName");
+		String hpno = request.getParameter("userHpno");
+		String email1 = request.getParameter("email1");
+		String email2 = request.getParameter("email2"); 
 		
-		 PrintWriter out = response.getWriter();
-		 
-		request.getRequestDispatcher("/src/main/webapp/jsp/main.jsp");
-        
-        String userName = (String) session.getAttribute("userName");
-        
+		HttpSession session = request.getSession();  
+		String id = (String) session.getAttribute("userId");
+		
+		int result = 0; // 회원 정보 수정을 실패하면 0 
+		
+		if (email2 == null) {
+			email2 = request.getParameter("emaildomain");
+		}
+	    
         try {
-        	int result = userDAO.logoutUser(userName);
-            String destPage = "/jsp/login.jsp";
-            
-            if (result == 1) { // 로그아웃 성공
-                System.out.println("로그아웃 성공");
-                session.setAttribute("userId", null);
-                session.setAttribute("userName", null);
-                session.invalidate();
-                
-                destPage = "/jsp/main.jsp";
+    	    result = userDAO.updateUser(pwd, name, hpno, email1, email2, id);
+        	
+            if (result == 1) {
+            	out.print("{\"result\": 1}"); // 회원정보 수정 성공
+
+            	destPage = "/jsp/mypage.jsp";
             } else {
-            	System.out.println("로그아웃 실패");
+                result = 0;
+            	out.print("{\"result\": 0}"); // 회원정보 수정 실패
+            	
+            	destPage = "/jsp/user_manage.jsp";
             }
-            out.print("{\"result\":"+result+"}");
-             
+            
             RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
             dispatcher.forward(request, response);
         } catch (SQLException e) {
-            throw new ServletException(e);
+			e.printStackTrace();
         }
 	}
 

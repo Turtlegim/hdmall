@@ -73,4 +73,3 @@ public class BestController extends HttpServlet {
 		}
 	}//end class
 }//end class
-

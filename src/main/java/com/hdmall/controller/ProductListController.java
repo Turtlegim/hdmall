@@ -13,13 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import com.hdmall.dao.ProductDAO;
 import com.hdmall.vo.ProductVO;
 
-/**
- * Servlet implementation class ProductListController
- */
 @WebServlet("/productList/*")
 public class ProductListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -96,5 +92,4 @@ public class ProductListController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
 }

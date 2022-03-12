@@ -10,9 +10,6 @@ import javax.servlet.http.*;
 import com.hdmall.dao.*;
 import com.hdmall.vo.*;
  
-/**
- * Servlet implementation class MemberController
- */
 @WebServlet("/join")
 public class JoinController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -59,12 +56,11 @@ public class JoinController extends HttpServlet {
     	    result = userDAO.joinUser(id, pwd, name, hpno, email1, email2);
     	    
         	session.setAttribute("userId", id);
-    	    
         	
             if (result == 1) {
             	out.print("{\"result\": 1}"); // 회원가입 성공 
             } else {
-                if (checkHpno == 0) {
+                if (checkHpno == 0) { // Controller에서 실행되도록 변경하기
                 	result = 2;
                 	out.print("{\"result\": 2}"); // 회원가입 실패 사유 : 전화번호 중복 
                 }

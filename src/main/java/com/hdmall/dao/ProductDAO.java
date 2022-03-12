@@ -146,6 +146,5 @@ public class ProductDAO {
 	      DBManager.close(con, pstmt, rs);
 	    }
 	    return product;
-	  }
-	
+	}
 }

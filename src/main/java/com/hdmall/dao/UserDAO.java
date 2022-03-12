@@ -106,6 +106,7 @@ public class UserDAO {
 	
 	public int joinUser(String userId, String userPwd, String userName, String userHpno, String email1, String email2) throws SQLException {
 		conn = DBManager.getConnection();
+		
 		String query = "insert into user_t (user_id, user_pw, user_nm, hp_no, email_f, email_l, user_type) values (?, ?, ?, ?, ?, ?, ?)";
 		System.out.println(query);
 	
@@ -140,6 +141,7 @@ public class UserDAO {
 		int check = 0; // 로그인 실패면 0 
 		
 		conn = DBManager.getConnection();
+		
 		String query = "select * from user_t where USER_NM = ?";
 		System.out.println(query);
 		pstmt = conn.prepareStatement(query);
@@ -158,5 +160,38 @@ public class UserDAO {
         conn.close();
  
         return check;
+	}
+	
+	public int updateUser(String userPwd, String userName, String userHpno, String email1, String email2, String userId) throws SQLException { // 회원정보 수정 
+		int check = 0; // 업데이트 실패면 0 
+		
+		conn = DBManager.getConnection();
+		
+		String query = "update user_t set user_pw=?, user_nm=?, hp_no=?, email_f=?, email_l=? where user_id=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, userPwd);
+			pstmt.setString(2, userName);
+			pstmt.setString(3, userHpno);
+			pstmt.setString(4, email1);
+			pstmt.setString(5, email2);
+			pstmt.setString(6, userId);
+			
+			check = pstmt.executeUpdate();
+			
+			if (check == 1) {
+        		System.out.println("회원정보 수정 성공");
+	        } else {
+	        	System.out.println("회원정보 수정 실패");
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		
+		conn.close();
+		
+		return check;
 	}
 }

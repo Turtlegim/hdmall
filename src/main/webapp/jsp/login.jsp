@@ -4,18 +4,22 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<%
-	Cookie[] cookie = request.getCookies();
-	String id = "";
-	if(cookie != null){
-	    for(int i = 0; i < cookie.length; i++){
-	        if(cookie[i].getName().trim().equals("userId")){
-	            System.out.println(cookie[i].getValue());
-	            id = cookie[i].getValue();
-	        }
-	    }
+<%!
+	public String getCookieValue(Cookie[] cookies, String cookieName) { 
+    	for (Cookie cookie : cookies) { 
+         	if(cookie.getName().equals(cookieName)){ 
+              	return cookie.getValue(); 
+        	}
+    	}
+    	
+    	return ""; 
 	}
 %>	
+
+<%
+     Cookie[] cookies = request.getCookies();
+     String id = getCookieValue(cookies, "userId");
+%>
 
 <head>
     <meta charset="utf-8">
@@ -81,26 +85,14 @@
 
         $( document ).ready(function() {
         	$('#btnLgin').click(function(){
-        		if(document.getElementById('userId').value == "") {
-            		alert("아이디를 입력하세요.");
-        		} else if(document.getElementById('userPwd').value == "") {
-            		alert("비밀번호를 입력하세요.");
-        		} else { 
-        			$.ajax({
-	                    url: "${action}/hdmall/login",
-	                    method: "post", // 요청방식은 post
-	                    data: {"userId": document.getElementById('userId').value,
-	                    		"userPwd" : document.getElementById('userPwd').value},
-	                    success: function(result) {
-	                    	if(result.result == 1) {
-	                			alert("로그인 성공");
-	                   	 	} else {
-	                			alert("아이디와 비밀번호를 다시 입력해주세요.");
-	                   	   	}
-	                    }, error:function(error){
-	                       	alert("AJAX요청 실패 : 에러코드=" + error.status); // status 에러확인 
-	                    }
-	                 });
+        		var id = document.getElementById('userId').value;
+            	var pwd = document.getElementById('userPwd').value;
+            	var result = <%= session.getAttribute("result")%>;
+            	
+        		if(id == "" || pwd == "") {
+            		alert("빈칸이 존재합니다.");
+        		} else {
+        			// 로그인 실패 알림창 띄우는 코드 넣기 
         		}
         	});
         });
@@ -136,12 +128,11 @@
 
 <body>
 	<%@ include file = "header.jsp"%>
-
     <main id="container_join" class="container_join">
         <section>
             <div id="wrap">
                 <div style="width: 430px; margin: 0 auto; margin-top: 150px; margin-bottom: 150px;">
-                    <h1 class="h1_type">로그인</h1>
+                    <h1 class="h1_type">${result}로그인</h1>
                     <div id="login01">
                         <form method="post" action="${action}/hdmall/login" autocomplete="off">
                             <div class="join_form">
