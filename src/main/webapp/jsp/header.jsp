@@ -17,7 +17,7 @@
 				<a> <%=userName%>님 </a>
 				<a href="${action}/hdmall/logout" id="logoutBtn">로그아웃</a>
 			<%}else { %> 
-				<a href="${action}/hdmall/jsp/login.jsp" id="loginBtn">로그인</a>
+				<a href="${action}/hdmall/login" id="loginBtn">로그인</a>
 			<%} %>
 				<ul>
                 <li class="item_01">

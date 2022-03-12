@@ -146,12 +146,6 @@
                 }
             });
         });
-        
-     	// join.jsp 에게 마이페이지 화면에서 넘어왔다는 것을 알려주는 함수 - 03.07 경민영
-        function sendJoin() {
-            localStorage.setItem('join', 'fromMypage');
-           	location.href = "join.jsp";
-        }
     </script>
 
     <style>
@@ -192,7 +186,7 @@
                                 </strong>
                                 <em>님</em>
                             </p>
-                            <a onclick="sendJoin()">회원정보 수정</a>
+                            <a href="user_manage.jsp">회원정보 수정</a>
                         </div>
                         <div class="mypresent">
                             <dl>

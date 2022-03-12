@@ -66,25 +66,6 @@
                  });
    			}
    		});
-
-        // join.html form 재사용을 위한 함수 - 03.07 경민영
-        $(document).ready(function () {
-            var text = localStorage.getItem('join')
-            if (text == "fromMypage") { // 마이페이지 > 회원정보관리
-                $('.h1_type').text('회원정보관리');
-                $('.h4_type').text('회원정보 수정');
-                $('.f_size01').text('회원정보 수정을 위한 필수 입력 정보입니다.');
-                
-                // 여기서부터 회원정보관리 코드 수정  ~ing 
-                document.getElementById("userName").value = (String) userName;
-                document.getElementById("userId").value = (String) userName;
-                
-                document.getElementById("mbshName").style.display = 'none';
-                document.getElementById("mbshId").style.display = 'none';
-                document.getElementById("mbshHpNo").style.display = 'none';
-                document.getElementById("idCheck").style.display = 'none';
-            }
-        });
         
         function email_change(form) {
             var value = form.emaildomain[form.emaildomain.selectedIndex].value;
@@ -126,7 +107,7 @@
     <main id="container_join" class="container_join">
         <section>
             <div id="wrap">
-                <div style="width: 614px; margin: 0 auto; margin-top: 5px; margin-bottom: 80px;">
+                <div style="width: 614px; margin: 0 auto; margin-top: 80px; margin-bottom: 80px;">
                     <h1 class="h1_type" id="state">회원가입</h1>
                     <div id="login01">
                         <form name="join" method="post" action="${action}/hdmall/join" autocomplete="off">
@@ -203,7 +184,7 @@
 
                                 <br><br><br><br>
                                 <div class="btn_login">
-                                    <button type="submit" class="btn_basic2 big" id="joinBtn">가입하기</button>
+                                    <button type="submit" class="btn_basic2 big" id="btnJoin">가입하기</button>
                                 </div>
                             </div>
                         </form>

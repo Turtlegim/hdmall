@@ -34,9 +34,13 @@ public class UserDAO {
 		UserVO user = null;
         if (result.next()) {
         	user = new UserVO();
-        	
+        	user.setName(query);
         	user.setId(userId);
         	user.setPwd(userPwd);
+        	user.setHpNo(result.getString("hp_no"));
+        	user.setEmail1(result.getString("email_f"));
+        	user.setEmail2(result.getString("email_l"));
+        	
         	result.getString("user_nm");
         	user.setName(result.getString("user_nm"));
         	

@@ -8,7 +8,7 @@
                 <div class="copy">
                     <div class="copyright">
                         <div class="logo">
-                            <!-- <span onclick="moveToMain();" style="cursor:pointer;">HYUNDAI DEPARTMENT SHOP - DUTY FREE</span>-->
+                            <span style="cursor:pointer;">HYUNDAI DEPARTMENT SHOP - DUTY FREE</span>
                             <strong>현대 IT&E 1차 프로젝트(2조)</strong>
                         </div>
                         <ul>
