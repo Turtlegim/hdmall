@@ -48,8 +48,8 @@ public class UserDAO {
         } else {
         	System.out.println("존재하지 않는 회원입니다.");
         }
- 
-        conn.close();
+        
+        DBManager.close(conn, pstmt, result);
  
         return user;
 	}
@@ -74,7 +74,7 @@ public class UserDAO {
         	System.out.println("사용 가능 아이디입니다.");
         }
         
-        conn.close();
+        DBManager.close(conn, pstmt, result);
         
 		return check;
 	}
@@ -99,7 +99,7 @@ public class UserDAO {
         	System.out.println("사용 가능한 전화번호입니다.");
         }
         
-        conn.close();
+        DBManager.close(conn, pstmt, result);
         
 		return check;
 	}
@@ -132,7 +132,7 @@ public class UserDAO {
 	    	e.printStackTrace();
 	    } 
 	    
-	    conn.close();
+	    DBManager.close(conn, pstmt);
 		
 		return result;
 	}
@@ -157,7 +157,7 @@ public class UserDAO {
         	System.out.println("로그아웃 실패");
         }
  
-        conn.close();
+        DBManager.close(conn, pstmt, result);
  
         return check;
 	}
@@ -190,7 +190,7 @@ public class UserDAO {
 			e.printStackTrace();
 		} 
 		
-		conn.close();
+		DBManager.close(conn, pstmt);
 		
 		return check;
 	}
