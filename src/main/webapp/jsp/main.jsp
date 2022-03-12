@@ -168,7 +168,6 @@
 
 <body>
 	<%@ include file = "header.jsp"%>
-
 	<div id="wrap">
 		<!-- 메인 상단 이미지 스와이프 START 03.07 경민영 -->
 		<div class="swiper">

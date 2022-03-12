@@ -78,7 +78,7 @@
 			sessionStorage.setItem("selMainSwiperPos", 1);
 			location.href = "${action}/hdmall/jsp/main.jsp";
 		}
-        
+
         $( document ).ready(function() {
         	$('#btnLgin').click(function(){
         		if(document.getElementById('userId').value == "") {
@@ -177,4 +177,4 @@
         </section>
     </main>
 
-<%@ include file = "footer.jsp"%>
+<%@ include file = "footer.jsp"%>		
