@@ -29,12 +29,15 @@
                 <li class="item_04">
                     <a href="${contextPath}/QBoardIns">고객센터</a>
                 </li>
-                <li class="exchange_rate exchageRateTxt"></li>
             </ul>
         </div>
 
 		<!-- 히든메뉴 START -->
 		<script type="text/javascript">
+			function goMainPage() {
+				sessionStorage.setItem("selMainSwiperPos", 1);
+				location.href = "${action}/hdmall/jsp/main.jsp";
+			}
                 function commOpenLayer(cookieChkYn, hiddenYn) {
                     $.ajax({
                         async: true,

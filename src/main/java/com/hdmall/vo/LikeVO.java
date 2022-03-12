@@ -3,13 +3,13 @@ package com.hdmall.vo;
 public class LikeVO {
 	private String user_id;
 	private String prod_id;
-	private String is_liked;
+	private Boolean is_liked;
 	
 	public LikeVO() {
 		
 	}
 
-	public LikeVO(String user_id, String prod_id, String is_liked) {
+	public LikeVO(String user_id, String prod_id, Boolean is_liked) {
 		super();
 		this.user_id = user_id;
 		this.prod_id = prod_id;
@@ -32,11 +32,11 @@ public class LikeVO {
 		this.prod_id = prod_id;
 	}
 
-	public String getIs_liked() {
+	public Boolean getIs_liked() {
 		return is_liked;
 	}
 
-	public void setIs_liked(String is_liked) {
+	public void setIs_liked(Boolean is_liked) {
 		this.is_liked = is_liked;
 	}
 
