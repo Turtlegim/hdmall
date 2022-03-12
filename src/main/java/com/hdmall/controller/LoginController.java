@@ -68,11 +68,12 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("userId", userId);
                 session.setAttribute("userName", userName);
                 session.setAttribute("remember", id_rem);
+
+	        	out.print("{\"result\": 1}");
                 destPage = "/jsp/main.jsp";
             } else {
             	System.out.println("로그인 실패");
-            	out.print("{\"user\": null}");
-            	request.setAttribute("msg", "!아이디와 비밀번호를 다시 확인하세요.");
+	        	out.print("{\"result\": 0}");
             }
              
             RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
