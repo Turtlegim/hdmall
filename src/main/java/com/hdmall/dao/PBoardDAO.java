@@ -34,6 +34,7 @@ public class PBoardDAO {
 	      rs = pstmt.executeQuery();
 	      while (rs.next()) {
 	    	  ProductVO product = new ProductVO();
+	    	  product.setId(rs.getString("prod_id"));
 		      product.setName(rs.getString("pbtitle"));
 		      product.setCate_no(rs.getString("cate"));
 		      product.setContext(rs.getString("pbtext"));
@@ -61,6 +62,7 @@ public class PBoardDAO {
 	      rs = pstmt.executeQuery();
 	      while (rs.next()) {
 	    	  ProductVO product = new ProductVO();
+	    	  product.setId(rs.getString("prod_id"));
 		      product.setName(rs.getString("pbtitle"));
 		      product.setCate_no(rs.getString("cate"));
 		      product.setContext(rs.getString("pbtext"));
