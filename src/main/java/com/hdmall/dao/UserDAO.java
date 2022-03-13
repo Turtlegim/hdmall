@@ -13,7 +13,7 @@ public class UserDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
 
-	private UserDAO() { }//싱글턴 패턴
+	private UserDAO() { } // 싱글턴 패턴
 	private static UserDAO instance = new UserDAO();
 	public static UserDAO getInstance() {
     	return instance;

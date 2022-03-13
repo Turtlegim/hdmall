@@ -119,43 +119,6 @@ img {
 </style>
 </head>
 
-<script type="text/javascript">
-			/*
-				$(document).ready(
-						function() {
-							$("#container").removeClass('container');
-
-							var cate_no = $(" .tab_item.ui-tabs-active")
-									.data('goosctgid');
-							var order = 'bestSaleCnt';
-							var link = document.location.href;
-*/
-							/* if(link.indexOf("bestSaleAmt") != -1){
-								$("#switchCheck").text("판매금액");
-								$('input[id="switch4"]').attr('checked', true);
-							} */
-				//		})
-
-				//전체 클릭시
-				function allBestList() {
-					var url = '<c:out value="${contextPath}"/>';
-
-					location.href = url + "/best";
-				}	// tab_item
-				
-				$(function () {
-		            let tab = false;
-		            $(".all").on("click", function () {
-		                if (!tab) {
-		                	document.getElementById("tab_round").background = "#5c6677";
-		                    tab = true;
-		                } else {
-		                    document.getElementById("tab_round").background = "#fff";
-		                    tab = false;
-		                }
-		            })
-		        });
-</script>
 <body>
 	<script type="text/javascript">
 		$(window).load(function() {
@@ -163,20 +126,20 @@ img {
 			orderStatusInfo();
 		});
 
-		$(function() {
-			$(".btn_gnb").on("click", function() {
-				$("#gnb > ul > li").removeClass("open").css("display", "");
-				$("#gnb > ul > li > ul").css("display", "none");
-				$(".serviceMenu").parent().removeClass("open");
-				$(".serviceMenu").parent().addClass("open");
-				$(".serviceMenu").css("display", "block");
+		$(function () {
+            $(".btn_gnb").on("click", function () {
+                $("#gnb > ul > li").removeClass("open").css("display", "");
+                $("#gnb > ul > li > ul").css("display", "none");
+                $(".serviceMenu").parent().removeClass("open");
+                $(".serviceMenu").parent().addClass("open");
+                $(".serviceMenu").css("display", "block");
 
-				//카테고리 JSONP load
-				if ($(".serviceCtgList > li").length < 1) {
-					loadCtgList();
-				}
-			});
-		});
+                //카테고리 JSONP load
+                if ($(".serviceCtgList > li").length < 1) {
+                    loadCtgList();
+                }
+            });
+        });
 
 		function goMainPage() {
 			sessionStorage.setItem("selMainSwiperPos", 1);
