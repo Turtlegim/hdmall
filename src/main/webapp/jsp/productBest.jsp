@@ -8,146 +8,141 @@
 <html lang="ko">
 
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>현대백화점인터넷면세점</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="format-detection" content="telephone=no">
-<script
-	src="https://cdn.hddfs.com/front/js/KO/jquery-1.12.4.min.js?ver=18"></script>
-<script src="https://cdn.hddfs.com/front/js/KO/jquery-ui.js?ver=18"></script>
-<script src="https://cdn.hddfs.com/front/js/KO/lottie.min.js?ver=18"></script>
-<script
-	src="https://cdn.hddfs.com/front/js/KO/swiper-bundle.min.js?ver=18"></script>
-<script
-	src="https://cdn.hddfs.com/front/js/KO/jquery.lazyload.min.js?ver=18"></script>
-<script
-	src="https://cdn.hddfs.com/front/js/KO/jquery.lazyloadxt.min.js?ver=18"></script>
-<script src="https://cdn.hddfs.com/front/js/KO/common.ui.js?ver=18"></script>
-<script src="https://cdn.hddfs.com/front/js/KO/main.ui.js?ver=18"></script>
-<link rel="shortcut icon"
-	href="https://cdn.hddfs.com/front/images/KO/common/favicon_H.ico">
-<link rel="stylesheet"
-	href="https://cdn.hddfs.com/front/css/KO/jquery-ui.css?ver=18">
-<link rel="stylesheet"
-	href="https://cdn.hddfs.com/front/css/KO/swiper-bundle.min.css?ver=18">
-<link rel="stylesheet"
-	href="https://cdn.hddfs.com/front/css/KO/common.css?ver=18">
-<link rel="stylesheet"
-	href="https://cdn.hddfs.com/front/css/KO/layout.css?ver=18">
-<link rel="stylesheet"
-	href="https://cdn.hddfs.com/front/css/KO/main.css?ver=18">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>현대백화점인터넷면세점</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="format-detection" content="telephone=no">
+	<script
+		src="https://cdn.hddfs.com/front/js/KO/jquery-1.12.4.min.js?ver=18"></script>
+	<script src="https://cdn.hddfs.com/front/js/KO/jquery-ui.js?ver=18"></script>
+	<script src="https://cdn.hddfs.com/front/js/KO/lottie.min.js?ver=18"></script>
+	<script
+		src="https://cdn.hddfs.com/front/js/KO/swiper-bundle.min.js?ver=18"></script>
+	<script
+		src="https://cdn.hddfs.com/front/js/KO/jquery.lazyload.min.js?ver=18"></script>
+	<script
+		src="https://cdn.hddfs.com/front/js/KO/jquery.lazyloadxt.min.js?ver=18"></script>
+	<script src="https://cdn.hddfs.com/front/js/KO/common.ui.js?ver=18"></script>
+	<script src="https://cdn.hddfs.com/front/js/KO/main.ui.js?ver=18"></script>
+	<link rel="shortcut icon"
+		href="https://cdn.hddfs.com/front/images/KO/common/favicon_H.ico">
+	<link rel="stylesheet"
+		href="https://cdn.hddfs.com/front/css/KO/jquery-ui.css?ver=18">
+	<link rel="stylesheet"
+		href="https://cdn.hddfs.com/front/css/KO/swiper-bundle.min.css?ver=18">
+	<link rel="stylesheet"
+		href="https://cdn.hddfs.com/front/css/KO/common.css?ver=18">
+	<link rel="stylesheet"
+		href="https://cdn.hddfs.com/front/css/KO/layout.css?ver=18">
+	<link rel="stylesheet"
+		href="https://cdn.hddfs.com/front/css/KO/main.css?ver=18">
+		
+	<script type="text/javascript"
+		src="https://cdn.hddfs.com/front/js/KO/crew/crew.source.js?ver=18"></script>
+	<script type="text/javascript"
+		src="https://cdn.hddfs.com/front/js/KO/crew/form/form.source.js?ver=18"></script>
+	<script type="text/javascript"
+		src="https://cdn.hddfs.com/front/js/KO/crew/sns.js?ver=18"></script>
+	<script type="text/javascript"
+		src="https://cdn.hddfs.com/front/js/KO/jquery.cookie.js?ver=18"></script>
+	<script type="text/javascript"
+		src="https://cdn.hddfs.com/front/js/KO/common.js?ver=18"></script>
+		
+	<script language="javascript">
+	      // 현재 요청경로
+	      var ctx_curr = "//www.hddfs.com/shop";
+	      var ctx_shop = "https://www.hddfs.com/shop";
+	      var isLogin = false;
+	      var SERVER_IMAGE = "https://cdn.hddfs.com/front";
+	      var SERVER_IMAGE_MNG = "https://cdn.hddfs.com/files/";
+	      var SERVER_SCRIPT_JSON = "https://cdn.hddfs.com/files";
+	      var USER_AUTO_LOGOUT_TIME = 1800;
+	      var gUmbMbshUrl = "https://www.h-point.co.kr"; // 통합멤버쉽 주소
+	</script>
 	
-<script type="text/javascript"
-	src="https://cdn.hddfs.com/front/js/KO/crew/crew.source.js?ver=18"></script>
-<script type="text/javascript"
-	src="https://cdn.hddfs.com/front/js/KO/crew/form/form.source.js?ver=18"></script>
-<script type="text/javascript"
-	src="https://cdn.hddfs.com/front/js/KO/crew/sns.js?ver=18"></script>
-<script type="text/javascript"
-	src="https://cdn.hddfs.com/front/js/KO/jquery.cookie.js?ver=18"></script>
-<script type="text/javascript"
-	src="https://cdn.hddfs.com/front/js/KO/common.js?ver=18"></script>
-
-<!-- S: 다이퀘스트 스크립트 추가 -->
-<script type="text/javascript"
-	src="https://cdn.hddfs.com/front/js/KO/diquest/dqAutoCompleteCommon.js?ver=18"></script>
-<script type="text/javascript"
-	src="https://cdn.hddfs.com/front/js/KO/diquest/dqHeader.js?ver=18"></script>
-<!-- E: 다이퀘스트 스크립트 추가 -->
-
-<script type="text/javascript"
-	src="https://cdn.hddfs.com/front/js/KO/cloud-zoom.1.0.2.js?ver=18"></script>
-<script type="text/javascript"
-	src="https://cdn.hddfs.com/front/js/KO/SsoAjax.js?ver=18"></script>
-<script type="text/javascript"
-	src="https://cdn.hddfs.com/front/js/KO/SsoHttpRequest.js?ver=18"></script>
-
-<script type="text/javascript"
-	src="https://cdn.hddfs.com/front/js/KO/makePCookie.js?ver=18"></script>
-
-<script type="text/javascript"
-	src="https://cdn.hddfs.com/front/js/KO/crew/hash.js?ver=18"></script>
-<link rel="stylesheet" href="${action}/hdmall/css/footer.css">
-<link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
-
-<script>
-	$(function () {
-		$(".btn_gnb").on("click", function () {
-			$("#gnb > ul > li").removeClass("open").css("display", "");
-			$("#gnb > ul > li > ul").css("display", "none");
-			$(".serviceMenu").parent().removeClass("open");
-			$(".serviceMenu").parent().addClass("open");
-			$(".serviceMenu").css("display", "block");
+	<!-- S: 다이퀘스트 스크립트 추가 -->
+	<script type="text/javascript"
+		src="https://cdn.hddfs.com/front/js/KO/diquest/dqAutoCompleteCommon.js?ver=18"></script>
+	<script type="text/javascript"
+		src="https://cdn.hddfs.com/front/js/KO/diquest/dqHeader.js?ver=18"></script>
+	<!-- E: 다이퀘스트 스크립트 추가 -->
 	
-			//카테고리 JSONP load
-			if ($(".serviceCtgList > li").length < 1) {
-				loadCtgList();
-			}
+	<script type="text/javascript"
+		src="https://cdn.hddfs.com/front/js/KO/cloud-zoom.1.0.2.js?ver=18"></script>
+	<script type="text/javascript"
+		src="https://cdn.hddfs.com/front/js/KO/SsoAjax.js?ver=18"></script>
+	<script type="text/javascript"
+		src="https://cdn.hddfs.com/front/js/KO/SsoHttpRequest.js?ver=18"></script>
+	
+	<script type="text/javascript"
+		src="https://cdn.hddfs.com/front/js/KO/makePCookie.js?ver=18"></script>
+	
+	<script type="text/javascript"
+		src="https://cdn.hddfs.com/front/js/KO/crew/hash.js?ver=18"></script>
+	<link rel="stylesheet" href="${action}/hdmall/css/footer.css">
+	<link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
+	
+	<script>
+		$(function () {
+			$(".btn_gnb").on("click", function () {
+				$("#gnb > ul > li").removeClass("open").css("display", "");
+				$("#gnb > ul > li > ul").css("display", "none");
+				$(".serviceMenu").parent().removeClass("open");
+				$(".serviceMenu").parent().addClass("open");
+				$(".serviceMenu").css("display", "block");
+		
+				//카테고리 JSONP load
+				if ($(".serviceCtgList > li").length < 1) {
+					loadCtgList();
+				}
+			});
 		});
-	});
+		
+		function goMainPage() {
+			sessionStorage.setItem("selMainSwiperPos", 1);
+			location.href = "${action}/hdmall/jsp/main.jsp";
+		}
+		
+		//전체 클릭시
+		function allBestList() {
+			var url = '<c:out value="${contextPath}"/>';
+
+			location.href = url + "/best";
+		}	// tab_item
+		
+		$(function () {
+            let tab = false;
+            $(".all").on("click", function () {
+                if (!tab) {
+                	document.getElementById("tab_round").background = "#5c6677";
+                    tab = true;
+                } else {
+                    document.getElementById("tab_round").background = "#fff";
+                    tab = false;
+                }
+            })
+        });
+	</script>
 	
-	function goMainPage() {
-		sessionStorage.setItem("selMainSwiperPos", 1);
-		location.href = "${action}/hdmall/jsp/main.jsp";
-	}
-</script>
-
-<style>
-html, body {
-	height: 100%;
-	margin: 0;
-	padding: 0;
-}
-
-img {
-	padding: 0;
-	display: block;
-	margin: 0 auto;
-	max-height: 100%;
-	max-width: 100%;
-}
-</style>
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+		
+		img {
+			padding: 0;
+			display: block;
+			margin: 0 auto;
+			max-height: 100%;
+			max-width: 100%;
+		}
+	</style>
 </head>
 
-<script type="text/javascript">
-			/*
-				$(document).ready(
-						function() {
-							$("#container").removeClass('container');
-
-							var cate_no = $(" .tab_item.ui-tabs-active")
-									.data('goosctgid');
-							var order = 'bestSaleCnt';
-							var link = document.location.href;
-*/
-							/* if(link.indexOf("bestSaleAmt") != -1){
-								$("#switchCheck").text("판매금액");
-								$('input[id="switch4"]').attr('checked', true);
-							} */
-				//		})
-
-				//전체 클릭시
-				function allBestList() {
-					var url = '<c:out value="${contextPath}"/>';
-
-					location.href = url + "/best";
-				}	// tab_item
-				
-				$(function () {
-		            let tab = false;
-		            $(".all").on("click", function () {
-		                if (!tab) {
-		                	document.getElementById("tab_round").background = "#5c6677";
-		                    tab = true;
-		                } else {
-		                    document.getElementById("tab_round").background = "#fff";
-		                    tab = false;
-		                }
-		            })
-		        });
-</script>
 <body>
 	<script type="text/javascript">
 		$(window).load(function() {
@@ -155,20 +150,20 @@ img {
 			orderStatusInfo();
 		});
 
-		$(function() {
-			$(".btn_gnb").on("click", function() {
-				$("#gnb > ul > li").removeClass("open").css("display", "");
-				$("#gnb > ul > li > ul").css("display", "none");
-				$(".serviceMenu").parent().removeClass("open");
-				$(".serviceMenu").parent().addClass("open");
-				$(".serviceMenu").css("display", "block");
+		$(function () {
+            $(".btn_gnb").on("click", function () {
+                $("#gnb > ul > li").removeClass("open").css("display", "");
+                $("#gnb > ul > li > ul").css("display", "none");
+                $(".serviceMenu").parent().removeClass("open");
+                $(".serviceMenu").parent().addClass("open");
+                $(".serviceMenu").css("display", "block");
 
-				//카테고리 JSONP load
-				if ($(".serviceCtgList > li").length < 1) {
-					loadCtgList();
-				}
-			});
-		});
+                //카테고리 JSONP load
+                if ($(".serviceCtgList > li").length < 1) {
+                    loadCtgList();
+                }
+            });
+        });
 
 		function goMainPage() {
 			sessionStorage.setItem("selMainSwiperPos", 1);

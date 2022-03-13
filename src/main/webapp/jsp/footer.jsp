@@ -9,7 +9,7 @@
                     <div class="copyright">
                         <div class="logo">
                             <img src="../image/footerLogo.png" style="margin: 0px;">
-                            <strong>현대 IT&E 1차 프로젝트(2조)</strong>
+                            <strong>현대 IT&E 1차 프로젝트 (2조)</strong>
                         </div>
                         <ul>
                             <li>

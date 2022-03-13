@@ -78,9 +78,8 @@
             	var userId = document.getElementById("userId").value;
             	
     	       	if(userId == ""){
-         		  	alert("아이디를 입력주세요.");
+         		  	alert("아이디를 입력해주세요.");
          		} else { // IdCheckController 요청
-         			idCheck = true;
          			$.ajax({
                         url: "${action}/hdmall/idCheck",
                         method: "post", // 요청방식은 post
@@ -90,6 +89,7 @@
                     			alert("중복된 아이디입니다.");
                        	 	} else if(result.result == 0) {
                     			alert("사용 가능 아이디입니다.");	
+                    			idCheck = true;
                        	   	} else {
                     			console.log('develop : 서버 오류');
                        	   	}
@@ -101,11 +101,11 @@
        		});
         	
         	$('#btnJoin').click(function(){
-        		var name = document.getElementById('userName').value
-        		var id = document.getElementById('userId').value
-        		var pwd = document.getElementById('userPwd').value
-        		var rePwd = document.getElementById('reUserPwd').value
-        		var email1 = document.getElementById('email1').value
+        		var name = document.getElementById('userName').value;
+        		var id = document.getElementById('userId').value;
+        		var pwd = document.getElementById('userPwd').value;
+        		var rePwd = document.getElementById('reUserPwd').value;
+        		var email1 = document.getElementById('email1').value;
         		
         		if (name == "" || id == "" || hpno == "" || email1 == "") { // 빈칸이 존재하는 경우
         			alert("필수 정보들을 모두 입력해주세요.");

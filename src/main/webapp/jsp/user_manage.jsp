@@ -110,18 +110,6 @@
 			sessionStorage.setItem("selMainSwiperPos", 1);
 			location.href = "${action}/hdmall/jsp/main.jsp";
 		}
-
-		$(document).ready(function () { // 비밀번호 확인하는 section부터 보여주기
-			document.getElementById("headerSection").style.display = "";
-			document.getElementById("bottomSection").style.display = "none";
-		});
-
-		$(document).on('click', '#btnCancel', function () { // 회원정보 수정 하단에 있는 취소 버튼을 눌렀을 때 동작
-			alert("회원정보 수정을 취소하셨습니다.");
-			document.getElementById("headerSection").style.display = "";
-			document.getElementById("bottomSection").style.display = "none";
-			document.getElementById("userPwd").value = ""; // 초기화
-		});
 		
 		$(document).on('click', '#pwdCheck', function () { // 회원정보 수정 전 비밀번호 입력 확인 버튼 (개인정보 보호용)
 			var userPwd = document.getElementById("userPwd").value;
@@ -136,6 +124,7 @@
 					success: function (result) {
 						if (result.result == 1) {
 							alert("비밀번호 확인 성공");
+							
 							document.getElementById("headerSection").style.display = "none";
 							document.getElementById("bottomSection").style.display = "";
 						} else {
@@ -149,27 +138,48 @@
 			}
 		});
 		
-		$(document).on('click', '#hpnoCheck', function () { // 전화번호 중복 확인
-			var userHpno = document.getElementById("userHpno").value;
+		$(document).on('click', '#btnCancel', function () { // 회원정보 수정 하단에 있는 취소 버튼을 눌렀을 때 동작
+			alert("회원정보 수정을 취소하셨습니다.");
+			
+			document.getElementById("userPwd").value = ""; // 초기화
+			
+			document.getElementById("headerSection").style.display = "";
+			document.getElementById("bottomSection").style.display = "none";
+		});
 		
-        	$.ajax({
-				url: "${action}/hdmall/hpnoCheck",
-				method: "post", //요청방식은 post
-				data: { "userHpno": userHpno },
-				success: function (result) {
-					if (result.result == 1) {
-						alert("이미 사용중인 전화번호 입니다.");
-					} else if (result.result == 0) {
-						alert("사용 가능한 전화번호 입니다.");
-					} else {
-						console.log('develop : 서버 오류');
-					}
-				},
-				error: function (error) {
-					alert("AJAX요청 실패 : 에러코드 = " + error.status); // status 에러확인 
+		$(document).ready(function () { // 비밀번호 확인하는 section부터 보여주기
+			var hpnoCheck = false;
+		
+			document.getElementById("headerSection").style.display = "";
+			document.getElementById("bottomSection").style.display = "none";
+			
+			$(document).on('click', '#hpnoCheck', function () { // 전화번호 중복 확인
+				var userHpno = document.getElementById("userHpno").value;
+				
+				if(userHpno == "") {
+					alert("전화번호를 입력해주세요.");
+				} else {
+					$.ajax({
+						url: "${action}/hdmall/hpnoCheck",
+						method: "post", //요청방식은 post
+						data: { "userHpno": userHpno },
+						success: function (result) {
+							if (result.result == 1) {
+								alert("이미 사용중인 전화번호 입니다.");
+							} else if (result.result == 0) {
+								alert("사용 가능한 전화번호 입니다.");
+								hpnoCheck = true;
+							} else {
+								console.log('develop : 서버 오류');
+							}
+						},
+						error: function (error) {
+							alert("AJAX요청 실패 : 에러코드 = " + error.status); // status 에러확인 
+						}
+					});
 				}
-			});
-   		});
+	   		});
+		});
 		
 		function email_change(form) {
             var value = form.emaildomain[form.emaildomain.selectedIndex].value;
@@ -248,7 +258,7 @@
 										<th scope="row">비밀번호</th>
 										<td>
 											<span>
-												<input type="password" id="userPwd" name="userPwd">
+												<input type="password" id="userPwd" name="userPwd" onkeypress="javascript:noSpaceEvnt(event);">
 											</span>
 										</td>
 									</tr>
@@ -256,7 +266,7 @@
 										<th scope="row">비밀번호 확인</th>
 										<td>
 											<span>
-												<input type="password" id="reUserPwd" name="reUserPwd">
+												<input type="password" id="reUserPwd" name="reUserPwd" onkeypress="javascript:noSpaceEvnt(event);">
 											</span>
 										</td>
 									</tr>
@@ -264,7 +274,7 @@
 										<th scope="row">전화번호</th>
 										<td>
 											<span class="phone_num">
-												<input type="text" id="userHpno" name="userHpno">
+												<input type="number" id="userHpno" name="userHpno" style="height: 34px;" onkeypress="javascript:noSpaceEvnt(event);">
 											</span>
 											<button type="button" class="btn_basic4 small v_top" id="hpnoCheck">중복 확인</button>
 										</td>
@@ -273,7 +283,7 @@
 										<th scope="row">이메일</th>
 										<td>
 											<span class="email1">
-												<input type="text" name="email1" id="email1" class="frm_input" maxlength="20">
+												<input type="text" name="email1" id="email1" class="frm_input" maxlength="20" onkeypress="javascript:noSpaceEvnt(event);">
 											</span> @
                                         	
 											<span class="email2">
@@ -294,7 +304,7 @@
 									<tr>
 										<th scope="row">회원탈퇴</th>
 										<td>
-											<span class="rgap02">회원탈퇴를 하시면 그동안의 찜하기 목록은 사라집니다.</span>
+											<span class="rgap02">회원탈퇴를 하시면 그동안의 찜하기와 문의 내역은 사라집니다.</span>
 											<a href="../deleteUser" style="text-decoration-line: underline;">회원탈퇴하기</a>
 										</td>
 									</tr>

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import util.DBManager;
 
 import com.hdmall.vo.ProductVO;
@@ -12,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QnaDAO {
+	private Connection conn;
+	private PreparedStatement pstmt;
+	
 	private QnaDAO() {
 	}
 
@@ -27,8 +32,6 @@ public class QnaDAO {
 		String query = "insert into QBOARD_T"
 					 + "(qboard_id,user_id,qboard_context,ins_dt,qboard_title)"
 					 + "values(qprodId_seq.nextval,?,?,?,?)";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
 
 		int result = 0;
 
@@ -51,13 +54,14 @@ public class QnaDAO {
 	}
 	
 	/* my_page 자기가 문의한 list */
-		public ArrayList<QBoardVO> listQBoard(String session_id,int page){
+	public ArrayList<QBoardVO> listQBoard(String session_id,int page){
 		 
-		ArrayList<QBoardVO> lists = new ArrayList<QBoardVO>();
+		 ArrayList<QBoardVO> lists = new ArrayList<QBoardVO>();
 		
 		 int startNum = (page-1)*5+1;
 		 int endNum = page*5;
 		 System.out.println(startNum + "//" + endNum);
+		 
 		 String query ="SELECT * FROM ("
 	                +      "SELECT ROWNUM AS row_num"
 	                + ",pb.qboard_title"
@@ -67,12 +71,11 @@ public class QnaDAO {
 	                + ",pb.qboard_id"
 	                + "FROM ("
 	                +             "SELECT * FROM QBOARD_T"
-					+			  "WHERE user_id =:user_id"
+					+			  "WHERE user_id = ?"
 					+ 			   "ORDER BY ins_dt DESC"
 	                +            ")pb"
 	                +         "))WHERE row_num >= ? and row_num <= ?";
-	    Connection conn = null;
-		PreparedStatement pstmt = null;
+		 
 		ResultSet rs = null;
 		try{
 			conn =  DBManager.getConnection();
@@ -97,4 +100,54 @@ public class QnaDAO {
 		}
 		return lists;	
 	}		
+	
+	// 고객센터에 문의한 내역을 지우는 함수
+	public int deleteQna(String userId) throws SQLException { // 회원 탈퇴 전 문의 내역 지우기 
+    	conn = DBManager.getConnection();
+		
+		String query = "delete from qboard_t where user_id=?";
+		System.out.println(query);
+
+		pstmt = conn.prepareStatement(query);
+		pstmt.setString(1, userId);
+		
+		int result = pstmt.executeUpdate();
+		
+        if (result == 1) {
+        	System.out.println("문의 내역 삭제 성공");
+        } else { // 회원 탈퇴 실패
+        	System.out.println("문의 내역 삭제 실패");
+        }
+        
+        DBManager.close(conn, pstmt);
+        
+		return result;
+	}
+	
+	// 해당 유저가 문의한 내역이 존재하는지 확인하는 함수 
+	public int isExistQna(String userId) throws SQLException {
+    	conn = DBManager.getConnection();
+		
+		String query = "select count(*) from qboard_t where user_id=?";
+		System.out.println(query);
+
+		pstmt = conn.prepareStatement(query);
+		pstmt.setString(1, userId);
+		
+		ResultSet result = pstmt.executeQuery();
+		int count = 0;
+		
+		if(result.next()) {
+			count = result.getInt(1);
+		}
+        System.out.println("Total rows : " + count);
+        
+        if (count == 0) {
+        	System.out.println("해당 유저의 문의 내역이 존재하지 않습니다.");
+        }
+        
+        DBManager.close(conn, pstmt);
+        
+		return count;
+	}
 }
