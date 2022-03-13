@@ -278,7 +278,7 @@
 	                              <c:forEach var="qna_Board" items="${qboardList}">
 	                                  <tr>
 	                                      <td>${qna_Board.getNum()}</td>
-	                                      <a href="${action}/hdmall/userManage?ans_yn=${qna_Board.getAns_yn()}&q"> 
+	                                      <a href="${action}/hdmall/QBoardDetail?ans_yn=${qna_Board.getAns_yn()}&aboard_id=${qna_Board.getId()}"> 
 	                                      <td class="tl">${qna_Board.getTitle()}</td>
 	                                      </a>
 	                                      <td class="gray">${qna_Board.getIns_dt()}</td>
