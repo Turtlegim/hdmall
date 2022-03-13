@@ -24,7 +24,7 @@
                     <a href="${contextPath}/like">찜하기</a>
                 </li>
                 <li class="item_03">
-                    <a href="${action}/hdmall/jsp/mypage.jsp">마이현대</a>
+                    <a href="${contextPath}/QBoardList">마이현대</a>
                 </li>
                 <li class="item_04">
                     <a href="${contextPath}/QBoardIns">고객센터</a>
