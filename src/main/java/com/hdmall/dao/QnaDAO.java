@@ -50,6 +50,34 @@ public class QnaDAO {
 	}
 	
 
+	
+	/*찜하기 총 count  - 지현 */
+		
+		public int getLikeProductCount(String session_id){
+		int count = 0;
+		String query = "SELECT count(*) FROM LIKE_T where user_id = ? AND is_liked = ?";
+		ResultSet rs = null;
+		System.out.println(query);
+		System.out.println(session_id);
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, session_id);
+			pstmt.setString(2, "1");
+			rs =pstmt.executeQuery();
+			if(rs.next())
+			count = rs.getInt(1);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn,pstmt,rs);
+		}
+		return count;
+	}
+	
+	
+	
 	/* USER 자신이 문의한 list count -지현*/
 	public int getAllProductCount_U(String session_id){
 		int count = 0;

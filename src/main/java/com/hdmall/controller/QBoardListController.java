@@ -66,6 +66,7 @@ public class QBoardListController extends HttpServlet {
 
 		int count; 
 		int count_combo;
+		int count_like;
 	
 		//  널값이면 ""를 반환하고  널이 아니면 그냥 자기 값을 반환한다
 
@@ -98,7 +99,10 @@ public class QBoardListController extends HttpServlet {
 		    
 	        count_combo = qnaDAO.getAllProductCount_COMBO_U(loginUser,col,word);  /*USER 게시글 입력 값에 따라 count*/
 	        request.setAttribute("count_combo", count_combo);
-		    
+	        
+	        count_like = qnaDAO.getLikeProductCount(loginUser);
+	        request.setAttribute("count_like", count_like);
+	        
 	        destpage = "/jsp/mypage.jsp";
 		 }
 

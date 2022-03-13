@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<% int count=(int)request.getAttribute("count"); %>
+<% int count=(int)request.getAttribute("count"); 
+%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -212,9 +213,9 @@
                             </a>
                         </dl>
                         <dl id="chim">
-                            <a href="https://www.hddfs.com/shop/mm/myBnf/listSvmt.do">
+                            <a href="${action}/hdmall/like">
                                 <dt>찜한 갯수</dt>
-                                <dd id="svmtAmt"><strong>0</strong>개</dd>
+                                <dd id="svmtAmt"><strong>${count_like}</strong>개</dd>
                             </a>
                         </dl>
                         <dl>
@@ -277,7 +278,9 @@
 	                              <c:forEach var="qna_Board" items="${qboardList}">
 	                                  <tr>
 	                                      <td>${qna_Board.getNum()}</td>
+	                                      <a href="${action}/hdmall/userManage?ans_yn=${qna_Board.getAns_yn()}&q"> 
 	                                      <td class="tl">${qna_Board.getTitle()}</td>
+	                                      </a>
 	                                      <td class="gray">${qna_Board.getIns_dt()}</td>
 	                                      <td class="gray" id="ansyn_chk">${qna_Board.getAns_yn()}
 	                                      </td>
