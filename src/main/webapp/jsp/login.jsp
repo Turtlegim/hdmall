@@ -87,12 +87,11 @@
         	$('#btnLgin').click(function(){
         		var id = document.getElementById('userId').value;
             	var pwd = document.getElementById('userPwd').value;
-            	var result = <%= session.getAttribute("result")%>;
             	
         		if(id == "" || pwd == "") {
             		alert("빈칸이 존재합니다.");
         		} else {
-        			// 로그인 실패 알림창 띄우는 코드 넣기 
+        			// 로그인 실패 alert 창
         		}
         	});
         });
@@ -132,7 +131,7 @@
         <section>
             <div id="wrap">
                 <div style="width: 430px; margin: 0 auto; margin-top: 150px; margin-bottom: 150px;">
-                    <h1 class="h1_type">${result}로그인</h1>
+                    <h1 class="h1_type">로그인</h1>
                     <div id="login01">
                         <form method="post" action="${action}/hdmall/login" autocomplete="off">
                             <div class="join_form">

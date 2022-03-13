@@ -1,0 +1,305 @@
+#footer {
+    background: #1b1e23;
+    min-width: 1340px;
+}
+#footer .policy {
+    background: #1c1e24;
+}
+#footer .policy .box {
+    width: 1080px;
+    margin: 0 auto;
+    padding: 15px 0 14px;
+}
+#footer .policy .box::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+#footer .policy_menu {
+    float: left;
+}
+#footer .policy_menu::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+#footer .policy_menu a {
+    display: block;
+    float: left;
+    color: #abb2be;
+    line-height: 31px;
+    margin-left: 30px;
+    font-size: 14px;
+}
+#footer .policy_menu a:first-child {
+    margin-left: 0;
+}
+#footer .policy_menu a strong {
+    font-weight: 600;
+}
+/* 2021-06-24 수정 : 컬러값(fff) 제거 */
+#footer .family_site {
+    float: right;
+    width: 174px;
+    position: relative;
+    text-align: left;
+}
+#footer .family_site button {
+    display: block;
+    position: relative;
+    background: #353b45;
+    border: 0;
+    width: 100%;
+    height: 31px;
+    line-height: 31px;
+    color: #9aa3b1;
+    padding-left: 10px;
+    text-align: left;
+    font-size: 13px;
+    cursor: pointer;
+}
+#footer .family_site button::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 31px;
+    width: 1px;
+    height: 100%;
+    background: #5c6677;
+}
+#footer .family_site button::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 13px;
+    right: 11px;
+    width: 9px;
+    height: 5px;
+    background: url("../../images/KO/common/icon_footer.png") 0 -142px no-repeat;
+}
+#footer .family_site.open button::after {
+    transform: rotate(180deg);
+}
+#footer .family_site .list {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 350px;
+    overflow-y: auto;
+    background: #353b45;
+    font-size: 13px;
+    color: #5c6677;
+    z-index: 10;
+    padding: 10px 0 10px 10px;
+    border-top: solid 1px #5c6677;
+}
+#footer .family_site .list p {
+    line-height: 19px;
+    margin-top: 10px;
+}
+#footer .family_site .list p:first-child {
+    margin-top: 0;
+}
+#footer .family_site .list li {
+    line-height: 29px;
+    letter-spacing: -1px;
+}
+#footer .family_site .list a {
+    color: #9aa3b1;
+    display: block;
+}
+#footer .family_site .list a:hover {
+    color: #fff;
+}
+#footer .copy {
+    width: 1080px;
+    margin: 0 auto;
+    color: #5c6677;
+    padding: 50px 0 80px;
+}
+#footer .copy::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+#footer .copyright {
+    float: left;
+}
+.copyright .logo {}
+.copyright .logo span {
+    display: block;
+    width: 140px;
+    height: 37px;
+    background: url("../../images/KO/common/logo_footer.png") 0 0 no-repeat;
+    text-indent: -9999px;
+}
+.copyright .logo strong {
+    display: block;
+    line-height: 27px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 24px;
+}
+.copyright ul {
+    font-size: 13px;
+}
+.copyright li {
+    margin-top: 4px;
+}
+.copyright li:first-child {
+    margin-top: 0;
+}
+.copyright li:nth-child(3) {
+    margin-top: 12px;
+}
+.copyright li::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.copyright li span {
+    display: block;
+    float: left;
+    position: relative;
+    margin-left: 17px;
+}
+.copyright li span::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    left: -9px;
+    width: 1px;
+    height: 12px;
+    background: url("../../images/KO/common/icon_footer.png") 0 0 no-repeat;
+}
+.copyright li span:first-child {
+    margin-left: 0;
+}
+.copyright li span:first-child::before {
+    display: none;
+}
+.copyright li a {
+    display: block;
+    float: left;
+    background: #353b45;
+    color: #9aa3b1;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 10px;
+    margin-left: 6px;
+}
+.copyright li a:first-child {
+    margin-left: 0;
+}
+.copyright p {
+    font-size: 12px;
+    padding-top: 30px;
+    clear: both;
+}
+#footer .escrow {
+    float: right;
+    font-size: 13px;
+    line-height: 19px;
+}
+.escrow strong {
+    display: block;
+    font-weight: 600;
+}
+.escrow span {
+    display: block;
+    margin-top: 4px;
+}
+.escrow p {}
+.escrow .btn_escrow {
+    display: inline-block;
+    background: #353b45;
+    color: #9aa3b1;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 10px;
+    margin-top: 4px;
+}
+.escrow .ismsp {
+    margin-top: 30px;
+    padding-left: 60px;
+    position: relative;
+}
+.escrow .ismsp::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 0;
+    width: 48px;
+    height: 34px;
+    background: url("../../images/KO/common/icon_footer.png") 0 -108px no-repeat;
+}
+.escrow .ismsp li {
+    margin-top: 2px;
+}
+.escrow .ismsp li:first-child {
+    margin-top: 0;
+}
+
+/* S: 2021-12-10 award 추가*/
+.escrow .award {
+    margin-top: 10px;
+    position: relative;
+}
+.escrow .award a {
+    position: relative;
+    display: block;
+    height: auto;
+    padding: 5px 0 0 60px;
+    line-height: 1.5;
+    color: #5c6677;
+}
+
+.escrow .award a::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 0;
+    width: 48px;
+    height: 46px;
+    background: url("../../images/KO/common/icon_footer.png") 0 -142px no-repeat;
+}
+/* E: 2021-12-10 award 추가*/
+
+/* S: 2021-06-23 추가 */
+#footer .sns_link {
+    margin-top: 25px;
+}
+#footer .sns_link:after {
+    clear: both;
+    content: '';
+    display: block;
+}
+#footer .sns_link a {
+    width: 48px;
+    height: 48px;
+    font-size: 0;
+    background-image: url("../../images/KO/common/icon_footer.png");
+    background-repeat: no-repeat;
+    float: left;
+    display: inline-block;
+}
+#footer .sns_link a + a {
+    margin-left: 16px;
+}
+#footer .sns_link .facebook {
+    background-position: 0 -12px;
+}
+#footer .sns_link .instagram {
+    background-position: 0 -60px;
+}
+#wrap_1 { /*footer wrap_1 따로 지정*/ 
+    width: 100%;
+    min-width: 1340px;
+    padding-top: 121px;
+}

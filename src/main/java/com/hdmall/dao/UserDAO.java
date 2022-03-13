@@ -54,8 +54,37 @@ public class UserDAO {
         return user;
 	}
 	
+	/* USER_TYPE 가져오기 */
+   public String getUserType(String session_id) throws SQLException{
+      
+      System.out.println("getUserType_session_id" + session_id);
+      
+      String query = "select user_type from user_t where USER_ID = ?";
+      System.out.println(query);
+      
+      conn = DBManager.getConnection();
+      pstmt = conn.prepareStatement(query);
+      pstmt.setString(1, session_id);
+      
+      ResultSet rs = pstmt.executeQuery();
+      String user_type = null;
+      
+      if (rs.next()) {
+           user_type = rs.getString("user_type");
+           System.out.println("admin(관리자)입니다.");
+      } else {
+           System.out.println("존재하지 않는 회원입니다.");
+      }
+      
+      conn.close();
+      
+      System.out.println("user_type" + user_type);
+        
+      return user_type;   
+   }
+	
 	public int checkId(String userId) throws SQLException { // 회원가입시 아이디 중복 체크 
-		int check = 0; // 중복이면 0 
+		int check = 0; // 중복이면 1
     	conn = DBManager.getConnection();
 		
 		String query = "select * from user_t where user_id=?";
@@ -80,7 +109,7 @@ public class UserDAO {
 	}
 	
 	public int checkHpno(String userHpno) throws SQLException { // 회원가입시 아이디 중복 체크 
-		int check = 0; // 중복이면 0 
+		int check = 0; // 중복이면 1
     	conn = DBManager.getConnection();
 		
 		String query = "select * from user_t where hp_no=?";
@@ -193,5 +222,27 @@ public class UserDAO {
 		DBManager.close(conn, pstmt);
 		
 		return check;
+	}
+	
+	public int deleteUser(String userId) throws SQLException { // 회원 탈퇴
+    	conn = DBManager.getConnection();
+		
+		String query = "delete from user_t where user_id=?"; // 문의 내역, 찜하기 내역 모두 지워지는 query문 생성하기
+		System.out.println(query);
+
+		pstmt = conn.prepareStatement(query);
+		pstmt.setString(1, userId);
+		
+		int result = pstmt.executeUpdate();
+		
+        if (result == 1) { // 회원 탈퇴 성공
+        	System.out.println("회원 탈퇴 성공");
+        } else { // 회원 탈퇴 실패
+        	System.out.println("회원 탈퇴 실패");
+        }
+        
+        DBManager.close(conn, pstmt);
+        
+		return result;
 	}
 }

@@ -19,10 +19,6 @@ public class JoinController extends HttpServlet {
 		userDAO = UserDAO.getInstance();
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -57,10 +53,10 @@ public class JoinController extends HttpServlet {
     	    
         	session.setAttribute("userId", id);
         	
-            if (result == 1) {
+            if (result == 1 && checkHpno == 0) {
             	out.print("{\"result\": 1}"); // 회원가입 성공 
             } else {
-                if (checkHpno == 0) { // Controller에서 실행되도록 변경하기
+                if (checkHpno == 1) { // Controller에서 실행되도록 변경하기
                 	result = 2;
                 	out.print("{\"result\": 2}"); // 회원가입 실패 사유 : 전화번호 중복 
                 }
@@ -78,10 +74,6 @@ public class JoinController extends HttpServlet {
         }
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 		doGet(request, response);

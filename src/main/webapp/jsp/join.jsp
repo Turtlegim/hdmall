@@ -37,35 +37,25 @@
     <link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
 
     <script>
-	    function goMainPage() {
+	    $(function () {
+			$(".btn_gnb").on("click", function () {
+				$("#gnb > ul > li").removeClass("open").css("display", "");
+				$("#gnb > ul > li > ul").css("display", "none");
+				$(".serviceMenu").parent().removeClass("open");
+				$(".serviceMenu").parent().addClass("open");
+				$(".serviceMenu").css("display", "block");
+	
+				//카테고리 JSONP load
+				if ($(".serviceCtgList > li").length < 1) {
+					loadCtgList();
+				}
+			});
+		});
+	
+		function goMainPage() {
 			sessionStorage.setItem("selMainSwiperPos", 1);
 			location.href = "${action}/hdmall/jsp/main.jsp";
 		}
-        	
-        $(document).on('click', '#idCheck', function () {
-        	var userId = document.getElementById("userId").value;
-        	
-	       	if(userId == ""){
-     		  	alert("아이디를 입력주세요.");
-     		} else { // IdCheckController 요청
-     			$.ajax({
-                    url: "${action}/hdmall/idCheck",
-                    method: "post", // 요청방식은 post
-                    data: {"userId": userId},
-                    success: function(result) {
-                    	if(result.result == 1) {
-                			alert("중복된 아이디입니다.");
-                   	 	} else if(result.result == 0) {
-                			alert("사용 가능 아이디입니다.");	
-                   	   	} else {
-                			console.log('develop : 서버 오류');
-                   	   	}
-                    }, error:function(error){
-                       	alert("AJAX요청 실패 : 에러코드=" + error.status); // status 에러확인 
-                    }
-                 });
-   			}
-   		});
         
         function email_change(form) {
             var value = form.emaildomain[form.emaildomain.selectedIndex].value;
@@ -80,6 +70,56 @@
             
             return;
         }
+        
+        $( document ).ready(function() {
+        	var idCheck = false;
+        	
+        	$(document).on('click', '#idCheck', function () {
+            	var userId = document.getElementById("userId").value;
+            	
+    	       	if(userId == ""){
+         		  	alert("아이디를 입력주세요.");
+         		} else { // IdCheckController 요청
+         			idCheck = true;
+         			$.ajax({
+                        url: "${action}/hdmall/idCheck",
+                        method: "post", // 요청방식은 post
+                        data: {"userId": userId},
+                        success: function(result) {
+                        	if(result.result == 1) {
+                    			alert("중복된 아이디입니다.");
+                       	 	} else if(result.result == 0) {
+                    			alert("사용 가능 아이디입니다.");	
+                       	   	} else {
+                    			console.log('develop : 서버 오류');
+                       	   	}
+                        }, error:function(error){
+                           	alert("AJAX요청 실패 : 에러코드=" + error.status); // status 에러확인 
+                        }
+                     });
+       			}
+       		});
+        	
+        	$('#btnJoin').click(function(){
+        		var name = document.getElementById('userName').value
+        		var id = document.getElementById('userId').value
+        		var pwd = document.getElementById('userPwd').value
+        		var rePwd = document.getElementById('reUserPwd').value
+        		var email1 = document.getElementById('email1').value
+        		
+        		if (name == "" || id == "" || hpno == "" || email1 == "") { // 빈칸이 존재하는 경우
+        			alert("필수 정보들을 모두 입력해주세요.");
+        	   	}
+        		
+        		if (pwd != rePwd) { // 비밀번호와 비밀번호 확인에 입력한 내용이 일치하지 않는 경우
+        	   		alert("입력한 비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+        	   	}
+        		
+        		if (idCheck == false) { // 아이디 중복 확인을 안한 경우
+        			alert("아이디 중복 확인을 해주세요.");
+        		}
+        	});
+        });
     </script>
 
     <style>

@@ -9,15 +9,9 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>현대백화점인터넷면세점</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="format-detection" content="telephone=no">
-	<meta name="title" content="현대백화점인터넷면세점">
-	<meta name="description" content="내 여행 최고의 목적지 현대백화점인터넷면세점! 세일, 사은행사, 쿠폰, 적립금, 럭키딜, 타임세일, 나만의 면세쇼핑을 즐겨보세요.">
-	<meta name="metaKeywords"
-		content="현대면세점, 현대백화점인터넷면세점, 현대인터넷면세점, 현대백화점면세점, 현대면세, 인터넷현대면세점, 현대온라인면세점, 현대백화점온라인면세점, 현대백화점DUTYFREE,현대무역센터면세점, 현대무역센터점, 현대동대문면세점, 현대동대문점, 현대인천공항면세점, 현대인천공항점, 면세쇼핑몰, 인터넷면세점, 온라인면세점, 인천공항면세점, 인천공항면세, 공항면세, 공항면세점, 공항쇼핑, dutyfree, 면세할인, 면세점할인, 면세가격, 면세점할인방법, 면세추천, 면세선물, 면세점선물, 면세점선물추천, 현대면세점인도장, 면세점인도장, 면세점상품수령, 쇼핑, 쇼핑몰, 명품쇼핑, 해외여행, 인천공항, 출장, 출국, 신혼여행, 허니문, 여행선물, 선물인터넷면세점주문, 인터넷면세점주문가능시간, 출국3시간전, 출국전쇼핑, 출국전인터넷쇼핑, 쿠폰, 할인쿠폰, 면세쿠폰, 면세점쿠폰, 현대면세점쿠폰, 적립금, 면세점적립금, 면세적립금, 현대면세점적립금,화장품, 향수, 가방, 명품, 해외명품, 브랜드, 면세점주류, 면세점담배, 면세점홍삼, 면세점화장품, 면세점향수, 면세점명품, 면세점시계, 면세점가방, 명품가방, 면세점정품">
-	
 	<script src="https://cdn.hddfs.com/front/js/KO/jquery-1.12.4.min.js?ver=18"></script>
 	<script src="https://cdn.hddfs.com/front/js/KO/jquery-ui.js?ver=18"></script>
 	<script src="https://cdn.hddfs.com/front/js/KO/lottie.min.js?ver=18"></script>
@@ -32,12 +26,14 @@
 	<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/common.css?ver=18">
 	<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/layout.css?ver=18">
 	<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/main.css?ver=18">
+	<link rel="stylesheet" href="${action}/hdmall/css/footer.css">
+    <link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
 
 	<!-- main 이미지 슬라이더 -->
 	<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 	<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
 
-	<script language="javascript">
+	<script language="javascript"> <!-- 남겨두기 -->
 		// 현재 요청경로
 		var ctx_curr = "//www.hddfs.com/shop";
 		var ctx_shop = "https://www.hddfs.com/shop";
@@ -115,40 +111,19 @@
 			location.href = "${action}/hdmall/jsp/main.jsp";
 		}
 
-		$(document).on('click', '#logoutBtn', function () {
-			var userName = session.getElementById("userName");
-
-			$.ajax({
-				url: "${action}/hdmall/logout",
-				method: "post", //요청방식은 post
-				data: { "userName": userName },
-				success: function (result) {
-					if (result.result == 1) {
-						alert("로그아웃 성공");
-					} else if (result.result == 0) {
-						alert("로그아웃 실패");
-					} else {
-						console.log('develop : 서버 오류');
-					}
-				},
-				error: function (error) {
-					alert("AJAX요청 실패 : 에러코드 = " + error.status); // status 에러확인 
-				}
-			});
-		});
-
-		$(document).ready(function () {
+		$(document).ready(function () { // 비밀번호 확인하는 section부터 보여주기
 			document.getElementById("headerSection").style.display = "";
 			document.getElementById("bottomSection").style.display = "none";
 		});
 
-		$(document).on('click', '#btnCancel', function () {
+		$(document).on('click', '#btnCancel', function () { // 회원정보 수정 하단에 있는 취소 버튼을 눌렀을 때 동작
 			alert("회원정보 수정을 취소하셨습니다.");
 			document.getElementById("headerSection").style.display = "";
 			document.getElementById("bottomSection").style.display = "none";
+			document.getElementById("userPwd").value = ""; // 초기화
 		});
 		
-		$(document).on('click', '#pwdCheck', function () {
+		$(document).on('click', '#pwdCheck', function () { // 회원정보 수정 전 비밀번호 입력 확인 버튼 (개인정보 보호용)
 			var userPwd = document.getElementById("userPwd").value;
 
 			if (userPwd == "") {
@@ -174,7 +149,7 @@
 			}
 		});
 		
-		$(document).on('click', '#hpnoCheck', function () { // Servlet 생성 후 변경하기
+		$(document).on('click', '#hpnoCheck', function () { // 전화번호 중복 확인
 			var userHpno = document.getElementById("userHpno").value;
 		
         	$.ajax({
@@ -320,8 +295,7 @@
 										<th scope="row">회원탈퇴</th>
 										<td>
 											<span class="rgap02">회원탈퇴를 하시면 그동안의 찜하기 목록은 사라집니다.</span>
-											<button type="button" class="btn_basic4 small"
-												id="btnMbshWithdrawal">회원탈퇴</button>
+											<a href="../deleteUser" style="text-decoration-line: underline;">회원탈퇴하기</a>
 										</td>
 									</tr>
 								</tbody>

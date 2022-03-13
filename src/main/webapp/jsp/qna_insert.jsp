@@ -38,6 +38,21 @@
 
 <body>
     <script type="text/javascript">
+	    $(function () {
+			$(".btn_gnb").on("click", function () {
+				$("#gnb > ul > li").removeClass("open").css("display", "");
+				$("#gnb > ul > li > ul").css("display", "none");
+				$(".serviceMenu").parent().removeClass("open");
+				$(".serviceMenu").parent().addClass("open");
+				$(".serviceMenu").css("display", "block");
+	
+				//카테고리 JSONP load
+				if ($(".serviceCtgList > li").length < 1) {
+					loadCtgList();
+				}
+			});
+		});
+    
 	    function goMainPage() {
 	        sessionStorage.setItem("selMainSwiperPos", 1);
 	        location.href = "${action}/hdmall/jsp/main.jsp";
