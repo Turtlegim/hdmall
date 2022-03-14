@@ -30,9 +30,9 @@ public class IdCheckController extends HttpServlet {
 	    System.out.println("전달된 useId : " + userId);
 	    
 	    try {
-	        int result = userDAO.checkId(userId);
+	        int result = userDAO.checkId(userId); // 아이디 중복 확인
 	        
-	        if (result == 1) {
+	        if (result > 0) {
 	        	out.print("{\"result\": 1}"); // json문법은 객체 표현할때 프라퍼티 앞에 백슬러시 큰따옴표가 필요 
 	        } else {
 	        	out.print("{\"result\": 0}");

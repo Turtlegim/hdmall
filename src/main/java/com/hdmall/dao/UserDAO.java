@@ -92,11 +92,8 @@ public class UserDAO {
 	          
 	        ResultSet result = cstmt.executeQuery();
 	          
-	        if (result.next()) {
-	        	check = 1;
-	            System.out.println("중복된 아이디입니다.");
-	        } else {
-	            System.out.println("사용 가능한 아이디입니다.");
+	        if (result.next()) { // 중복된 아이디를 세는 PL/SQL 함수 사용
+	        	check = result.getInt(1);
 	        }
 	    } catch (Exception e){
 	    	e.printStackTrace();
@@ -117,12 +114,9 @@ public class UserDAO {
 	          
 	        ResultSet result = cstmt.executeQuery();
 	          
-	        if (result.next()) {
-	        	check = 1;
-	        	System.out.println("중복된 전화번호입니다.");
-	        } else {
-	          	System.out.println("사용 가능한 전화번호입니다.");
-	        }	
+	        if (result.next()) { // 중복된 전화번호를 세는 PL/SQL 함수 사용
+	        	check = result.getInt(1);
+	        }
 		} catch (Exception e){
 			e.printStackTrace();
 		} finally {
@@ -244,11 +238,6 @@ public class UserDAO {
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, cstmt);
-		}
-		if (result > 0) {
-			System.out.println("찜한 목록 삭제 성공");
-		} else { // 회원 탈퇴 실패
-			System.out.println("찜한 목록 삭제 실패");
 		}
         
 		return result;

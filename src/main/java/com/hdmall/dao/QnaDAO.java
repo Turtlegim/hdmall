@@ -55,7 +55,7 @@ public class QnaDAO {
 			conn = DBManager.getConnection();
 			cstmt = conn.prepareCall("select LikeCount_Qna_FUNC(?) from dual");
 			cstmt.setString(1, session_id);
-			rs =cstmt.executeQuery();
+			rs = cstmt.executeQuery();
 			if(rs.next())
 			count = rs.getInt(1);		
 		}catch(Exception e) {
