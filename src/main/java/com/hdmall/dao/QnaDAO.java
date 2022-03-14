@@ -138,6 +138,7 @@ public class QnaDAO {
 			rs =pstmt.executeQuery();
 			if(rs.next())
 			count = rs.getInt(1);
+			System.out.println("지금 ADMIN COUNT" + count);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -165,7 +166,8 @@ public class QnaDAO {
 				cstmt = conn.prepareCall("select qboardCountComboA_all_Title_Qna_func(?) from dual");
 				cstmt.setString(1, word);
 			}else {
-				cstmt= conn.prepareCall("SELECT count(*) FROM qBOARD_T");
+				cstmt= conn.prepareCall("select qboardCountComboA_Qna_else_func(?) from dual");
+				cstmt.setInt(1, 0);
 			}	
 			rs = cstmt.executeQuery();
 			
@@ -349,55 +351,63 @@ public class QnaDAO {
 			return productList;	
 	}
 	
-	/*회원 탈퇴 전 문의 내역 지우기 - 민영 03/14*/
+	/* 회원 탈퇴 전 문의 내역 지우기 - 민영 03/14 */
 	public int deleteQna(String userId) throws SQLException {
-
-		conn = DBManager.getConnection();
-	
-		String query = "delete from qboard_t where user_id=?";
-		System.out.println(query);
-
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, userId);
-		
-		int result = pstmt.executeUpdate();
-		
-        if (result == 1) {
-        	System.out.println("문의 내역 삭제 성공");
-        } else { // 회원 탈퇴 실패
-        	System.out.println("문의 내역 삭제 실패");
-        }
-        
-        DBManager.close(conn, pstmt);
-        
-		return result;
-	}
-	
-
-	/*해당 유저가 문의한 내역이 존재하는지 확인하는 함수 - 민영 03/14*/
-	public int isExistQna(String userId) throws SQLException {
-    	conn = DBManager.getConnection();
-		
-		String query = "select count(*) from qboard_t where user_id=?";
-		System.out.println(query);
-
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, userId);
-		
-		ResultSet result = pstmt.executeQuery();
 		int count = 0;
 		
-		if(result.next()) {
-			count = result.getInt(1);
+		try {
+			conn = DBManager.getConnection();
+			String query = "{call delete_qna_proc(?, ?)}";
+			cstmt = conn.prepareCall(query);
+			cstmt.setString(1, userId);
+			cstmt.registerOutParameter(2, java.sql.Types.NUMERIC);
+			ResultSet result = cstmt.executeQuery();
+			
+			if (result.next()) {
+				count = result.getInt(2);
+			}
+			
+			System.out.println("Total rows : " + count);
+
+			if (count == 0) {
+				System.out.println("해당 유저의 문의 목록이 존재하지 않습니다.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, cstmt);
 		}
-        System.out.println("Total rows : " + count);
         
-        if (count == 0) {
-        	System.out.println("해당 유저의 문의 내역이 존재하지 않습니다.");
-        }
-        
-        DBManager.close(conn, pstmt);
-        
+		return count;
+	}
+
+	/* 해당 유저가 문의한 내역이 존재하는지 확인하는 함수 - 민영 03/14 */
+	public int isExistQna(String userId) throws SQLException {
+		int count = 0;
+		ResultSet result = null;
+		
+		try {
+			conn = DBManager.getConnection();
+			String query = "{call isexist_qna_func(?)}";
+			cstmt = conn.prepareCall(query);
+			cstmt.setString(1, userId);
+			result = cstmt.executeQuery();
+			
+			if (result.next()) {
+				count = result.getInt(1);
+			}
+			
+			System.out.println("Total rows : " + count);
+
+			if (count == 0) {
+				System.out.println("해당 유저의 문의 내역이 존재하지 않습니다.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, cstmt);
+		}
+		
 		return count;
 	}
 

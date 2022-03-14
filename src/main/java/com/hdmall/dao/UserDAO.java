@@ -66,7 +66,7 @@ public class UserDAO {
           ResultSet result = cstmt.executeQuery();
           
           if (result.next()) {
-              user_type = result.getString("user_type");
+              user_type = result.getString(1);
               System.out.println("admin(관리자)입니다.");
          } else {
               System.out.println("존재하지 않는 회원입니다.");
