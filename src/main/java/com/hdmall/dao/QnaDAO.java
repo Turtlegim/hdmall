@@ -423,6 +423,7 @@ public class QnaDAO {
 					qboard.setAns_title(rs.getString("ans_title"));
 					qboard.setAns_ins_dt(rs.getDate("ans_ins_dt"));
 					qboard.setDetail(rs.getString("ans_detail"));       
+					qboard.setAns_yn(rs.getString("ans_yn"));   
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

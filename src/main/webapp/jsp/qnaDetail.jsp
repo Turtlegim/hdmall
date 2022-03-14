@@ -65,14 +65,19 @@
 	<script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/hash.js?ver=18"></script>
 
 	<script>
+	
 		function getParameterByName(name) {
 			name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 			var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
 				results = regex.exec(document.referrer);
 			return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 		}
-
-		var Naver_Previous_Query = getParameterByName('oquery');
+		
+		function goMainPage() {
+		    sessionStorage.setItem("selMainSwiperPos", 1);
+		    location.href = "${action}/hdmall/jsp/main.jsp";
+		}
+		
 	</script>
 
 	<style>
@@ -95,35 +100,17 @@
 <%@ include file="header.jsp" %>
 <body>
 	<script type="text/javascript">
-		$(window).load(function () {
-			fnLnbCountInfo();
-			orderStatusInfo();
 
-		});
-
-		$(function () {
-			$(".btn_gnb").on("click", function () {
-				$("#gnb > ul > li").removeClass("open").css("display", "");
-				$("#gnb > ul > li > ul").css("display", "none");
-				$(".serviceMenu").parent().removeClass("open");
-				$(".serviceMenu").parent().addClass("open");
-				$(".serviceMenu").css("display", "block");
-
-				//카테고리 JSONP load
-				if ($(".serviceCtgList > li").length < 1) {
-					loadCtgList();
-				}
-			});
-		});
-
-		function goMainPage() {
-			sessionStorage.setItem("selMainSwiperPos", 1);
-			location.href = "main.html";
-		}
+	$(document).ready(function () {
+		      if (${qboard_detail.ans_yn} == "미완료") {
+		    	  console.log(${qboard_detail.ans_yn});
+		          document.getElementById("ans_div").style.display = "none";
+		      } else {
+		          document.getElementById("ans_div").style.display = ""
+		  });
 	</script>
 
 	<main id="container_join" class="container_join">
-		<section>
 			<div id="wrap">
 				<div class="lnb_content" style="width: 760px; margin: 0 auto; margin-top: 60px; margin-bottom: 80px;">
 					<!-- 하단부 레이아웃을 위해서는 wrap 꼭 남겨두기 -->
@@ -135,6 +122,7 @@
 							<p class="day_count">
 								<span class="day">${qboard_detail.ins_dt}</span>
 							</p>
+							<p id = "ans_yn" style = "display:none">${qboard_detail.ans_yn}</p>
 						</div>
 						<div class="view_contents">
 							<p>
@@ -142,6 +130,7 @@
 							</p>
 						</div>
 					</div>
+					<div id = "ans_div">
 					<h3 class="h3_type_ans">답변</h3>
 					<div class="div_view mgtsl">
 						<div class="view_header">
@@ -156,12 +145,13 @@
 							</p>
 						</div>
 					</div>
-
+				</div>
 					<div class="basic_btn_box">
 						<button type="button" class="btn_basic4"
 							onclick="javascript:fnGoList('', '001', '', '', '');">마이페이지로</button>
 					</div>
 				</div>
+			</div>	
 				<!-- container END -->
 
 				<script type="text/javascript">
@@ -182,8 +172,6 @@
 						location.href = ctx_shop + '/dm/main.do';
 					}
 				</script>
-		</section>
-		</div>
 	</main>
 	<%@ include file="footer.jsp" %>
 </body>
