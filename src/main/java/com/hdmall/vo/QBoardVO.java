@@ -3,21 +3,23 @@ package com.hdmall.vo;
 import java.sql.Date;
 
 public class QBoardVO {
+	private int num;
 	private String id;
 	private String user_id;
 	private String context;
 	private String detail;
 	private Date ins_dt;
 	private String title;
-	private Boolean ans_yn;
+	private String ans_yn;
 	
 	public QBoardVO() {
 		
 	}
 
-	public QBoardVO(String id, String user_id, String context, String detail, Date ins_dt, String title,
-			Boolean ans_yn) {
+	public QBoardVO(int num,String id, String user_id, String context, String detail, Date ins_dt, String title,
+			String ans_yn) {
 		super();
+		this.num =num;
 		this.id = id;
 		this.user_id = user_id;
 		this.context = context;
@@ -27,6 +29,14 @@ public class QBoardVO {
 		this.ans_yn = ans_yn;
 	}
 
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -75,12 +85,11 @@ public class QBoardVO {
 		this.title = title;
 	}
 
-	public Boolean getAns_yn() {
+	public String getAns_yn() {
 		return ans_yn;
 	}
 
-	public void setAns_yn(Boolean ans_yn) {
+	public void setAns_yn(String ans_yn) {
 		this.ans_yn = ans_yn;
 	}
-	
 }

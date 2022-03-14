@@ -69,7 +69,4 @@ public class ProductVO {
 	public void setImg(String img) {
 		this.img = img;
 	}
-
-
 }
-

@@ -6,8 +6,9 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%
   request.setCharacterEncoding("UTF-8");
+  int likecount = (int)request.getAttribute("likecount");
 %> 
-
+	
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -17,6 +18,10 @@
     <title>현대백화점인터넷면세점</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="format-detection" content="telephone=no">
+    <meta name="title" content="현대백화점인터넷면세점">
+    <meta name="description" content="내 여행 최고의 목적지 현대백화점인터넷면세점! 세일, 사은행사, 쿠폰, 적립금, 럭키딜, 타임세일, 나만의 면세쇼핑을 즐겨보세요.">
+    <meta name="metaKeywords"
+        content="현대면세점, 현대백화점인터넷면세점, 현대인터넷면세점, 현대백화점면세점, 현대면세, 인터넷현대면세점, 현대온라인면세점, 현대백화점온라인면세점, 현대백화점DUTYFREE,현대무역센터면세점, 현대무역센터점, 현대동대문면세점, 현대동대문점, 현대인천공항면세점, 현대인천공항점, 면세쇼핑몰, 인터넷면세점, 온라인면세점, 인천공항면세점, 인천공항면세, 공항면세, 공항면세점, 공항쇼핑, dutyfree, 면세할인, 면세점할인, 면세가격, 면세점할인방법, 면세추천, 면세선물, 면세점선물, 면세점선물추천, 현대면세점인도장, 면세점인도장, 면세점상품수령, 쇼핑, 쇼핑몰, 명품쇼핑, 해외여행, 인천공항, 출장, 출국, 신혼여행, 허니문, 여행선물, 선물인터넷면세점주문, 인터넷면세점주문가능시간, 출국3시간전, 출국전쇼핑, 출국전인터넷쇼핑, 쿠폰, 할인쿠폰, 면세쿠폰, 면세점쿠폰, 현대면세점쿠폰, 적립금, 면세점적립금, 면세적립금, 현대면세점적립금,화장품, 향수, 가방, 명품, 해외명품, 브랜드, 면세점주류, 면세점담배, 면세점홍삼, 면세점화장품, 면세점향수, 면세점명품, 면세점시계, 면세점가방, 명품가방, 면세점정품">
     <script src="https://cdn.hddfs.com/front/js/KO/jquery-1.12.4.min.js?ver=18"></script>
     <script src="https://cdn.hddfs.com/front/js/KO/jquery-ui.js?ver=18"></script>
     <script src="https://cdn.hddfs.com/front/js/KO/lottie.min.js?ver=18"></script>
@@ -32,8 +37,6 @@
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/layout.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/n_hgk.css?ver=18">
     <link rel="stylesheet" href="../css/detailprod.css">
-    <link rel="stylesheet" href="${action}/hdmall/css/footer.css">
-    <link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
 
     <script language="javascript">
         // 현재 요청경로
@@ -62,33 +65,20 @@
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/cloud-zoom.1.0.2.js?ver=18"></script>
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/SsoAjax.js?ver=18"></script>
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/SsoHttpRequest.js?ver=18"></script>
-
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/makePCookie.js?ver=18"></script>
-
-
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/hash.js?ver=18"></script>
+    
     <script>
-	    $(function () {
-			$(".btn_gnb").on("click", function () {
-				$("#gnb > ul > li").removeClass("open").css("display", "");
-				$("#gnb > ul > li > ul").css("display", "none");
-				$(".serviceMenu").parent().removeClass("open");
-				$(".serviceMenu").parent().addClass("open");
-				$(".serviceMenu").css("display", "block");
-	
-				//카테고리 JSONP load
-				if ($(".serviceCtgList > li").length < 1) {
-					loadCtgList();
-				}
-			});
-		});
-	
-		function goMainPage() {
-			sessionStorage.setItem("selMainSwiperPos", 1);
-			location.href = "${action}/hdmall/jsp/main.jsp";
-		}
-    </script>
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(document.referrer);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
 
+        var Naver_Previous_Query = getParameterByName('oquery');
+    </script>
+    
     <style>
         html,
         body {
@@ -130,17 +120,54 @@
                 sessionStorage.setItem("selMainSwiperPos", 1);
                 location.href = "${action}/hdmall/jsp/main.jsp";
             }
+           /*  
+            function LikeBtn(String userId) {
+            	let like = false;
+            	if ( userId != null ) {
+            		alert("로그인되어있습니다");
+            	}
+            	else {
+            		alert("찜하기는 로그인시 이용가능합니다.");
+            	}
+            } */
             
+            // 찜하기 버튼이 로그인시에만 이용가능하고 버튼을 누를 떄 하트 색이 변경하는 함수  김민수 03/13 
             $(function () {
                 let like = false;
+                let userId = '<%= (String)session.getAttribute("userId") %>';
+				let prodId = '${productVO.id}';
+				let isLike = '${likeVO.is_liked}';
+                
                 $(".likebtn").on("click", function () {
-                    if (!like) {
-                        document.querySelector("#likeheart").style.color = "red";
-                        like = true;
-                    } else {
-                        document.querySelector("#likeheart").style.color = "white";
-                        like = false;
-                    }
+                	if ( userId == "null" ) {
+                		alert("찜하기는 로그인시 이용가능합니다.");
+                	}
+                	else {               
+                		if (!like) {
+	                        document.querySelector("#likeheart").style.color = "red";
+	                        like = true;
+	                    } else {
+	                        document.querySelector("#likeheart").style.color = "white";
+	                        like = false;
+	                    }
+                		
+                		$.ajax({
+                            url: "${contextPath}/LikeProduct",
+                            method: "post", // 요청방식은 post
+                            data: {"userId": userId, "prodId" : prodId, "isLike" : isLike},
+                            success: function(result) {
+                            	if(result.result == 1) {
+                        			alert("찜하기를 수정하였습니다.");
+                           	 	} else if(result.result == 2) {
+                        			alert("상품을 찜하였습니다.");	
+                           	   	} else {
+                        			console.log('develop : 서버 오류');
+                           	   	}
+                            }, error:function(error){
+                               	alert("AJAX요청 실패 : 에러코드=" + error.status); // status 에러확인 
+                            }
+                         });
+                	}
                 })
             });
             </script>
@@ -157,8 +184,7 @@
             <article id="content" class="productdetail">
                 <section class="pd_area">
                     <div class="pd_visual" style="padding: 100px 18px;">
-                        <div class="swiper-container swiper_visual">
-                            
+                        <div class="swiper-container swiper_visual">                       
                                 <div class="swiper-slide">
                                     <a href="javascript://">이미지 크게보기</a>
                                     <img src="./image/product/${productVO.img}" />
@@ -168,7 +194,6 @@
                     </div>
                     <div class="pd_info" style="padding: 40px 180px 100px 120px;">
                         <div class="summary_info" style="margin-top: 150px;">
-
                             <h2><strong>Product Info 제품정보</strong></h2>
 
                             <div class="price">
@@ -201,89 +226,43 @@
                                         <strong style="font-size: 19px;">
                                             좋아요</strong>
                                         <p style="font-size: 18px; padding-top: 8px;">
-                                            0개</p>
+                                            ${likecount}개</p>
                                     </li>
                                 </ul>
                             </div>
                         </div>
 
-
+						
                         <div class="productdetail_cart">
                             <br>
                             <hr style="border: solid 1px rgb(109, 101, 101);">
-                            <div class="selectlist"></div>
                         </div>
-                        <div class="button_area">
-                            <button class="likebtn" style="    width: 100%;
-                            background: #1b1e23;
-                            color: #fff;
-                            font-size: 16px;
-                            font-weight: 600;
-                            text-align: center;
-                            line-height: 60px;
-                            ">찜하기 <span id="likeheart">♥</span></button>
-                            <div id="wrap"> </div>
-                        </div>
-                        <ul class="layercall"></ul>
+  	                    <div class="button_area">
+	                           <button class="likebtn" style="    
+	                            width: 100%;
+	                            background: #1b1e23;
+	                            color: #fff;
+	                            font-size: 16px;
+	                            font-weight: 600;
+	                            text-align: center;
+	                            line-height: 60px;">찜하기 
+	
+	                        	<c:choose>  
+									<c:when test="${ likeVO.is_liked == '1'}"> 
+										<span id="likeheart" style="color:red">♥</span>
+									</c:when> 
+									<c:otherwise> 
+										<span id="likeheart">♥</span>
+									</c:otherwise> 
+								</c:choose>
+	                            </button>
+	                            <div id="wrap"> </div>
+	                     </div>              
                     </div>
                 </section>
             </article>
             </main>
     </div>
-    	<script src="https://cdn.hddfs.com/front/js/KO/productdetail.js"></script>
-
-    <script type="text/javascript">
-        function sellerInfo() {
-            $("#seller_information").dialog("open");
-        }
-        $(document).ready(function () {
-            // 다이얼로그 초기화
-            $("#seller_information").dialog({
-                autoOpen: false,
-                resizable: false,
-                width: 400,
-                maxHeight: 340,
-                modal: true
-            });
-        });
-        function moveToMain() {
-            location.href = ctx_shop + '/dm/main.do';
-        }
-    </script>
-    <!-- footer start 배지현 (03.07) -->
-    <div id="wrap">
-        <footer id="footer">
-            <div class="policy">
-                <div class="copy">
-                    <div class="copyright">
-                        <div class="logo">
-                            <!-- <span onclick="moveToMain();" style="cursor:pointer;">HYUNDAI DEPARTMENT SHOP - DUTY FREE</span>-->
-                            <strong>현대 IT&E 1차 프로젝트(2조) </strong>
-                        </div>
-                        <ul>
-                            <li>
-                                <span>김기범</span>
-                                <span>배지현</span>
-                                <span>김민수</span>
-                                <span>경민영</span>
-                            </li>
-                            <li>
-                                <span>대표메일 : turtlegim@gmail.com</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="escrow">
-                        <strong>서블릿 MVC2 패턴과 오라클 DB[PL-SQL] 활용</strong>
-                        <span>
-                            2022년 03월 18일까지 열심히 한 프로젝트입니다. 예쁘게 봐주세요.
-                        </span>
-                        <p>주식회사 현대 IT&E 2조</p>
-                        <p>2조 is awsome</p>
-                        <!--//award-->
-                    </div>
-                </div>
-        </footer>
-    </div>
-</body>
-
-</html>
+   	<script src="https://cdn.hddfs.com/front/js/KO/productdetail.js"></script>
+    	
+<%@ include file="footer.jsp" %>    

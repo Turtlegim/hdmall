@@ -29,10 +29,10 @@ public class LogoutController extends HttpServlet {
 		 
 		request.getRequestDispatcher("/src/main/webapp/jsp/main.jsp");
         
-        String userName = (String) session.getAttribute("userName");
+        String userId = (String) session.getAttribute("userId");
         
         try {
-        	int result = userDAO.logoutUser(userName);
+        	int result = userDAO.logoutUser(userId);
             String destPage = "/jsp/login.jsp";
             
             if (result == 1) { // 로그아웃 성공

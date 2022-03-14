@@ -151,4 +151,56 @@
 		<!-- 메인 상단 이미지 스와이프 END 03.07 경민영 -->
 	</div>
 	
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+	      google.load("visualization", "1", {packages:["corechart"]});
+	      google.setOnLoadCallback(drawChart);
+	      function drawChart() {
+		        var data = google.visualization.arrayToDataTable([
+		          ['Year', 'Sales', 'Expenses'],
+		          ['2004',  1000,      400],
+		          ['2005',  1170,      460],
+		          ['2006',  660,       1120],
+		          ['2007',  1030,      540]
+		        ]);
+		
+		        var options = {
+		          title: 'hdmall 방문자 수'
+		        };
+		
+		        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+		        chart.draw(data, options);
+	      }
+    </script>
+    
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+        //구글차트 
+        google.charts.load('current', {'packages':['corechart']}); 
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string','Foods');
+            data.addColumn('number','비중');
+ 
+            data.addRows([ 
+                ['피자',5],
+                ['치킨',2],
+                ['햄버거',3]
+            ]);
+            var opt = {
+                    'title':'좋아하는 음식',
+                    'width':600,
+                    'height':600,
+                    pieSliceText:'label',
+                    legend:'none' 
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('myChart'));
+            chart.draw(data,opt);
+        }
+        </script>
+        
+        
+	<div id="chart_div" style="width: 900px; height: 500px; margin:0 auto; margin-top: 80px;"></div>
+	<div id="myChart" style="margin:0 auto;"></div>
 <%@ include file = "footer.jsp"%>			

@@ -39,6 +39,4 @@ public class LikeVO {
 	public void setIs_liked(Boolean is_liked) {
 		this.is_liked = is_liked;
 	}
-
-	
 }

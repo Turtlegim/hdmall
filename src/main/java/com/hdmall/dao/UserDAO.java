@@ -1,5 +1,6 @@
 package com.hdmall.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,7 @@ import util.DBManager;
 public class UserDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
+	private CallableStatement cstmt;
 
 	private UserDAO() { } // 싱글턴 패턴
 	private static UserDAO instance = new UserDAO();
@@ -21,37 +23,35 @@ public class UserDAO {
 	  
 	public UserVO loginUser(String userId, String userPwd) throws SQLException { // 로그인 후 필요한 정보 : 아이디, 비밀번호, 이름 
 		conn = DBManager.getConnection();
-		
-		String query = "select * from user_t where USER_ID = ? AND USER_PW = ?";
-		System.out.println(query);
-		
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, userId);
-		pstmt.setString(2, userPwd);
-		
-		ResultSet result = pstmt.executeQuery();
-		
-		UserVO user = null;
-        if (result.next()) {
-        	user = new UserVO();
-        	user.setName(query);
-        	user.setId(userId);
-        	user.setPwd(userPwd);
-        	user.setHpNo(result.getString("hp_no"));
-        	user.setEmail1(result.getString("email_f"));
-        	user.setEmail2(result.getString("email_l"));
-        	
-        	result.getString("user_nm");
-        	user.setName(result.getString("user_nm"));
-        	
-        	System.out.println("로그인 성공");
-        } else {
-        	System.out.println("존재하지 않는 회원입니다.");
-        }
-        
-        DBManager.close(conn, pstmt, result);
- 
-        return user;
+		UserVO user = new UserVO();
+	    
+	    try {
+	    	cstmt = conn.prepareCall("{call login_user_proc(?, ?, ?, ?)}");
+			System.out.println(cstmt); 
+	    	
+		    cstmt.setString(1, userId);
+		    cstmt.setString(2, userPwd);
+		    
+		    cstmt.registerOutParameter(3, java.sql.Types.VARCHAR);
+		    cstmt.registerOutParameter(4, java.sql.Types.VARCHAR);
+		    
+		    cstmt.execute();
+		    
+		    String id = cstmt.getString(3);
+		    String name = cstmt.getString(4);
+		    System.out.println(id);
+		    System.out.println(name);
+		    
+    		System.out.println("로그인 성공");
+    		user.setId(id);
+		    user.setName(name);
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    } finally {
+		    DBManager.close(conn, cstmt);
+	    }
+	    
+	    return user;
 	}
 	
 	/* USER_TYPE 가져오기 */
@@ -103,7 +103,7 @@ public class UserDAO {
         	System.out.println("사용 가능 아이디입니다.");
         }
         
-        DBManager.close(conn, pstmt, result);
+        DBManager.close(conn, cstmt);
         
 		return check;
 	}
@@ -135,23 +135,22 @@ public class UserDAO {
 	
 	public int joinUser(String userId, String userPwd, String userName, String userHpno, String email1, String email2) throws SQLException {
 		conn = DBManager.getConnection();
-		
-		String query = "insert into user_t (user_id, user_pw, user_nm, hp_no, email_f, email_l, user_type) values (?, ?, ?, ?, ?, ?, ?)";
-		System.out.println(query);
-	
-	    int result = 0; 
+	    int result = 0;
 	    
 	    try {
-	    	pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, userId);
-			pstmt.setString(2, userPwd);
-			pstmt.setString(3, userName);
-			pstmt.setString(4, userHpno);
-			pstmt.setString(5, email1);
-			pstmt.setString(6, email2);
-			pstmt.setString(7, "USER");
-			
-			result = pstmt.executeUpdate();
+	    	cstmt = conn.prepareCall("{call join_user_proc(?, ?, ?, ?, ?, ?, ?)}");
+			System.out.println(cstmt); 
+	    	
+		    cstmt.setString(1, userId);
+		    cstmt.setString(2, userPwd);
+		    cstmt.setString(3, userName);
+		    cstmt.setString(4, userHpno);
+		    cstmt.setString(5, email1);
+		    cstmt.setString(6, email2);
+		    cstmt.setString(7, "USER");
+		    
+		    result = cstmt.executeUpdate();
+		    
 	    	if (result == 1) {
         		System.out.println("회원가입 성공");
 	        } else {
@@ -159,34 +158,37 @@ public class UserDAO {
 	        }
 	    } catch (Exception e) {
 	    	e.printStackTrace();
-	    } 
+	    } finally {
+		    DBManager.close(conn, cstmt);
+	    }
 	    
-	    DBManager.close(conn, pstmt);
-		
-		return result;
+	    return result;
 	}
 	
-	public int logoutUser(String userName) throws SQLException {
+	public int logoutUser(String userId) throws SQLException {
 		int check = 0; // 로그인 실패면 0 
 		
 		conn = DBManager.getConnection();
 		
-		String query = "select * from user_t where USER_NM = ?";
-		System.out.println(query);
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, userName);
+		cstmt = conn.prepareCall("{call logout_user_proc(?, ?)}");
+		System.out.println(cstmt); 
+    	
+	    cstmt.setString(1, userId);
+	    cstmt.registerOutParameter(2, java.sql.Types.VARCHAR);
+	    
+	    cstmt.execute();
+	    
+	    String id = cstmt.getString(2);
+	    System.out.println(id);
+	    
+	    if (id != null) {
+	    	check = 1;
+			System.out.println("로그아웃 성공");
+	    } else {
+	    	check = 0;
+	    }
 		
-		ResultSet result = pstmt.executeQuery();
-		
-        if (result.next()) {
-        	check = 1;
-        	System.out.println("로그아웃 성공");
-        } else {
-        	check = 0; 
-        	System.out.println("로그아웃 실패");
-        }
- 
-        DBManager.close(conn, pstmt, result);
+        DBManager.close(conn, pstmt);
  
         return check;
 	}
@@ -196,30 +198,24 @@ public class UserDAO {
 		
 		conn = DBManager.getConnection();
 		
-		String query = "update user_t set user_pw=?, user_nm=?, hp_no=?, email_f=?, email_l=? where user_id=?";
+		cstmt = conn.prepareCall("{call update_user_proc(?, ?, ?, ?, ?, ?)}");
 		
-		try {
-			pstmt = conn.prepareStatement(query);
-			
-			pstmt.setString(1, userPwd);
-			pstmt.setString(2, userName);
-			pstmt.setString(3, userHpno);
-			pstmt.setString(4, email1);
-			pstmt.setString(5, email2);
-			pstmt.setString(6, userId);
-			
-			check = pstmt.executeUpdate();
-			
-			if (check == 1) {
-        		System.out.println("회원정보 수정 성공");
-	        } else {
-	        	System.out.println("회원정보 수정 실패");
-	        }
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} 
+		cstmt.setString(1, userPwd);
+		cstmt.setString(2, userName);
+		cstmt.setString(3, userHpno);
+		cstmt.setString(4, email1);
+		cstmt.setString(5, email2);
+		cstmt.setString(6, userId);
 		
-		DBManager.close(conn, pstmt);
+	    check = cstmt.executeUpdate();
+		
+		if (check == 1) {
+    		System.out.println("회원정보 수정 성공");
+        } else {
+        	System.out.println("회원정보 수정 실패");
+        }
+		
+		DBManager.close(conn, cstmt);
 		
 		return check;
 	}

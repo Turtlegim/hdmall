@@ -31,7 +31,7 @@ public class DBManager {
 		try {
 			stmt.close();
 			conn.close();
-			System.out.println("DB 연결 종료.");
+			System.out.println("DB 연결 종료");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

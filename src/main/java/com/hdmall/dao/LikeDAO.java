@@ -2,18 +2,12 @@ package com.hdmall.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 
 import com.hdmall.vo.LikeVO;
-import com.hdmall.vo.PBoardVO;
 import com.hdmall.vo.ProductVO;
 
 import oracle.jdbc.internal.OracleTypes;
@@ -114,7 +108,7 @@ public class LikeDAO {
 		}
 		return productList;
 	}
-
+	
 	public void cancelLike(String userid, String prodid) {
 		CallableStatement cstmt = null;
 		try {
@@ -183,5 +177,121 @@ public class LikeDAO {
 		}
 		return count;
 
+	}
+	
+	// 김민수
+	public int insertLike(String userId, String prodId, String isLike) throws SQLException {
+		String query = "insert into like_t (user_id, prod_id, is_liked) values (?, ?, ?)";
+		System.out.println(query);
+		int result = 0;
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, prodId);
+			pstmt.setString(3, isLike);
+
+			result = pstmt.executeUpdate();
+
+			if (result == 1) {
+				System.out.println("상품을 찜하였습니다.");
+			} else {
+				System.out.println("찜하기 수정실패");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+
+		conn.close();
+
+		return result;
+	}
+
+	public int updateLike(String islike, String userId, String prodId) {
+		int result = 0;
+		String sql = "update like_t "
+				+ "set is_liked = ?" +
+				"where user_id= ? AND prod_id= ?";	     
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, islike);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, prodId);
+
+			result = pstmt.executeUpdate();
+
+			if (result == 1) {
+				System.out.println("찜하기 수정");
+			} else {
+				System.out.println("찜하기 수정실패");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+
+	public LikeVO checkLikeUser(String userId, String prodId) throws SQLException{
+		LikeVO like = null;
+		String query = "select * from like_t b where user_id = ? AND prod_id = ?";
+		System.out.println(query);
+		ResultSet result = null;
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, prodId);
+			result = pstmt.executeQuery();
+
+			if (result.next()) {
+				like = new LikeVO();
+				like.setIs_liked(result.getBoolean("is_liked"));
+			}				
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+
+		conn.close();
+
+		return like;
+	}
+
+	public int checkLikeInfo(String userId, String prodId) throws SQLException{
+		int check = 0; // 이미있으면 1 없으면 0
+		String query = "select * from like_t b where user_id = ? AND prod_id = ?";
+		System.out.println(query);
+
+		ResultSet result = null;
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, prodId);
+			result = pstmt.executeQuery();
+
+			if (result.next()) {
+				check = 1;
+				System.out.println("테이블에 정보가 존재합니다.");
+			}
+			else {
+				check = 0;
+				System.out.println("테이블에 정보가 존재하지 않습니다.");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+
+		conn.close();
+
+		return check;
 	}
 }

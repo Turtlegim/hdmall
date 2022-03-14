@@ -19,16 +19,6 @@ public class QBoardController extends HttpServlet {
 	public void init() throws ServletException {
 		qnaDAO = QnaDAO.getInstance();
 	}
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doHandle(request, response);
@@ -40,15 +30,14 @@ public class QBoardController extends HttpServlet {
 	}
 
 	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
         request.setCharacterEncoding("utf-8");
 		response.setContentType("\"text/html;charset=utf-8\"");
 		
 		HttpSession session = request.getSession();
 
 		String loginUser = (String) session.getAttribute("userId");
-		String title = request.getParameter("title"); // 문의사항 제목 get
-        String context = request.getParameter("context"); // 문의사항 제목 get  
+        String context = request.getParameter("context"); 
+		String title = request.getParameter("title");   
         
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("\"text/html;charset=utf-8\"");
@@ -57,12 +46,13 @@ public class QBoardController extends HttpServlet {
 		String destpage ="/jsp/qna_insert.jsp";
 		
 		if(result == 0) {
-			 request.setAttribute("message", "문의 등록을 실패 했습니다.");
+			 request.setAttribute("message", "문의등록을 실패하였습니다.");
 		} else {
-			 request.setAttribute("message", "문의 등록을 성공 하였습니다.");
+			 request.setAttribute("message", "문의등록을 성공하였습니다.");
 		}
 		
         RequestDispatcher dispatcher = request.getRequestDispatcher(destpage);
 		dispatcher.forward(request, response);
+	
 	}
 }
