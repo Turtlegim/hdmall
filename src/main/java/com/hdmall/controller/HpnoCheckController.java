@@ -31,9 +31,9 @@ public class HpnoCheckController extends HttpServlet {
 	   
 	    try {
 	    	int result = userDAO.checkHpno(userHpno); // 전화번호 중복 확인 
-	    	System.out.println("전화번호 중복"+result);
+	    	System.out.println("전화번호 중복 결과 : " + result);
 	    	
-	        if (result == 1) {
+	        if (result > 0) {
 	        	out.print("{\"result\": 1}"); // json문법은 객체 표현할때 프라퍼티 앞에 백슬러시 큰따옴표가 필요 
 	        } else {
 	        	out.print("{\"result\": 0}");

@@ -88,7 +88,7 @@
                         	if(result.result == 1) {
                     			alert("중복된 아이디입니다.");
                        	 	} else if(result.result == 0) {
-                    			alert("사용 가능 아이디입니다.");	
+                    			alert("사용 가능한 아이디입니다.");	
                     			idCheck = true;
                        	   	} else {
                     			console.log('develop : 서버 오류');

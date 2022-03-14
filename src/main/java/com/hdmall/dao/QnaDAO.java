@@ -25,7 +25,6 @@ public class QnaDAO {
 	}
 	
 	/* 문의사항 등록 지현 */
-	
 	public int insertQna(String session_id, String context, String title) {
 		int result = 0;
 		try {
@@ -55,7 +54,7 @@ public class QnaDAO {
 			conn = DBManager.getConnection();
 			cstmt = conn.prepareCall("select LikeCount_Qna_FUNC(?) from dual");
 			cstmt.setString(1, session_id);
-			rs =cstmt.executeQuery();
+			rs = cstmt.executeQuery();
 			if(rs.next())
 			count = rs.getInt(1);		
 		}catch(Exception e) {
@@ -378,6 +377,7 @@ public class QnaDAO {
 			DBManager.close(conn, cstmt);
 		}
         
+
 		return count;
 	}
 
@@ -411,8 +411,6 @@ public class QnaDAO {
 		return count;
 	}
 
-
-
  	/*qboard_id에 해당하는 문의사항 값 함수*/
 		public QBoardVO getQboardDetail(String qprod_id) {
 			QBoardVO qboard = null;
@@ -442,14 +440,4 @@ public class QnaDAO {
 			}
 			return qboard;
 		}
-		
-
 }
-
-
-
-
-
-
-
-
