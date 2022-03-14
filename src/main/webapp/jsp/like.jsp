@@ -93,6 +93,11 @@
 			display: flex
 			height: 200px;
 		}
+		
+		.top_line {
+    		border-top: 3px solid #1b1e23;
+    		margin: 0 auto;
+		}
 	</style>
 </head>
 
@@ -242,29 +247,21 @@
 
 		<article id="content" style="padding-bottom: 30px;">
 			<section class="cart_wrap">
-				<input type="hidden" id="checkedCartSeq" value=""> <input
-					type="hidden" id="checkedCartSetId" value=""> <input
-					type="hidden" id="buyNow" value=""> <input type="hidden"
-					id="buyNowSetGoosId" value=""> <input type="hidden"
-					id="chkPspt" value="0"> <input type="hidden" id="chkDpat"
-					value="0"> <input type="hidden" id="buyNowType" value="">
-				<input type="hidden" id="buyNowOnlnGoosCdList" value=""> <input
-					type="hidden" id="adtAucaYn" value="N">
-				<ul class="title_tab">
+				<ul class="title_tab" style="margin-left: 20px;">
 					<li><a href="javascript:void(0);"
 						onclick='goCartTab("CART");' class="on" id="tabCart">찜하기 목록</a></li>
 				</ul>
 				<div class="cart_contens" style="padding-right: 0px;">
 					<!-- CSS 적용한거 따로 파일에 만들지 고민 -->
-					<div class="cont_left" id="CART">
+					<div class="top_line" id="CART">
 							<!-- 찜하기 목록이 비어있습니다 :) -->
-						<div class="cart_list">
+						<div class="cart_list" style="margin">
 						<c:forEach var="likelist" items="${likeboard }" varStatus="status">
-						<div id="like_product">
+						<div id="like_product" style="margin-top: 50px; margin-bottom:25px;">
 							<a href="${contextPath }/productdetail/product?prod_id=${likelist.getId() }">
-							<i class="tnr_font "><em><c:out value="${status.index+1}" />.</em></i>
-								<div class="prod">
-									<div class="img_w" style="">
+							<i class="tnr_font" style="width: 30px; height: 180px; float: left; margin-left: 25px; margin-right: 25px;"><em style="height: 180px;"><c:out value="${status.index+1}" />.</em></i>
+								<div class="prod" style="width: 1000px;">
+									<div class="img_w" style="width: 180px; float: left;">
 										<img id="prod_img" data-src=<c:out value="./${likelist.getImg() }"/>
 											src=<c:out value="./${likelist.getImg() }"/>
 											alt=<c:out value="${likelist.getContext() }"/>
@@ -273,14 +270,13 @@
 										<div class="on_btn"></div>
 									</div>
 									<div class="pro_i">
-										<p class="ti_brand" style="font-size:20px"><strong>${likelist.getName() }</strong></p>
-										<p class="tx_ex goosNm" style="font-size:15px">${likelist.getContext() }</p>
-										<div class="por_icons"></div>
+										<p class="ti_brand" style="font-size:20px; margin-left: 30px; float:left; margin-top: 75px;"><strong>${likelist.getName() }</strong></p>
+										<p class="tx_ex goosNm" style="font-size:15px; margin-left: 25px; margin-top: 80px; float: left; width: 500px;">${likelist.getContext() }</p>
+										<div class="por_icons" ><a href="${contextPath }/likeCancel?prod_id=${likelist.getId() }">
+											<button id="deletelike" type="button" style="font-size:20px; float: right; margin-top: 75px;">삭제</button>
+										</div>
 									</div>
 								</div>
-							</a>
-							<a href="${contextPath }/likeCancel?prod_id=${likelist.getId() }">
-							<button id="deletelike" type="button" style="font-size:20px">삭제</button>
 							</a>
 						</div>
 					</c:forEach>
