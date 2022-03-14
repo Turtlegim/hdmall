@@ -28,8 +28,6 @@ public class UserManageController extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         
     	String destPage = "";
-
-        PrintWriter out = response.getWriter();
         
 		String pwd = request.getParameter("userPwd");
 		String name = request.getParameter("userName");

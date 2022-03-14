@@ -31,6 +31,7 @@ public class IdCheckController extends HttpServlet {
 	    
 	    try {
 	        int result = userDAO.checkId(userId);
+	        
 	        if (result == 1) {
 	        	out.print("{\"result\": 1}"); // json문법은 객체 표현할때 프라퍼티 앞에 백슬러시 큰따옴표가 필요 
 	        } else {

@@ -134,7 +134,7 @@ public class LikeDAO {
 
 		try {
 			conn = DBManager.getConnection();
-			String query = "{call deleteLike_PROC(?)}";
+			String query = "{call deleteLike_PROC(?, ?)}";
 			cstmt = conn.prepareCall(query);
 			cstmt.setString(1, userId);
 			result = cstmt.executeUpdate();

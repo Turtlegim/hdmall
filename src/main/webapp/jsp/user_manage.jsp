@@ -273,7 +273,7 @@
 										<th scope="row">전화번호</th>
 										<td>
 											<span class="phone_num">
-												<input type="number" id="userHpno" name="userHpno" style="height: 34px;" onkeypress="javascript:noSpaceEvnt(event);">
+												<input type="text" id="userHpno" name="userHpno" style="height: 34px;" onkeypress="javascript:noSpaceEvnt(event);">
 											</span>
 											<button type="button" class="btn_basic4 small v_top" id="hpnoCheck">중복 확인</button>
 										</td>

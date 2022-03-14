@@ -12,7 +12,6 @@ import util.DBManager;
 
 public class UserDAO {
 	private Connection conn;
-	private PreparedStatement pstmt;
 	private CallableStatement cstmt;
 
 	private UserDAO() { } // 싱글턴 패턴
@@ -55,28 +54,28 @@ public class UserDAO {
 	}
 	
 	/* USER_TYPE 가져오기 */
-   public String getUserType(String session_id) throws SQLException{
-      
+   public String getUserType(String session_id) throws SQLException{    
       System.out.println("getUserType_session_id" + session_id);
-      
-      String query = "select user_type from user_t where USER_ID = ?";
-      System.out.println(query);
-      
-      conn = DBManager.getConnection();
-      pstmt = conn.prepareStatement(query);
-      pstmt.setString(1, session_id);
-      
-      ResultSet rs = pstmt.executeQuery();
-      String user_type = null;
-      
-      if (rs.next()) {
-           user_type = rs.getString("user_type");
-           System.out.println("admin(관리자)입니다.");
-      } else {
-           System.out.println("존재하지 않는 회원입니다.");
+      String user_type = "";
+     
+      try {
+    	  conn = DBManager.getConnection();
+          cstmt = conn.prepareCall("select get_usertype_func(?) from dual");
+          cstmt.setString(1, session_id);
+          
+          ResultSet result = cstmt.executeQuery();
+          
+          if (result.next()) {
+              user_type = result.getString("user_type");
+              System.out.println("admin(관리자)입니다.");
+         } else {
+              System.out.println("존재하지 않는 회원입니다.");
+         }
+      } catch (Exception e){
+    	  e.printStackTrace();
+      } finally {
+    	  DBManager.close(conn, cstmt);
       }
-      
-      conn.close();
       
       System.out.println("user_type" + user_type);
         
@@ -85,51 +84,51 @@ public class UserDAO {
 	
 	public int checkId(String userId) throws SQLException { // 회원가입시 아이디 중복 체크 
 		int check = 0; // 중복이면 1
-    	conn = DBManager.getConnection();
 		
-		String query = "select * from user_t where user_id=?";
-		System.out.println(query);
-
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, userId);
-		
-		ResultSet result = pstmt.executeQuery();
-		
-        if (result.next()) {
-        	check = 1;
-        	System.out.println("중복된 아이디입니다.");
-        } else {
-        	check = 0;
-        	System.out.println("사용 가능 아이디입니다.");
-        }
-        
-        DBManager.close(conn, cstmt);
+		try {
+			conn = DBManager.getConnection();
+	        cstmt = conn.prepareCall("select id_check_func(?) from dual");
+	        cstmt.setString(1, userId);
+	          
+	        ResultSet result = cstmt.executeQuery();
+	          
+	        if (result.next()) {
+	        	check = 1;
+	            System.out.println("중복된 아이디입니다.");
+	        } else {
+	            System.out.println("사용 가능한 아이디입니다.");
+	        }
+	    } catch (Exception e){
+	    	e.printStackTrace();
+	    } finally {
+	    	DBManager.close(conn, cstmt);
+	    }
         
 		return check;
 	}
 	
 	public int checkHpno(String userHpno) throws SQLException { // 회원가입시 아이디 중복 체크 
 		int check = 0; // 중복이면 1
-    	conn = DBManager.getConnection();
 		
-		String query = "select * from user_t where hp_no=?";
-		System.out.println(query);
-
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, userHpno);
+		try {
+			conn = DBManager.getConnection();
+	        cstmt = conn.prepareCall("select hpno_check_func(?) from dual");
+	        cstmt.setString(1, userHpno);
+	          
+	        ResultSet result = cstmt.executeQuery();
+	          
+	        if (result.next()) {
+	        	check = 1;
+	        	System.out.println("중복된 전화번호입니다.");
+	        } else {
+	          	System.out.println("사용 가능한 전화번호입니다.");
+	        }	
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, cstmt);
+		}
 		
-		ResultSet result = pstmt.executeQuery();
-		
-        if (result.next()) {
-        	check = 1;
-        	System.out.println("중복된 전화번호입니다.");
-        } else {
-        	check = 0;
-        	System.out.println("사용 가능한 전화번호입니다.");
-        }
-        
-        DBManager.close(conn, pstmt, result);
-        
 		return check;
 	}
 	
@@ -188,7 +187,7 @@ public class UserDAO {
 	    	check = 0;
 	    }
 		
-        DBManager.close(conn, pstmt);
+        DBManager.close(conn, cstmt);
  
         return check;
 	}
@@ -225,23 +224,32 @@ public class UserDAO {
 	}
 	
 	public int deleteUser(String userId) throws SQLException { // 회원 탈퇴
-    	conn = DBManager.getConnection();
-		
-		String query = "delete from user_t where user_id=?"; // 문의 내역, 찜하기 내역 모두 지워지는 query문 생성하기
-		System.out.println(query);
+		int result = 0;
 
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, userId);
-		
-		int result = pstmt.executeUpdate();
-		
-        if (result == 1) { // 회원 탈퇴 성공
-        	System.out.println("회원 탈퇴 성공");
-        } else { // 회원 탈퇴 실패
-        	System.out.println("회원 탈퇴 실패");
-        }
-        
-        DBManager.close(conn, pstmt);
+		try {
+			conn = DBManager.getConnection();
+			String query = "{call delete_user_proc(?, ?)}";
+			cstmt = conn.prepareCall(query);
+			cstmt.setString(1, userId);
+			cstmt.registerOutParameter(2, java.sql.Types.VARCHAR);
+			cstmt.executeUpdate();
+			result = cstmt.getInt(2);
+			
+			if (result == 1) { // 회원 탈퇴 성공
+	        	System.out.println("회원 탈퇴 성공");
+	        } else { // 회원 탈퇴 실패
+	        	System.out.println("회원 탈퇴 실패");
+	        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, cstmt);
+		}
+		if (result > 0) {
+			System.out.println("찜한 목록 삭제 성공");
+		} else { // 회원 탈퇴 실패
+			System.out.println("찜한 목록 삭제 실패");
+		}
         
 		return result;
 	}
