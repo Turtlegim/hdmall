@@ -6,6 +6,7 @@
 <% int count=(int)request.getAttribute("count"); 
 %>
 
+
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -174,7 +175,6 @@
 		      });
 		
 		      if ("<%=userId%>" != "admin") {
-		          console.log("userId" + <%=userName %>);
 		          document.getElementById("chim").style.display = "";
 		      } else {
 		          document.getElementById("chim").style.display = "none";
@@ -275,16 +275,19 @@
 	                              </tr>
 	                          </thead>
 	                          <tbody>
-	                              <c:forEach var="qna_Board" items="${qboardList}">
-	                                  <tr>
-	                                      <td>${qna_Board.getNum()}</td>
-	                                      <a href="${action}/hdmall/QBoardDetail?ans_yn=${qna_Board.getAns_yn()}&aboard_id=${qna_Board.getId()}"> 
-	                                      <td class="tl">${qna_Board.getTitle()}</td>
+	                              <c:forEach var="qna_Board" items="${qboardList}">	                            	                                   	                           	     	                                                         
+	                                    <tr> 
+	                                      <td>${qna_Board.getNum()}</td>	                                      
+	                                      <td class="tl" style="cursor:pointer;">	                                      
+	                                      <a href = "${contextPath}/QBoardDetail?ans_yn=${qna_Board.getAns_yn()}&qboard_id=${qna_Board.getId()}" >
+	                                      ${qna_Board.getTitle()}
 	                                      </a>
+	                                      </td>	                                    
 	                                      <td class="gray">${qna_Board.getIns_dt()}</td>
 	                                      <td class="gray" id="ansyn_chk">${qna_Board.getAns_yn()}
-	                                      </td>
+	                                      </td>	                        
 	                                  </tr>
+
 	                              </c:forEach>
 	                            </tbody>
 	                        </table>

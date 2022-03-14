@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import util.DBManager;
 
+import com.hdmall.vo.ProductVO;
 import com.hdmall.vo.QBoardVO;
 import java.util.ArrayList;
 
@@ -399,4 +400,45 @@ public class QnaDAO {
         
 		return count;
 	}
+
+
+
+ 	/*qboard_id에 해당하는 문의사항 값 함수*/
+		public QBoardVO getQboardDetail(String qprod_id) {
+			QBoardVO qboard = null;
+			String query = "select * from QBOARD_T where qboard_id = ?";	 
+			System.out.println(query);
+			ResultSet rs = null;    	    
+			try {
+				conn = DBManager.getConnection();
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, qprod_id);
+				rs = pstmt.executeQuery();
+				if (rs.next()) { 
+					qboard = new QBoardVO();
+					qboard.setId(rs.getString("qboard_id"));
+					qboard.setTitle(rs.getString("qboard_title"));;
+					qboard.setIns_dt(rs.getDate("ins_dt"));
+					qboard.setContext(rs.getString("qboard_context"));
+					qboard.setAns_title(rs.getString("ans_title"));
+					qboard.setAns_ins_dt(rs.getDate("ans_ins_dt"));
+					qboard.setDetail(rs.getString("ans_detail"));       
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, pstmt, rs);
+			}
+			return qboard;
+		}
+		
+
 }
+
+
+
+
+
+
+
+

@@ -131,30 +131,28 @@
 					<h3 class="h3_type">문의사항</h3>
 					<div class="div_view mgtsl">
 						<div class="view_header">
-							<p class="title">배지현의 문의사항입니다.</p>
+							<p class="title">${qboard_detail.title}</p>
 							<p class="day_count">
-								<span class="day">2022-03-06</span>
-								<span class="count">조회수 : 351</span>
+								<span class="day">${qboard_detail.ins_dt}</span>
 							</p>
 						</div>
 						<div class="view_contents">
 							<p>
-								hey
+								${qboard_detail.context}
 							</p>
 						</div>
 					</div>
 					<h3 class="h3_type_ans">답변</h3>
 					<div class="div_view mgtsl">
 						<div class="view_header">
-							<p class="title">답변사항입니다.</p>
+							<p class="title">${qboard_detail.ans_title}.</p>
 							<p class="day_count">
-								<span class="day">2022-03-06</span>
-								<span class="count">조회수 : 351</span>
+								<span class="day">${qboard_detail.ans_ins_dt}</span>
 							</p>
 						</div>
 						<div class="view_contents">
 							<p>
-								답변입니다~.
+								${qboard_detail.detail}
 							</p>
 						</div>
 					</div>
