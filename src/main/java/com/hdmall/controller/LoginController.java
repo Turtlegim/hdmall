@@ -76,12 +76,12 @@ public class LoginController extends HttpServlet {
             	
             	destPage = "/jsp/login.jsp";
             }
+            
+            RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
+            dispatcher.forward(request, response);
         } catch (SQLException e) {
         	e.printStackTrace();
         } 
-        
-        RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
-        dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

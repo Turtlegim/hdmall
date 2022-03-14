@@ -128,7 +128,7 @@ public class LikeDAO {
 	    }
 	}
 	
-	// 찜한 목록을 지우는 함수
+	// 찜한 목록을 지우는 함수 : 경민영
 	public int deleteLike(String userId) throws SQLException { // 회원 탈퇴 전 문의 내역 지우기 
     	conn = DBManager.getConnection();
 		
@@ -151,7 +151,7 @@ public class LikeDAO {
 		return result;
 	}
 	
-	// 해당 유저가 찜한 목록이 존재하는지 확인하는 함수 
+	// 해당 유저가 찜한 목록이 존재하는지 확인하는 함수 : 경민영
 	public int isExistLike(String userId) throws SQLException {
     	conn = DBManager.getConnection();
 		

@@ -24,7 +24,6 @@ public class QnaDAO {
 	/* 문의사항 등록 지현 */
 	
 	public int insertQna(String session_id, String context, String title) {
-
 		String query = "insert into QBOARD_T"
 					 + "(qboard_id,user_id,qboard_context,ins_dt,qboard_title)"
 					 + "values(qprodId_seq.nextval,?,?,?,?)";

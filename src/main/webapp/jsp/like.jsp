@@ -450,6 +450,7 @@
 		function sellerInfo() {
 			$("#seller_information").dialog("open");
 		}
+		
 		$(document).ready(function() {
 			// 다이얼로그 초기화
 			$("#seller_information").dialog({
@@ -460,6 +461,7 @@
 				modal : true
 			});
 		});
+		
 		function moveToMain() {
 			location.href = ctx_shop + '/dm/main.do';
 		}

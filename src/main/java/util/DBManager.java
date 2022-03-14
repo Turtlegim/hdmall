@@ -31,7 +31,7 @@ public class DBManager {
 		try {
 			stmt.close();
 			conn.close();
-			System.out.println("¼º°ø");
+			System.out.println("DB ì—°ê²° ì¢…ë£Œ");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

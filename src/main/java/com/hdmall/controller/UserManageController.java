@@ -27,7 +27,7 @@ public class UserManageController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
         
-    	String destPage = "/jsp/mypage.jsp";
+    	String destPage = "";
 
         PrintWriter out = response.getWriter();
         
