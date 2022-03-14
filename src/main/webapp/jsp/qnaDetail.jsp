@@ -129,10 +129,12 @@
 		          		document.getElementById("ans_div").style.display = "none";
 		      		}
 		      }else{
+		    	  	  document.getElementById("ans_div_insert").style.display = "none";
 		    	  if ("${qboard_detail.ans_yn}" == 0){
 		    		  document.getElementById("ans_div").style.display = "none";
+		    		  
 		    	  }else{
-		    		  document.getElementById("ans_div").style.display = " ";
+		    		  document.getElementById("ans_div").style.display = "";
 		    	  }  
 		      }
 		  });
@@ -178,7 +180,7 @@
 						</div>
 					</div>
 				</div>
-				<div class = "ans_div2" style = "border-top: 1px solid #333333; border-bottom: 1px solid #e5e5e5; padding: 25px 20px 28px 20px;">
+				<div id = "ans_div_insert" class = "ans_div2" style = "border-top: 1px solid #333333; border-bottom: 1px solid #e5e5e5; padding: 25px 20px 28px 20px;">
 					<h2 class="h3_type_ans" style ="margin: 0px 0px 14px 0px;">답변</h2>
 					<tbody>
                         <tr>
