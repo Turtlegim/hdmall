@@ -204,7 +204,7 @@
                           </strong>
                           <em>님</em>
                       </p>
-                      <a href="${action}/hdmall/userManage" style="text-decoration-line: underline;">회원정보 수정</a>
+                      <a href="${action}/hdmall/jsp/user_manage.jsp" style="text-decoration-line: underline;">회원정보 수정</a>
                   </div>
                   <div class="mypresent">
                       <dl>

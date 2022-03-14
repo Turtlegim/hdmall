@@ -234,7 +234,7 @@
 				<section id="bottomSection" style="width: 800px; margin:0 auto; margin-top: 75px;">
 					<div class="content_wrap">
 						<h3 class="h3_type line">회원정보 수정</h3>
-						<form name="userManage" method="post" action="${action}/hdmall/userManage">
+						<form name="userManage" method="post" action="${contextPath}/userManage">
 							<table class="tb_write01 vm">
 								<colgroup>
 									<col style="width: 160px">

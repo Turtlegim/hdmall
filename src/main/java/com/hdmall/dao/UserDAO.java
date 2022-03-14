@@ -196,26 +196,30 @@ public class UserDAO {
 	public int updateUser(String userPwd, String userName, String userHpno, String email1, String email2, String userId) throws SQLException { // 회원정보 수정 
 		int check = 0; // 업데이트 실패면 0 
 		
-		conn = DBManager.getConnection();
-		
-		cstmt = conn.prepareCall("{call update_user_proc(?, ?, ?, ?, ?, ?)}");
-		
-		cstmt.setString(1, userPwd);
-		cstmt.setString(2, userName);
-		cstmt.setString(3, userHpno);
-		cstmt.setString(4, email1);
-		cstmt.setString(5, email2);
-		cstmt.setString(6, userId);
-		
-	    check = cstmt.executeUpdate();
-		
-		if (check == 1) {
-    		System.out.println("회원정보 수정 성공");
-        } else {
-        	System.out.println("회원정보 수정 실패");
-        }
-		
-		DBManager.close(conn, cstmt);
+		try {
+			conn = DBManager.getConnection();
+			
+			cstmt = conn.prepareCall("{call update_user_proc(?, ?, ?, ?, ?, ?)}");
+			
+			cstmt.setString(1, userPwd);
+			cstmt.setString(2, userName);
+			cstmt.setString(3, userHpno);
+			cstmt.setString(4, email1);
+			cstmt.setString(5, email2);
+			cstmt.setString(6, userId);
+			
+		    check = cstmt.executeUpdate();
+		    System.out.println("회원정보 수정 결과를 확인하는 check : " + check);
+			if (check == 1) {
+	    		System.out.println("회원정보 수정 성공");
+	        } else {
+	        	System.out.println("회원정보 수정 실패");
+	        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, cstmt);
+		}
 		
 		return check;
 	}

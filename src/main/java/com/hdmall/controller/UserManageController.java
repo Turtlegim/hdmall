@@ -40,22 +40,21 @@ public class UserManageController extends HttpServlet {
 		HttpSession session = request.getSession();  
 		String id = (String) session.getAttribute("userId");
 		
+		int result = 0; // 회원정보 수정을 실패하면 0
+		
 		if (email2 == null) {
 			email2 = request.getParameter("emaildomain");
 		}
 	    
         try {
-    	    int result = userDAO.updateUser(pwd, name, hpno, email1, email2, id);
+    	    result = userDAO.updateUser(pwd, name, hpno, email1, email2, id);
+        	System.out.println(result);
         	
             if (result == 1) {
-            	out.print("{\"result\": 1}"); // 회원정보 수정 성공
-
-            	destPage = "/jsp/mypage.jsp";
+            	destPage = "/jsp/main.jsp";
             } else {
                 result = 0;
-            	out.print("{\"result\": 0}"); // 회원정보 수정 실패
-            	
-            	destPage = "/jsp/user_manage.jsp";
+            	destPage = "/jsp/main.jsp";
             }
             
             RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
