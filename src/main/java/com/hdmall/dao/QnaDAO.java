@@ -25,8 +25,8 @@ public class QnaDAO {
 	
 	public int insertQna(String session_id, String context, String title) {
 
-		String query = "insert into QBOARD_T"
-					 + "(qboard_id,user_id,qboard_context,ins_dt,qboard_title)"
+		String query = "insert into QBOARD_T "
+					 + "(qboard_id,user_id,qboard_context,ins_dt,qboard_title) "
 					 + "values(qprodId_seq.nextval,?,?,?,?)";
 
 		int result = 0;
@@ -40,6 +40,7 @@ public class QnaDAO {
 			pstmt.setString(2, context);
 			pstmt.setDate(3, sqlDate);
 			pstmt.setString(4, title);
+			
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -48,8 +49,6 @@ public class QnaDAO {
 		}
 		return result;
 	}
-	
-
 	
 	/*찜하기 총 count  - 지현 */
 		

@@ -30,21 +30,19 @@ public class QBoardController extends HttpServlet {
 	}
 
 	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
         request.setCharacterEncoding("utf-8");
 		response.setContentType("\"text/html;charset=utf-8\"");
 		
 		HttpSession session = request.getSession();
 
 		String loginUser = (String) session.getAttribute("userId");
-		String title = request.getParameter("title");   
         String context = request.getParameter("context"); 
-        
+		String title = request.getParameter("title");   
         
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("\"text/html;charset=utf-8\"");
 
-		int result = qnaDAO.insertQna(loginUser,context, title); //loginUser.getId()
+		int result = qnaDAO.insertQna(loginUser,context, title);
 		String destpage ="/jsp/qna_insert.jsp";
 		
 		if(result == 0) {
