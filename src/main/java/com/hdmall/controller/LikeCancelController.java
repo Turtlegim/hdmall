@@ -64,7 +64,7 @@ public class LikeCancelController extends HttpServlet {
 //				out.flush();
 				destPage = "${contextPath}/jsp/main.jsp";
 			} else {
-				likeDAO.cancleLike(userId, prod_id);
+				likeDAO.cancelLike(userId, prod_id);
 				System.out.println(prod_id + " 상품 좋아요 취소됨.");
 				destPage = "/like";
 			}
