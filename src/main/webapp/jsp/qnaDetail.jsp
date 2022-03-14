@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -23,7 +25,7 @@
 	<script src="https://cdn.hddfs.com/front/js/KO/jquery.lazyload.min.js?ver=18"></script>
 	<script src="https://cdn.hddfs.com/front/js/KO/jquery.lazyloadxt.min.js?ver=18"></script>
 	<script src="https://cdn.hddfs.com/front/js/KO/common.ui.js?ver=18"></script>
-	<script src="https://cdn.hddfs.com/front/js/KO/main.ui.js?ver=18"></script>
+	<script src="https://cdn.hddfs.com/front/js/KO/main.ui.js?ver=18"></script>		
 	<link rel="shortcut icon" href="https://cdn.hddfs.com/front/images/KO/common/favicon_H.ico">
 	<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/jquery-ui.css?ver=18">
 	<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/swiper-bundle.min.css?ver=18">
@@ -73,6 +75,22 @@
 			return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 		}
 		
+		
+		$(function () {
+		    $(".btn_gnb").on("click", function () {
+		        $("#gnb > ul > li").removeClass("open").css("display", "");
+		        $("#gnb > ul > li > ul").css("display", "none");
+		        $(".serviceMenu").parent().removeClass("open");
+		        $(".serviceMenu").parent().addClass("open");
+		        $(".serviceMenu").css("display", "block");
+		
+		        //카테고리 JSONP load
+		        if ($(".serviceCtgList > li").length < 1) {
+		            loadCtgList();
+		        }
+		    });
+		});
+		
 		function goMainPage() {
 		    sessionStorage.setItem("selMainSwiperPos", 1);
 		    location.href = "${action}/hdmall/jsp/main.jsp";
@@ -97,20 +115,34 @@
 		}
 	</style>
 </head>
-<%@ include file="header.jsp" %>
-<body>
-	<script type="text/javascript">
 
-	$(document).ready(function () {
-		      if (${qboard_detail.ans_yn} == "미완료") {
-		    	  console.log(${qboard_detail.ans_yn});
-		          document.getElementById("ans_div").style.display = "none";
-		      } else {
-		          document.getElementById("ans_div").style.display = ""
+<body>	
+	<%@ include file="header.jsp" %>
+		<script type="text/javascript">
+			
+		<!-- 지현, 민영 관리자 답변 표출 function 2022/03/15 -->
+		$(document).ready(function () {
+		      if("<%=userName%>" == "관리자"){
+					if ("${qboard_detail.ans_yn}" == 0){
+		          		document.getElementById("ans_div").style.display = "none";
+		      		}else{
+		          		document.getElementById("ans_div").style.display = "none";
+		      		}
+		      }else{
+		    	  if ("${qboard_detail.ans_yn}" == 0){
+		    		  document.getElementById("ans_div").style.display = "none";
+		    	  }else{
+		    		  document.getElementById("ans_div").style.display = " ";
+		    	  }  
+		      }
 		  });
-	</script>
+		
+		function gomyPage() {
+			location.href = "${contextPath}/QBoardList";
+		}
+		
 
-	<main id="container_join" class="container_join">
+		</script>
 			<div id="wrap">
 				<div class="lnb_content" style="width: 760px; margin: 0 auto; margin-top: 60px; margin-bottom: 80px;">
 					<!-- 하단부 레이아웃을 위해서는 wrap 꼭 남겨두기 -->
@@ -122,7 +154,7 @@
 							<p class="day_count">
 								<span class="day">${qboard_detail.ins_dt}</span>
 							</p>
-							<p id = "ans_yn" style = "display:none">${qboard_detail.ans_yn}</p>
+							<p id="ans_yn" style = "display:none">${qboard_detail.ans_yn}</p>
 						</div>
 						<div class="view_contents">
 							<p>
@@ -134,7 +166,7 @@
 					<h3 class="h3_type_ans">답변</h3>
 					<div class="div_view mgtsl">
 						<div class="view_header">
-							<p class="title">${qboard_detail.ans_title}.</p>
+							<p class="title">${qboard_detail.ans_title}</p>
 							<p class="day_count">
 								<span class="day">${qboard_detail.ans_ins_dt}</span>
 							</p>
@@ -146,33 +178,31 @@
 						</div>
 					</div>
 				</div>
+				<div class = "ans_div2" style = "border-top: 1px solid #333333; border-bottom: 1px solid #e5e5e5; padding: 25px 20px 28px 20px;">
+					<h2 class="h3_type_ans" style ="margin: 0px 0px 14px 0px;">답변</h2>
+					<tbody>
+                        <tr>
+                           <th scope="row">제목<em class="essential">*</em></th>
+                            <td><input type="text" class="required" valmsg="제목을 입력해주세요." id="title" name="title" value="" placeholder="제목을 입력해주세요." style="width: 100% ; margin: 11px 0 20px 0px;" maxlength="50" onpaste="false; "></td>
+                       </tr>
+                       <tr>
+                          <th scope="row">내용<em class="essential">*</em></th>
+                          <td>
+                           <div class="textarea_wrap">
+                             <textarea placeholder="내용을 입력해주세요." id="context" name="context" maxlength="500" class="required" style = "margin: 12px 0 0 0;height: 150px;"></textarea>
+                           </div>
+                         </td>
+                       </tr>
+                    </tbody>
+               </div> 
+               
 					<div class="basic_btn_box">
 						<button type="button" class="btn_basic4"
-							onclick="javascript:fnGoList('', '001', '', '', '');">마이페이지로</button>
+							onclick = "gomyPage();">마이페이지로</button>
 					</div>
 				</div>
 			</div>	
 				<!-- container END -->
-
-				<script type="text/javascript">
-					function sellerInfo() {
-						$("#seller_information").dialog("open");
-					}
-					$(document).ready(function () {
-						// 다이얼로그 초기화
-						$("#seller_information").dialog({
-							autoOpen: false,
-							resizable: false,
-							width: 400,
-							maxHeight: 340,
-							modal: true
-						});
-					});
-					function moveToMain() {
-						location.href = ctx_shop + '/dm/main.do';
-					}
-				</script>
-	</main>
 	<%@ include file="footer.jsp" %>
 </body>
 
