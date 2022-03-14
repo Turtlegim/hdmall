@@ -55,7 +55,7 @@ public class UserDAO {
 	
 	/* USER_TYPE 가져오기 */
    public String getUserType(String session_id) throws SQLException{    
-      System.out.println("getUserType_session_id" + session_id);
+      System.out.println("getUserType_session_id : " + session_id);
       String user_type = "";
      
       try {
@@ -66,7 +66,7 @@ public class UserDAO {
           ResultSet result = cstmt.executeQuery();
           
           if (result.next()) {
-              user_type = result.getString("user_type");
+              user_type = result.getString(1);
               System.out.println("admin(관리자)입니다.");
          } else {
               System.out.println("존재하지 않는 회원입니다.");
