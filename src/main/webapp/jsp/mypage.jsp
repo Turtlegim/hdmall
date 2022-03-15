@@ -154,7 +154,7 @@
             <body>
                 <%@ include file="header.jsp" %>
                     <script type="text/javascript">
-		< !--배지현 : 마이페이지 목록부분 hover 적용 -- >
+		<!--배지현 : 마이페이지 목록부분 hover 적용 -->
                             $(document).ready(function () {
                                 var $tmp = null;
                                 $('table tr').mouseover(function () {
@@ -166,7 +166,7 @@
                                     $tmp.css("backgroundColor", "#f5f7fa");
 
                                 });
-                    < !--배지현, 경민영 : 관리자일 경우 찜 count 박스 히든 처리 적용-- >
+                    <!--배지현, 경민영 : 관리자일 경우 찜 count 박스 히든 처리 적용-->
                     if ("<%=userId%>" != "admin") {
                                     document.getElementById("chim").style.display = "";
                                 } else {
