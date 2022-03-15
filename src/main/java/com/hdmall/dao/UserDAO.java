@@ -25,25 +25,27 @@ public class UserDAO {
 		UserVO user = new UserVO();
 	    
 	    try {
-	    	cstmt = conn.prepareCall("{call login_user_proc(?, ?, ?, ?)}");
+	    	cstmt = conn.prepareCall("{call login_user_proc(?, ?, ?)}");
 			System.out.println(cstmt); 
 	    	
 		    cstmt.setString(1, userId);
 		    cstmt.setString(2, userPwd);
 		    
 		    cstmt.registerOutParameter(3, java.sql.Types.VARCHAR);
-		    cstmt.registerOutParameter(4, java.sql.Types.VARCHAR);
 		    
 		    cstmt.execute();
 		    
-		    String id = cstmt.getString(3);
-		    String name = cstmt.getString(4);
-		    System.out.println(id);
-		    System.out.println(name);
+		    String name = cstmt.getString(3);
+		    System.out.println("로그인 결과 회원의 이름은 : " + name);
 		    
-    		System.out.println("로그인 성공");
-    		user.setId(id);
-		    user.setName(name);
+		    if (name != null) {
+		    	System.out.println("로그인 성공");
+	    		user.setId(userId);
+			    user.setName(name);
+		    } else {
+		    	System.out.println("로그인 실패");
+		    	user = null;
+		    }
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    } finally {

@@ -17,7 +17,7 @@ public class QnaDAO {
 	private PreparedStatement pstmt;
 	private CallableStatement cstmt;
 	
-	private QnaDAO() {} //싱글턴패턴
+	private QnaDAO() {} // 싱글턴패턴
 	
 	private static QnaDAO instance = new QnaDAO();
 	public static QnaDAO getInstance() {
@@ -29,7 +29,7 @@ public class QnaDAO {
 		int result = 0;
 		try {
 			conn = DBManager.getConnection();
-
+			
 			cstmt = conn.prepareCall("{call insert_Qna_PROC(?,?,?)}");
 			System.out.println(cstmt);
 			cstmt.setString(1, session_id);

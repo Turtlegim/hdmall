@@ -32,19 +32,17 @@ public class LoginController extends HttpServlet {
         HttpSession session = request.getSession();
         
         String destPage = "";
-        String result = "0"; // 로그인 실패하면 0 
         
         try {
-        	UserVO user = userDAO.loginUser(userId, userPwd);
-            
             response.setCharacterEncoding("UTF-8"); // 한글도 입력 가능하게 하기
-    		
     		Cookie cookie = new Cookie("userId", userId); // 쿠키 생성 
     		
-            if (user != null) {
+    		UserVO user = userDAO.loginUser(userId, userPwd);
+        	
+        	if (user != null) {
                 System.out.println("로그인 성공");
-                
                 String userName = user.getName(); // 이름 저장 후 보여주기 
+                
                 if(id_rem != null) { // 아이디 저장 여부를 보고 쿠키로 아이디값 저장 
                     cookie = new Cookie("userId", userId);
                    
@@ -59,10 +57,6 @@ public class LoginController extends HttpServlet {
                     response.addCookie(cookie);
                 }
                 
-                result = "1";
-                session.setAttribute("result", result);
-                System.out.println("로그인 성공 session : "+session.getAttribute("result"));
-                
                 session.setAttribute("userId", userId);
                 session.setAttribute("userName", userName);
                 session.setAttribute("remember", id_rem);
@@ -70,13 +64,14 @@ public class LoginController extends HttpServlet {
                 destPage = "/jsp/main.jsp";
             } else {
             	System.out.println("로그인 실패");
-            	result = "0";
-            	session.setAttribute("result", null);
-            	System.out.println("로그인 실패 session : "+session.getAttribute("result"));
-            	
             	destPage = "/jsp/login.jsp";
             }
             
+            if (userId == "" || userPwd == "") {
+            	System.out.println("빈칸이 존재합니다.");
+    			destPage = "/jsp/login.jsp";
+    		}
+        	
             RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
             dispatcher.forward(request, response);
         } catch (SQLException e) {
