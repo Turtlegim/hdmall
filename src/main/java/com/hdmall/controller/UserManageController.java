@@ -49,10 +49,10 @@ public class UserManageController extends HttpServlet {
         	System.out.println(result);
         	
             if (result == 1) {
-            	destPage = "/jsp/main.jsp";
+            	destPage = "/main.do";
             } else {
                 result = 0;
-            	destPage = "/jsp/main.jsp";
+            	destPage = "/main.do";
             }
             
             RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);

@@ -33,7 +33,7 @@ public class LogoutController extends HttpServlet {
         
         try {
         	int result = userDAO.logoutUser(userId);
-            String destPage = "/jsp/login.jsp";
+            String destPage = "/login";
             
             if (result == 1) { // 로그아웃 성공
                 System.out.println("로그아웃 성공");
@@ -41,7 +41,7 @@ public class LogoutController extends HttpServlet {
                 session.setAttribute("userName", null);
                 session.invalidate();
                 
-                destPage = "/jsp/main.jsp";
+                destPage = "/main.do";
             } else {
             	System.out.println("로그아웃 실패");
             }

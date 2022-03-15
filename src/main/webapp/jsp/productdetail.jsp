@@ -173,12 +173,10 @@
 			
             <article id="content" class="productdetail">
                 <section class="pd_area">
-                    <div class="pd_visual" style="padding: 100px 18px;">
-                        <div>                       
-                            <img src="./image/product/${productVO.img}" style="width: 460px; height: 460px"/>
-                        </div>
+                	<div style="margin-left: 200px; margin-top: 150px; float: left;">                       
+                        <img src="./image/product/${productVO.img}" style="width: 460px; height: 460px"/>
                     </div>
-                    <div class="pd_info">
+                    <div class="pd_info" style="height: 830px;">
                         <div class="summary_info" style="margin-top: 150px;">
                             <h2><strong>Product Info 제품정보</strong></h2>
 
@@ -202,7 +200,7 @@
                                         <p style="font-size: 18px; padding-top: 8px;">
                                             ${productVO.cate_no}</p>
                                     </li>
-                                    <li>
+                                    <li style="width: 400px;">
                                         <strong style="font-size: 19px;">
                                             제품설명</strong>
                                         <p style="font-size: 18px; padding-top: 8px;">

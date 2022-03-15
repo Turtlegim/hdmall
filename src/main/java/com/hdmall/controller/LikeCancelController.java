@@ -59,10 +59,7 @@ public class LikeCancelController extends HttpServlet {
 		// request.setAttribute("cate_no", cate_no);
 		try {
 			if (userId == null) {
-//				PrintWriter out = response.getWriter();
-//				out.println("<script>alert('로그인하십시오.'); </script>");
-//				out.flush();
-				destPage = "${contextPath}/jsp/main.jsp";
+				destPage = "/main.do";
 			} else {
 				likeDAO.cancelLike(userId, prod_id);
 				System.out.println(prod_id + " 상품 좋아요 취소됨.");

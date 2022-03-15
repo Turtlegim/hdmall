@@ -61,7 +61,7 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("userName", userName);
                 session.setAttribute("remember", id_rem);
 
-                destPage = "/jsp/main.jsp";
+                destPage = "/main.do";
             } else {
             	System.out.println("로그인 실패");
             	destPage = "/jsp/login.jsp";

@@ -91,7 +91,7 @@ public class QBoardListController extends HttpServlet {
 			
 				destpage = "/jsp/mypage.jsp";
 			} else {
-				destpage = "/jsp/login.jsp";
+				destpage = "/login";
 				System.out.println("마이페이지는 로그인 후 이용 가능합니다.");
 			}
 
