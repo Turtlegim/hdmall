@@ -138,6 +138,18 @@
     		 align-items: center;
 		}
 		
+		button#deletelike {
+    			padding: 12px;
+    			border: solid 2px lightgray;
+    			border-radius: 13px;
+			}
+			
+	    .deletelike:hover{
+    			background: #dcdcdc;
+    			color: white;
+    			transition: all 0.5s;
+    			}
+		
 	</style>
 </head>
 
@@ -188,10 +200,10 @@
 										<div class="on_btn"></div>
 									</div>
 									<div class="pro_i">
-										<p class="ti_brand" style="font-size:20px; float:left;"><strong>${likelist.getName() }</strong></p>
-										<p class="tx_ex goosNm" style="font-size:15px; margin-left: 25px; float: left; width: 500px;">${likelist.getContext() }</p>
+										<p class="ti_brand" style="font-size:20px; float:left;     margin-left: 50px;"><strong>${likelist.getName() }</strong></p>
+										<p class="tx_ex goosNm" style="font-size:15px; margin-left: 25px;  width: 650px;">${likelist.getContext() }</p>
 										<div class="por_icons" ><a href="${contextPath }/likeCancel?prod_id=${likelist.getId() }">
-											<button id="deletelike" type="button" style="font-size:20px; float: right;">삭제</button>
+											<button  class = "deletelike" id="deletelike" type="button" style="font-size:15px; float: right;">삭제</button>
 										</div>
 									</div>
 								</div>
