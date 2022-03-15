@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import com.hdmall.vo.LikeVO;
 import com.hdmall.vo.ProductVO;
@@ -301,4 +303,26 @@ public class LikeDAO {
 
 		return count;
 	}
+	
+	public HashMap<String, Integer> prodLikeInfo() {
+		HashMap<String, Integer> list = new HashMap<>();
+		String sql = "{call prodLikeInfo_PROC(?)}";
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getConnection();
+			cstmt = conn.prepareCall(sql);
+			cstmt.registerOutParameter(1, OracleTypes.CURSOR);
+			cstmt.execute();
+			rs = (ResultSet) cstmt.getObject(1);
+			while (rs.next()) {
+				list.put(rs.getString("prod_name"), rs.getInt("prod_cnt"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, cstmt, rs);
+		}
+		return (list);
+	}
+	
 }

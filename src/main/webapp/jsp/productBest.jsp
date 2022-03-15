@@ -155,7 +155,7 @@
 		<main id="container">
 			<article class="location">
 				<section class="box">
-					<a href="https://www.hddfs.com/shop/dm/main.do" class="home">홈</a>
+					<a class="home">홈</a>
 					<div>
 						<a href="javascript:;" style="cursor: default">베스트</a>
 					</div>
@@ -212,7 +212,7 @@
 								<ul>
 									<c:forEach var="vo" items="${best}" begin="3" end="6" varStatus="status">
 										<li class="product_item">
-											<a href="${contextPath }/productdetail/product?prod_id=${vo.getId() }">
+											<a href="${contextPath }/productdetail?prod_id=${vo.getId() }">
 												<i class="tnr_font "><em><c:out value="${status.index + 1}" />.</em></i>
 												<div class="img_w">
 													<img data-src=<c:out value="./${vo.getImg() }"/>

@@ -1,11 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="ko">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
+<%@ page import = "java.util.*" %>
+<%@ page import = "java.util.Map.Entry" %>
+<%
+	HashMap<String, Integer> like_list = null;
+	Object obj = (Object) request.getAttribute("likelist");;
+	if (obj != null)
+		like_list = (HashMap<String, Integer>)obj;
+	Iterator <Entry<String, Integer>> entries = like_list.entrySet().iterator();
+%>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -150,28 +158,6 @@
 		</div>
 		<!-- 메인 상단 이미지 스와이프 END 03.07 경민영 -->
 	</div>
-	
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-	      google.load("visualization", "1", {packages:["corechart"]});
-	      google.setOnLoadCallback(drawChart);
-	      function drawChart() {
-		        var data = google.visualization.arrayToDataTable([
-		          ['Year', 'Sales', 'Expenses'],
-		          ['2004',  1000,      400],
-		          ['2005',  1170,      460],
-		          ['2006',  660,       1120],
-		          ['2007',  1030,      540]
-		        ]);
-		
-		        var options = {
-		          title: 'hdmall 방문자 수'
-		        };
-		
-		        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-		        chart.draw(data, options);
-	      }
-    </script>
     
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
@@ -182,14 +168,16 @@
             var data = new google.visualization.DataTable();
             data.addColumn('string','Foods');
             data.addColumn('number','비중');
- 
+
             data.addRows([ 
-                ['피자',5],
-                ['치킨',2],
-                ['햄버거',3]
-            ]);
+            		<% 
+            	 	while (entries.hasNext()) {
+            			Map.Entry<String, Integer> entry = entries.next(); %>
+            			['<%=entry.getKey()%>',<%=entry.getValue()%>]<%if(entries.hasNext()){%>
+            				, <%}}%>
+						]);
             var opt = {
-                    'title':'좋아하는 음식',
+                    'title':'상품별 찜한 사용자수',
                     'width':600,
                     'height':600,
                     pieSliceText:'label',
@@ -201,6 +189,5 @@
         </script>
         
         
-	<div id="chart_div" style="width: 900px; height: 500px; margin:0 auto; margin-top: 80px;"></div>
 	<div id="myChart" style="margin:0 auto;"></div>
 <%@ include file = "footer.jsp"%>			
