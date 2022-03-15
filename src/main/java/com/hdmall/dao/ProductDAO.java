@@ -23,24 +23,13 @@ public class ProductDAO {
 	
 	public ArrayList<ProductVO> listProductNew(String user_id) {
 		ArrayList<ProductVO> productList = new ArrayList<ProductVO>();
-		String sql = "select *"
-				+ " from (select a.prod_id, a.cate_no, a.prod_img, b.pboard_title, b.pboard_context "
-				+ " from product_t a, pboard_t b"
-				+ " where a.prod_id = b. prod_id) t1"
-				+ " left outer join "
-				+ " (select b.prod_id, is_liked"
-				+ " from user_t a, pboard_t b, like_t c"
-				+ " where a.user_id = c.user_id"
-				+ "    AND b.prod_id = c.prod_id"
-				+ "    AND a.user_id = ?) t2"
-				+ " on t1.prod_id = t2.prod_id";
-
+		String sql = "{call listProductNew_PROC(?, ?)}";
 		ResultSet rs = null;
 		try {
 			conn =  DBManager.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, user_id);
-			rs = pstmt.executeQuery();
+			cstmt = conn.prepareCall(sql);
+			cstmt.setString(1, user_id);
+			rs = cstmt.executeQuery();
 
 			while (rs.next()) {
 				ProductVO product = new ProductVO();
@@ -54,10 +43,9 @@ public class ProductDAO {
 		} catch (Exception e){
 			e.printStackTrace();
 		} finally {
-			DBManager.close(conn, pstmt, rs);
+			DBManager.close(conn, cstmt, rs);
 		}
 		return productList;
-
 	}
 
 	public int getNewCount() {
