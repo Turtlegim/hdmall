@@ -1,17 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 
-<!-- footer start 배지현 (03.07) -->
+<!-- 배지현 : footer 생성 -->
     <div id="wrap">
         <footer id="footer">
             <div class="policy">
                 <div class="copy">
                     <div class="copyright">
-                        <div class="logo">
+                       <!-- 경민영 : footer 로고생성 및 적용 -->
+                         <div class="logo">
                             <img src="${action}/hdmall/image/footerLogo.png" style="margin: 0px;">
                             <strong>현대 IT&E 1차 프로젝트 (2조)</strong>
-                        </div>
-                        <ul>
+                         </div>
+                         <ul>
                             <li>
                                 <span>김기범</span>
                                 <span>배지현</span>
