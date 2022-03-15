@@ -29,6 +29,7 @@ public class ProductDAO {
 			conn =  DBManager.getConnection();
 			cstmt = conn.prepareCall(sql);
 			cstmt.setString(1, user_id);
+			cstmt.registerOutParameter(2, OracleTypes.CURSOR);
 			rs = cstmt.executeQuery();
 
 			while (rs.next()) {
