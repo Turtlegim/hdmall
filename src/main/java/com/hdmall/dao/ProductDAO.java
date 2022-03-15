@@ -24,14 +24,13 @@ public class ProductDAO {
 	public ArrayList<ProductVO> listProductNew(String user_id) {
 		ArrayList<ProductVO> productList = new ArrayList<ProductVO>();
 		String sql = "{call listProductNew_PROC(?, ?)}";
-		ResultSet rs = null;
 		try {
 			conn =  DBManager.getConnection();
 			cstmt = conn.prepareCall(sql);
 			cstmt.setString(1, user_id);
 			cstmt.registerOutParameter(2, OracleTypes.CURSOR);
-			rs = cstmt.executeQuery();
-
+			cstmt.executeQuery();
+			ResultSet rs = (ResultSet)cstmt.getObject(2);
 			while (rs.next()) {
 				ProductVO product = new ProductVO();
 				product.setId(rs.getString("prod_id"));
@@ -44,7 +43,7 @@ public class ProductDAO {
 		} catch (Exception e){
 			e.printStackTrace();
 		} finally {
-			DBManager.close(conn, cstmt, rs);
+			DBManager.close(conn, cstmt);
 		}
 		return productList;
 	}

@@ -122,6 +122,22 @@
     		border-top: 3px solid #1b1e23;
     		margin: 0 auto;
 		}
+		
+		div#like_product {
+   			 display: inline-flex;
+    		 text-align: center;
+    		 align-content: center;
+		}
+		.prod {
+    		display: inline-flex;
+    		align-items: center;
+		}
+
+		.pro_i{
+    		 display: inline-flex;
+    		 align-items: center;
+		}
+		
 	</style>
 </head>
 
@@ -172,10 +188,10 @@
 										<div class="on_btn"></div>
 									</div>
 									<div class="pro_i">
-										<p class="ti_brand" style="font-size:20px; margin-left: 30px; float:left; margin-top: 75px;"><strong>${likelist.getName() }</strong></p>
-										<p class="tx_ex goosNm" style="font-size:15px; margin-left: 25px; margin-top: 80px; float: left; width: 500px;">${likelist.getContext() }</p>
+										<p class="ti_brand" style="font-size:20px; float:left;"><strong>${likelist.getName() }</strong></p>
+										<p class="tx_ex goosNm" style="font-size:15px; margin-left: 25px; float: left; width: 500px;">${likelist.getContext() }</p>
 										<div class="por_icons" ><a href="${contextPath }/likeCancel?prod_id=${likelist.getId() }">
-											<button id="deletelike" type="button" style="font-size:20px; float: right; margin-top: 75px;">삭제</button>
+											<button id="deletelike" type="button" style="font-size:20px; float: right;">삭제</button>
 										</div>
 									</div>
 								</div>
