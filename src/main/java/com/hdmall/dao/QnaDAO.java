@@ -205,7 +205,7 @@ public class QnaDAO {
 				query.append(" FROM (");
 				query.append(" SELECT * FROM QBOARD_T");
 				query.append(" WHERE user_id = ?");
-				query.append(" AND qboard_title LIKE ? OR qboard_context LIKE ?");
+				query.append(" AND qboard_title LIKE ? AND qboard_context LIKE ?");
 				query.append(" ORDER BY ins_dt DESC");
 				query.append(") pb)");
 				pstmt = conn.prepareStatement(query.toString());
@@ -294,7 +294,7 @@ public class QnaDAO {
 				query.append(",pb.qboard_id");
 				query.append(" FROM (");
 				query.append(" SELECT * FROM QBOARD_T");
-				query.append(" WHERE qboard_title LIKE ? OR qboard_context LIKE ?");
+				query.append(" WHERE qboard_title LIKE ? AND qboard_context LIKE ?");
 				query.append(" AND ans_yn = 0");
 				query.append(" ORDER BY ins_dt DESC");
 				query.append(") pb)");
@@ -440,18 +440,20 @@ public class QnaDAO {
 
 
 		/* 답변 등록 지현 */
-		public int UpdateAns(String qboard_id, String context, String title) {
+		public int UpdateAns(int qboard_id, String context, String title) {
 			int result = 0;
+			System.out.println(qboard_id);
+			System.out.println(context);
+			System.out.println(title);
 			try {
 				conn = DBManager.getConnection();
-
 				cstmt = conn.prepareCall("{call UPDATE_ANS_PROC(?,?,?,?)}");
-				System.out.println(cstmt);
-				cstmt.setString(1, qboard_id);
+				cstmt.setInt(1, qboard_id);
 				cstmt.setString(2, context);
 				cstmt.setString(3, title);
 				cstmt.setInt(4, 1);
 				result = cstmt.executeUpdate();
+				System.out.println(result);
 
 			} catch (Exception e) {
 				e.printStackTrace();
