@@ -26,7 +26,7 @@ public class QBoardDetailController extends HttpServlet {
 	
 	public void init(ServletConfig config) throws ServletException {
 		qnaDAO = QnaDAO.getInstance();
-		userDAO = UserDAO.getInstance();
+		userDAO= UserDAO.getInstance();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -65,7 +65,6 @@ public class QBoardDetailController extends HttpServlet {
 			String user_type= userDAO.getUserType(loginUser);   /*user_id 값 받아서 user_type 반환 함수 만들기*/	
 			request.setAttribute("user_type", user_type);
 		
-			
 			destPage = "/jsp/qnaDetail.jsp";
 			
 			RequestDispatcher dispatch = request.getRequestDispatcher(destPage);

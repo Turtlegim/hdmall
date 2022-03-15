@@ -437,4 +437,28 @@ public class QnaDAO {
 			}
 			return qboard;
 		}
+
+
+		/* 답변 등록 지현 */
+		public int UpdateAns(String qboard_id, String context, String title) {
+			int result = 0;
+			try {
+				conn = DBManager.getConnection();
+
+				cstmt = conn.prepareCall("{call UPDATE_ANS_PROC(?,?,?,?)}");
+				System.out.println(cstmt);
+				cstmt.setString(1, qboard_id);
+				cstmt.setString(2, context);
+				cstmt.setString(3, title);
+				cstmt.setInt(4, 1);
+				result = cstmt.executeUpdate();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, cstmt);
+			}
+			return result;
+		}
+		
 }
