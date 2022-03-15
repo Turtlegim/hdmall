@@ -69,6 +69,8 @@
 		src="https://cdn.hddfs.com/front/js/KO/jquery.cookie.js?ver=18"></script>
 	<script type="text/javascript"
 		src="https://cdn.hddfs.com/front/js/KO/common.js?ver=18"></script>
+	<link rel="stylesheet" href="${action}/hdmall/css/footer.css">
+    <link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
 	
 	<!-- S: 다이퀘스트 스크립트 추가 -->
 	<script type="text/javascript"
