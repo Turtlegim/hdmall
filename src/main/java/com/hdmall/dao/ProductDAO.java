@@ -151,12 +151,15 @@ public class ProductDAO {
 		ResultSet rs = null;    	    
 		try {
 			conn = DBManager.getConnection();
-			cstmt = conn.prepareCall("{call get_product_proc(?, ?)}");
+			cstmt = conn.prepareCall("{call get_product_proc(?, ?, ?, ?)}");
 			cstmt.setString(1, prod_id);
 			cstmt.registerOutParameter(2, OracleTypes.CURSOR);
+			cstmt.registerOutParameter(3, java.sql.Types.VARCHAR);
+			cstmt.registerOutParameter(4, java.sql.Types.NUMERIC);
+
 			cstmt.executeQuery();
 			rs = (ResultSet)cstmt.getObject(2);
-		    System.out.println(rs);
+//		    System.out.println(rs);
 		    
 			while (rs.next()) { 
 				product = new ProductVO();
@@ -165,14 +168,33 @@ public class ProductDAO {
 				product.setName(rs.getString("prod_nm"));
 				product.setPrice(rs.getString("prod_price"));
 				product.setImg(rs.getString("prod_img"));
-				product.setContext(rs.getString("prod_context"));       
+				product.setContext(rs.getString("prod_context"));
 			}
+			countUpdate(cstmt.getString(3), cstmt.getInt(4) + 1); // 조회수 업데이트
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, cstmt, rs);
 		}
 		return product;
+	}
+	
+	// 조회수 업데이트 해주는 함수
+	public int countUpdate(String pboardId, int currhit) {
+		String sql = "{call countUpdate_PROC(?, ?)}";
+		int updatedRowCount = 0;
+		try {
+			conn = DBManager.getConnection();
+			cstmt = conn.prepareCall(sql);
+			cstmt.setString(1, pboardId);
+			cstmt.setInt(2, currhit);
+			updatedRowCount = cstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, cstmt);
+		}
+		return updatedRowCount;
 	}
 
 	public int getLikeCount(String prod_id) {
