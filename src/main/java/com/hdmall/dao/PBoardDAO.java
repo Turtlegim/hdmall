@@ -31,6 +31,7 @@ public class PBoardDAO {
 		return instance;
 	}
 	
+	// Hit 상위 7개의 상품 목록을 가져오는 함수.
 	public ArrayList<ProductVO> listTophitsPBoard() {
 	    ArrayList<ProductVO> productList = new ArrayList<>();
 	    String sql = "select * from best_view";
@@ -58,6 +59,7 @@ public class PBoardDAO {
 	    return productList;
 	  }
 	
+	// 카테고리별 Hit 상위 7개의 상품 목록을 가져오는 함수.
 	public ArrayList<ProductVO> listTophitsPBoard(String cateno) {
 	    ArrayList<ProductVO> productList = new ArrayList<>();
 	    String sql = "{call listTophitsPBoard_PROC(?, ?)}";
@@ -67,8 +69,7 @@ public class PBoardDAO {
 	      cstmt.setString(1, cateno);
 	      cstmt.registerOutParameter(2, OracleTypes.CURSOR);
 	      cstmt.executeQuery();
-	      ocstmt = (OracleCallableStatement)cstmt;
-	      rs = ocstmt.getCursor(2);
+	      rs = (ResultSet) cstmt.getObject(2);
 	      while (rs.next()) {
 	    	  ProductVO product = new ProductVO();
 	    	  product.setId(rs.getString("prod_id"));
@@ -81,7 +82,7 @@ public class PBoardDAO {
 	    } catch (Exception e) {
 	      e.printStackTrace();
 	    } finally {
-	      DBManager.close(conn, cstmt, rs);
+	      //DBManager.close(conn, cstmt, rs);
 	    }
 	    return productList;
 	}

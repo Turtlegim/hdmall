@@ -26,7 +26,8 @@ public class LikeDAO {
 	public static LikeDAO getInstance() {
 		return instance;
 	}
-
+	
+	// Like Table 전체를 커서로 받아오는 함수.
 	public ArrayList<LikeVO> listLike() {
 		ArrayList<LikeVO> likelist = new ArrayList<>();
 		String sql = "{call listLike_PROC(?)}";
@@ -52,7 +53,8 @@ public class LikeDAO {
 		}
 		return likelist;
 	}
-
+	
+	// 특정 User의 Like Table을 질의하는 함수.
 	public ArrayList<LikeVO> listLikeTable(String userid) {
 		ArrayList<LikeVO> likelist = new ArrayList<>();
 		String sql = "{call listLikeTable_PROC(?,?)}";
@@ -78,7 +80,8 @@ public class LikeDAO {
 		}
 		return likelist;
 	}
-
+	
+	// 특정 User가 Like 한 상품들의 정보를 불러오는 함수.
 	public ArrayList<ProductVO> listisLiked(String userid) {
 		ArrayList<ProductVO> productList = new ArrayList<>();
 		String sql = "select * " + "from ( " + "	  select * " + "	  from pb_p_id_view " + "	 ) t1 "
@@ -109,6 +112,7 @@ public class LikeDAO {
 		return productList;
 	}
 	
+	// 특정 User의 특정 prod에 대한 Like를 취소하는 함수. (delete하지 않음.)
 	public void cancelLike(String userid, String prodid) {
 		CallableStatement cstmt = null;
 		try {
@@ -137,7 +141,10 @@ public class LikeDAO {
 			String query = "{call deleteLike_PROC(?, ?)}";
 			cstmt = conn.prepareCall(query);
 			cstmt.setString(1, userId);
+			int res = 0;
+			cstmt.registerOutParameter(2, java.sql.Types.INTEGER);
 			result = cstmt.executeUpdate();
+			res = cstmt.getInt(2);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

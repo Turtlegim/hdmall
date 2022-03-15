@@ -17,7 +17,7 @@ public class LikeController extends HttpServlet {
 	LikeDAO likeDAO;
 
 	public void init() throws ServletException {
-		likeDAO = likeDAO.getInstance();
+		likeDAO = LikeDAO.getInstance();
 	}
 
 	/**

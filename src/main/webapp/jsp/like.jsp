@@ -144,7 +144,7 @@
 					<li><a href="javascript:void(0);"
 						onclick='goCartTab("CART");' class="on" id="tabCart">찜하기 목록</a></li>
 				</ul>
-				<div class="cart_contens" style="padding-right: 0px;">
+				<div class="cart_contents" style="padding-right: 0px;">
 					<!-- CSS 적용한거 따로 파일에 만들지 고민 -->
 					<div class="top_line" id="CART">
 							<!-- 찜하기 목록이 비어있습니다 :) -->
