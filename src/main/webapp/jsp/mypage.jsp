@@ -38,6 +38,8 @@
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/common.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/layout.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/main.css?ver=18">
+    <link rel="stylesheet" href="${action}/hdmall/css/footer.css">
+    <link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
 
     <!-- main 이미지 슬라이더 -->
 	<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>

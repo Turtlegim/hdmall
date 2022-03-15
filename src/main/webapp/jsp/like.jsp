@@ -55,6 +55,8 @@
 	
 	<script type="text/javascript"
 		src="https://cdn.hddfs.com/front/js/KO/makePCookie.js?ver=18"></script>
+	<link rel="stylesheet" href="${action}/hdmall/css/footer.css">
+    <link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
 	
 	
 	<script type="text/javascript"
