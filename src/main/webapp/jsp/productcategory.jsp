@@ -126,9 +126,9 @@
         });
 
         function goMainPage() {
-            sessionStorage.setItem("selMainSwiperPos", 1);
-            location.href = "${action}/hdmall/jsp/main.jsp";
-        }
+			sessionStorage.setItem("selMainSwiperPos", 1);
+			location.href = "${action}/hdmall/main.do";
+		}
         /* $(function () {
             let heart = false;
             $(".heartBtn").on("click", function () {

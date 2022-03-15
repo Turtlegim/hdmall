@@ -107,7 +107,7 @@
 
 		function goMainPage() {
 			sessionStorage.setItem("selMainSwiperPos", 1);
-			location.href = "${action}/hdmall/jsp/main.jsp";
+			location.href = "${action}/hdmall/main.do";
 		}
 		
 		$(document).on('click', '#pwdCheck', function () { // 회원정보 수정 전 비밀번호 입력 확인 버튼 (개인정보 보호용)
