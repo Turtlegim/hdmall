@@ -124,9 +124,9 @@
                         method: "post", // 요청방식은 post
                         data: {"userId": userId, "prodId" : prodId, "isLike" : isLike},
                         success: function(result) {
-                        	if(result == 1) {
+                        	if(result == "1") {
                     			alert("상품을 찜을 취소 또는 재등록하였습니다.");
-                       	 	} else if(result == 2) {
+                       	 	} else if(result == "2") {
                     			alert("상품을 찜하였습니다.");	
                        	   	} else {
                     			console.log('develop : 서버 오류');
@@ -214,6 +214,12 @@
                                             좋아요</strong>
                                         <p style="font-size: 18px; padding-top: 8px;">
                                             ${likecount}개</p>
+                                    </li>
+                                    <li>
+                                        <strong style="font-size: 19px;">
+                                            조회수</strong>
+                                        <p style="font-size: 18px; padding-top: 8px;">
+                                            ${productVO.getHitnum()}</p>
                                     </li>
                                 </ul>
                             </div>
