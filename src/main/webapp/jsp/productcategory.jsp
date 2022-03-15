@@ -44,6 +44,9 @@
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/common.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/layout.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/n_hgk.css?ver=18">
+    <link rel="stylesheet" href="${action}/hdmall/css/footer.css">
+    <link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
+    
     <script language="javascript">
         // 현재 요청경로
         var ctx_curr = "//www.hddfs.com/shop";
@@ -75,6 +78,7 @@
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/makePCookie.js?ver=18"></script>
 
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/hash.js?ver=18"></script>
+    
 	<script>
         function getParameterByName(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");

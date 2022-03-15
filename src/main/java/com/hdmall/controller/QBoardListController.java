@@ -66,10 +66,11 @@ public class QBoardListController extends HttpServlet {
 
 		int count; 
 		int count_combo;
+		int count_like;
 	
 		//  널값이면 ""를 반환하고  널이 아니면 그냥 자기 값을 반환한다
 
-		/*분기처리 */
+		/*분기처리*/
 		List<QBoardVO> qboardList = new ArrayList<QBoardVO>();
 		String user_type = userDAO.getUserType(loginUser);
 		
@@ -79,26 +80,29 @@ public class QBoardListController extends HttpServlet {
 		System.out.println("첫" + word);
 		
 		 if(user_type.equals("ADMIN")) {
-		 	qboardList = qnaDAO.qBoardListAll(col,word);				 	
+		 	qboardList = qnaDAO.qBoardListAll(col,word);				 	/*ADMIN 게시글 입력 값에 따른 list*/
 		 	request.setAttribute("qboardList", qboardList);
 		 
-		 	count = qnaDAO.getAllProductCount_A();						/* ADMIN 답변 되지 않은 총 list count*/
+		 	count = qnaDAO.getAllProductCount_A();							/* ADMIN 답변 되지 않은 총 list count*/
 	        request.setAttribute("count", count);
 	        
-	        count_combo = qnaDAO.getAllProductCount_COMBO_A(col,word);  /*ADMIN 게시글 입력 값에 따라 count*/
+	        count_combo = qnaDAO.getAllProductCount_COMBO_A(col,word);  	/*ADMIN 게시글 입력 값에 따라 count*/
 	        request.setAttribute("count_combo", count_combo);
 	        
 	        destpage = "/jsp/mypage.jsp";
 		 } else {	
-		 	qboardList = qnaDAO.qBoardlistType_U(loginUser,col,word);
+		 	qboardList = qnaDAO.qBoardlistType_U(loginUser,col,word);		 /*USER 게시글 입력 값에 따른 list*/
 		 	request.setAttribute("qboardList", qboardList);
 		 	
-		    count = qnaDAO.getAllProductCount_U(loginUser);
+		    count = qnaDAO.getAllProductCount_U(loginUser);					/*USER 게시글 총 count*/
 		    request.setAttribute("count", count);
 		    
 	        count_combo = qnaDAO.getAllProductCount_COMBO_U(loginUser,col,word);  /*USER 게시글 입력 값에 따라 count*/
 	        request.setAttribute("count_combo", count_combo);
-		    
+	        
+	        count_like = qnaDAO.getLikeProductCount(loginUser); 				  /*USER가 찜한 목록 count*/
+	        request.setAttribute("count_like", count_like);
+	        
 	        destpage = "/jsp/mypage.jsp";
 		 }
 

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -148,38 +147,35 @@
 		});
 		
 		$(document).ready(function () { // 비밀번호 확인하는 section부터 보여주기
-			var hpnoCheck = false;
-		
 			document.getElementById("headerSection").style.display = "";
 			document.getElementById("bottomSection").style.display = "none";
-			
-			$(document).on('click', '#hpnoCheck', function () { // 전화번호 중복 확인
-				var userHpno = document.getElementById("userHpno").value;
-				
-				if(userHpno == "") {
-					alert("전화번호를 입력해주세요.");
-				} else {
-					$.ajax({
-						url: "${action}/hdmall/hpnoCheck",
-						method: "post", //요청방식은 post
-						data: { "userHpno": userHpno },
-						success: function (result) {
-							if (result.result == 1) {
-								alert("이미 사용중인 전화번호 입니다.");
-							} else if (result.result == 0) {
-								alert("사용 가능한 전화번호 입니다.");
-								hpnoCheck = true;
-							} else {
-								console.log('develop : 서버 오류');
-							}
-						},
-						error: function (error) {
-							alert("AJAX요청 실패 : 에러코드 = " + error.status); // status 에러확인 
-						}
-					});
-				}
-	   		});
 		});
+		
+		$(document).on('click', '#hpnoCheck', function () { // 전화번호 중복 확인
+			var userHpno = document.getElementById("userHpno").value;
+			
+			if(userHpno == "") {
+				alert("전화번호를 입력해주세요.");
+			} else {
+				$.ajax({
+					url: "${action}/hdmall/hpnoCheck",
+					method: "post", //요청방식은 post
+					data: { "userHpno": userHpno },
+					success: function (result) {
+						if (result.result == 1) {
+							alert("이미 사용중인 전화번호 입니다.");
+						} else if (result.result == 0) {
+							alert("사용 가능한 전화번호 입니다.");
+						} else {
+							console.log('develop : 서버 오류');
+						}
+					},
+					error: function (error) {
+						alert("AJAX요청 실패 : 에러코드 = " + error.status); // status 에러확인 
+					}
+				});
+			}
+   		});
 		
 		function email_change(form) {
             var value = form.emaildomain[form.emaildomain.selectedIndex].value;
@@ -235,7 +231,7 @@
 				<section id="bottomSection" style="width: 800px; margin:0 auto; margin-top: 75px;">
 					<div class="content_wrap">
 						<h3 class="h3_type line">회원정보 수정</h3>
-						<form name="userManage" method="post" action="${action}/hdmall/userManage">
+						<form name="userManage" method="post" action="${contextPath}/userManage">
 							<table class="tb_write01 vm">
 								<colgroup>
 									<col style="width: 160px">
@@ -274,7 +270,7 @@
 										<th scope="row">전화번호</th>
 										<td>
 											<span class="phone_num">
-												<input type="number" id="userHpno" name="userHpno" style="height: 34px;" onkeypress="javascript:noSpaceEvnt(event);">
+												<input type="text" id="userHpno" name="userHpno" style="height: 34px;" onkeypress="javascript:noSpaceEvnt(event);">
 											</span>
 											<button type="button" class="btn_basic4 small v_top" id="hpnoCheck">중복 확인</button>
 										</td>

@@ -37,6 +37,8 @@
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/layout.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/n_hgk.css?ver=18">
     <link rel="stylesheet" href="../css/detailprod.css">
+    <link rel="stylesheet" href="${action}/hdmall/css/footer.css">
+    <link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
 
     <script language="javascript">
         // 현재 요청경로

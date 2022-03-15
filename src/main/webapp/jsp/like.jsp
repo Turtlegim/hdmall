@@ -55,6 +55,8 @@
 	
 	<script type="text/javascript"
 		src="https://cdn.hddfs.com/front/js/KO/makePCookie.js?ver=18"></script>
+	<link rel="stylesheet" href="${action}/hdmall/css/footer.css">
+    <link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
 	
 	
 	<script type="text/javascript"
@@ -70,6 +72,28 @@
 	
 		var Naver_Previous_Query = getParameterByName('oquery');
 	</script>
+	
+	<script type="text/javascript">
+		function goMainPage() {
+			sessionStorage.setItem("selMainSwiperPos", 1);
+			location.href = "${action}/hdmall/jsp/main.jsp";
+		}
+	
+		$(function() {
+			$(".btn_gnb").on("click", function() {
+				$("#gnb > ul > li").removeClass("open").css("display", "");
+				$("#gnb > ul > li > ul").css("display", "none");
+				$(".serviceMenu").parent().removeClass("open");
+				$(".serviceMenu").parent().addClass("open");
+				$(".serviceMenu").css("display", "block");
+
+				//카테고리 JSONP load
+				if ($(".serviceCtgList > li").length < 1) {
+					loadCtgList();
+				}
+			});
+		});
+	</script> 
 
 	<style>
 		html, body {
@@ -93,139 +117,15 @@
 			display: flex
 			height: 200px;
 		}
+		
+		.top_line {
+    		border-top: 3px solid #1b1e23;
+    		margin: 0 auto;
+		}
 	</style>
 </head>
 
 <body>
-	 <script type="text/javascript"><!--
-		$(window).load(function() {
-			fnLnbCountInfo();
-			orderStatusInfo();
-
-		});
-
-		function fnLnbCountInfo() {
-			$.ajax({
-				async : true,
-				url : "//www.hddfs.com/shop/cm/comm/lnbInfo.json",
-				dataType : "json",
-				type : "POST",
-				success : function(data, textStatus, jqXHR) {
-					//if(!crew.ajaxValidate(data)){ return; }
-
-					var result = data.cartCnt;
-					if (result >= 99) {
-						result = "99+";
-					}
-
-					if (data.cartCnt > 0) {
-						$("#rwingCartCnt").html(result);
-						$("#rwingCartCnt").show();
-					} else {
-						$("#rwingCartCnt").html("0"); //전체삭제시 장바구니 카운트가 초기화 되지 않아 장바구니 추가시 기존카운트에 추가됨.
-						$("#rwingCartCnt").hide();
-					}
-				},
-				error : function(jqXHR, textStatus, errorThrown) {
-					//console.log(jqXHR.status);
-				}
-			});
-		}
-
-		function orderStatusInfo() {
-			if (isLogin) {
-				$
-						.ajax({
-							async : true,
-							url : "//www.hddfs.com/shop/cm/comm/orderStatusInfo.json",
-							dataType : "json",
-							type : "POST",
-							success : function(data, textStatus, jqXHR) {
-								if (!crew.ajaxValidate(data)) {
-									return;
-								}
-
-								var result020 = typeof (data.orderStatInfo['020']) == "undefined" ? 0
-										: Number(data.orderStatInfo['020']); //주문완료
-								var result030 = typeof (data.orderStatInfo['030']) == "undefined" ? 0
-										: Number(data.orderStatInfo['030']); //상품준비중
-								var result040 = typeof (data.orderStatInfo['040']) == "undefined" ? 0
-										: Number(data.orderStatInfo['040']); //상품이동중
-								var result050 = typeof (data.orderStatInfo['050']) == "undefined" ? 0
-										: Number(data.orderStatInfo['050']); //인도대기
-
-								var result = result020 + result030 + result040
-										+ result050;
-
-								if (result >= 99) {
-									result = "99+";
-								}
-								$(".orderStatusTxt").html(
-										result == null ? 0 : result);
-
-								//관심 브랜드 처리
-								var interestList = data.interestBranList;
-								var interestListLength = $(".interestBranList > li").length;
-								if (interestList.length + interestListLength > 20) {
-									for (var i = 0; i < (interestList.length
-											+ interestListLength - 20); i++) {
-										$(".interestBranList > li:last")
-												.remove();
-									}
-								}
-
-								var html = "";
-								for (var i = 0; i < interestList.length; i++) {
-									var onlnBranCd = interestList[i].onlnBranCd;
-									if ($(".interest" + onlnBranCd).length < 1) {
-										html += "<li class=\"interest" + onlnBranCd + "\">";
-										html += "<a  href=\"https://www.hddfs.com/shop/dm/bran/brand.do?onlnBranCd="
-												+ onlnBranCd + "\">";
-										html += "<p>" + interestList[i].branNm
-												+ "</p>";
-										html += "<img src=\"https://cdn.hddfs.com/files/"
-												+ interestList[i].branReprImgUrl
-												+ "?sf=webp&RS=200x200\" alt=\"\" onerror=\"this.onerror=null; this.src='https://cdn.hddfs.com/front/images/M_KO/common/noimg.png?sf=webp&RS=200x200';\">";
-										html += "</a>";
-										html += "</li>";
-									}
-								}
-								$(".interestBranList").prepend(html);
-
-								if ($(".interestBranList > li").length < 1) {
-									$(".interestBranList").parent().remove();
-								}
-							},
-							error : function(jqXHR, textStatus, errorThrown) {
-								console.log(jqXHR.status);
-							}
-						});
-			} else {
-				if ($(".interestBranList > li").length < 1) {
-					$(".interestBranList").parent().remove();
-				}
-			}
-			if ($(".luxuryAreaList > li").length < 1) { //럭셔리 없는 경우 항목삭제
-				$(".luxuryAreaList").parent().remove();
-			}
-		}
--->
-		$(function() {
-			$(".btn_gnb").on("click", function() {
-				$("#gnb > ul > li").removeClass("open").css("display", "");
-				$("#gnb > ul > li > ul").css("display", "none");
-				$(".serviceMenu").parent().removeClass("open");
-				$(".serviceMenu").parent().addClass("open");
-				$(".serviceMenu").css("display", "block");
-
-				//카테고리 JSONP load
-				if ($(".serviceCtgList > li").length < 1) {
-					loadCtgList();
-				}
-			});
-		});
-		}
-	</script> 
 	
 <%@ include file="header.jsp"%>
 <div id="wrap">
@@ -242,29 +142,21 @@
 
 		<article id="content" style="padding-bottom: 30px;">
 			<section class="cart_wrap">
-				<input type="hidden" id="checkedCartSeq" value=""> <input
-					type="hidden" id="checkedCartSetId" value=""> <input
-					type="hidden" id="buyNow" value=""> <input type="hidden"
-					id="buyNowSetGoosId" value=""> <input type="hidden"
-					id="chkPspt" value="0"> <input type="hidden" id="chkDpat"
-					value="0"> <input type="hidden" id="buyNowType" value="">
-				<input type="hidden" id="buyNowOnlnGoosCdList" value=""> <input
-					type="hidden" id="adtAucaYn" value="N">
-				<ul class="title_tab">
+				<ul class="title_tab" style="margin-left: 20px;">
 					<li><a href="javascript:void(0);"
 						onclick='goCartTab("CART");' class="on" id="tabCart">찜하기 목록</a></li>
 				</ul>
-				<div class="cart_contens" style="padding-right: 0px;">
+				<div class="cart_contents" style="padding-right: 0px;">
 					<!-- CSS 적용한거 따로 파일에 만들지 고민 -->
-					<div class="cont_left" id="CART">
+					<div class="top_line" id="CART">
 							<!-- 찜하기 목록이 비어있습니다 :) -->
-						<div class="cart_list">
+						<div class="cart_list" style="margin">
 						<c:forEach var="likelist" items="${likeboard }" varStatus="status">
-						<div id="like_product">
+						<div id="like_product" style="margin-top: 50px; margin-bottom:25px;">
 							<a href="${contextPath }/productdetail/product?prod_id=${likelist.getId() }">
-							<i class="tnr_font "><em><c:out value="${status.index+1}" />.</em></i>
-								<div class="prod">
-									<div class="img_w" style="">
+							<i class="tnr_font" style="width: 30px; height: 180px; float: left; margin-left: 25px; margin-right: 25px;"><em style="height: 180px;"><c:out value="${status.index+1}" />.</em></i>
+								<div class="prod" style="width: 1000px;">
+									<div class="img_w" style="width: 180px; float: left;">
 										<img id="prod_img" data-src=<c:out value="./${likelist.getImg() }"/>
 											src=<c:out value="./${likelist.getImg() }"/>
 											alt=<c:out value="${likelist.getContext() }"/>
@@ -273,14 +165,13 @@
 										<div class="on_btn"></div>
 									</div>
 									<div class="pro_i">
-										<p class="ti_brand" style="font-size:20px"><strong>${likelist.getName() }</strong></p>
-										<p class="tx_ex goosNm" style="font-size:15px">${likelist.getContext() }</p>
-										<div class="por_icons"></div>
+										<p class="ti_brand" style="font-size:20px; margin-left: 30px; float:left; margin-top: 75px;"><strong>${likelist.getName() }</strong></p>
+										<p class="tx_ex goosNm" style="font-size:15px; margin-left: 25px; margin-top: 80px; float: left; width: 500px;">${likelist.getContext() }</p>
+										<div class="por_icons" ><a href="${contextPath }/likeCancel?prod_id=${likelist.getId() }">
+											<button id="deletelike" type="button" style="font-size:20px; float: right; margin-top: 75px;">삭제</button>
+										</div>
 									</div>
 								</div>
-							</a>
-							<a href="${contextPath }/likeCancel?prod_id=${likelist.getId() }">
-							<button id="deletelike" type="button" style="font-size:20px">삭제</button>
 							</a>
 						</div>
 					</c:forEach>
@@ -298,170 +189,6 @@
 					</div>
 			</section>
 		</article>
-
-<!-- 			<script type="text/javascript">
-				$(window)
-						.bind(
-								"pageshow",
-								function(event) {
-									if (event.originalEvent.persisted
-											|| (window.performance && window.performance.navigation.type == 2)) {
-										location.href = 'https://www.hddfs.com/shop/or/order/listCart.do'
-									}
-								});
-
-				$(document).ready(function() {
-					if ($("#cartCd").val() != "001") {
-						$(".loadProgBar").css("display", "none");
-					}
-					$(".select_items a").click(function() {
-						$(".select_items").hide();
-					});
-					$(document).mouseup(function(e) {
-						if ($(".select_items").has(e.target).length === 0)
-							$(".select_items").hide();
-					});
-				});
-
-				$(function() {
-					$(".btn_onoff").click(function() {
-						if ($(this).hasClass("on")) {
-							$(this).removeClass("on");
-						} else {
-							$(this).addClass("on");
-						}
-					});
-
-					$(".tooltip").hide();
-					$(".btn_tooltip").click(function() {
-						$(this).next(".tooltip").show();
-					});
-					$(".close").click(function() {
-						$(this).parent(".tooltip").hide();
-					});
-				});
-
-				$(function() {
-					var product_slider = 4;
-					$(".product-module-swipera")
-							.each(
-									function(index, element) {
-										var $this = $(this);
-										$this.addClass("instance-swipwe-"
-												+ index);
-										$this
-												.siblings(".swiper-prev")
-												.addClass(
-														"instance-prev" + index)
-										$this
-												.siblings(".swiper-next")
-												.addClass(
-														"instance-next" + index)
-
-										var swiper = new Swiper(
-												".instance-swipwe-" + index,
-												{
-													slidesPerView : "auto",
-													spaceBetween : 16,
-													slidesPerGroup : 1,
-													observer : true,
-													observeParents : true,
-													navigation : {
-														nextEl : '.instance-next'
-																+ index,
-														prevEl : '.instance-prev'
-																+ index
-													}
-												});
-
-										if ($(this).find('.swiper-slide').length <= product_slider) {
-											$(this)
-													.parent()
-													.find(
-															'.swiper-next, .swiper-prev')
-													.hide();
-										}
-									});
-				});
-
-				function maxDcAmtInfo() {
-
-					var setGoosId = [];
-					var setGoooCd = [];
-					var setGoosQty = [];
-
-					$("input[name='chkSetCartSeq']:checked").each(
-							function() {
-								var checkedsetGoosId = $(this).attr(
-										"data-setGoosId");
-								var checkedSetIdx = $(this).attr("data-idx");
-
-								$("input[name='setGoosQtyVal']").each(
-										function() {
-
-											var index = $(this)
-													.attr("data-idx");
-											var goosQty = 0;
-											var onlnGoosCd = 0;
-											if (checkedSetIdx === index) {
-												goosQty = $(this).attr(
-														"data-goosQty");
-												onlnGoosCd = $(this).attr(
-														"data-setOnlnGoosCd");
-												setGoosQty.push(goosQty);
-												setGoooCd.push(onlnGoosCd);
-											}
-
-										});
-							});
-
-					var goosQtyList = [];
-					var onlineGoosCdList = [];
-					$("input[name='cartSeq']:checked").each(function() {
-						var checkedIdx = $(this).attr("data-idx");
-						var onlnGoosCd = $(this).attr("data-onlnGoosCd");
-						var goosQty = $("#goosQty" + checkedIdx).val();
-
-						onlineGoosCdList.push(onlnGoosCd);
-						goosQtyList.push(goosQty);
-					});
-
-					goosQtyList = goosQtyList.join(",");
-					onlineGoosCdList = onlineGoosCdList.join(",");
-
-					setGoooCd = setGoooCd.join(",");
-					setGoosQty = setGoosQty.join(",");
-
-					getMaxDcPrc(onlineGoosCdList, goosQtyList, setGoooCd,
-							setGoosQty);
-				}
-
-				function goosDetail(goosCd) {
-					setCookie('ADULT_GOOSCD', goosCd);
-					openPopup('', 'cartGoosCdDetail', goosCd, '', '', '', '',
-							'');
-				}
-			</script>
--->		</main>
+		</main>
 	</div>
-
-	<!-- // container -->
-	<!-- <script type="text/javascript">
-		function sellerInfo() {
-			$("#seller_information").dialog("open");
-		}
-		$(document).ready(function() {
-			// 다이얼로그 초기화
-			$("#seller_information").dialog({
-				autoOpen : false,
-				resizable : false,
-				width : 400,
-				maxHeight : 340,
-				modal : true
-			});
-		});
-		function moveToMain() {
-			location.href = ctx_shop + '/dm/main.do';
-		}
-	</script> -->
 <%@ include file="footer.jsp"%>

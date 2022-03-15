@@ -54,15 +54,12 @@ public class JoinController extends HttpServlet {
         	session.setAttribute("userId", id);
         	
             if (result == 1 && checkHpno == 0) {
-            	out.print("{\"result\": 1}"); // 회원가입 성공 
             } else {
                 if (checkHpno == 1) { // Controller에서 실행되도록 변경하기
                 	result = 2;
-                	out.print("{\"result\": 2}"); // 회원가입 실패 사유 : 전화번호 중복 
                 }
                 
                 result = 0;
-            	out.print("{\"result\": 0}"); // 회원가입 실패 
             	
             	destPage = "/jsp/join.jsp";
             }

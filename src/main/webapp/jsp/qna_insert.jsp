@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="/assets/app/css/swiper.min.css">
     <link rel="stylesheet" href="/assets/app/css/screen.ui.css?version=202202170001" />
     <link rel="stylesheet" href="${action}/hdmall/css/footer.css">
-<link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
+	<link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
 
 <body>
     <script type="text/javascript">

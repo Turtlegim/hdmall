@@ -17,7 +17,7 @@ public class LikeController extends HttpServlet {
 	LikeDAO likeDAO;
 
 	public void init() throws ServletException {
-		likeDAO = likeDAO.getInstance();
+		likeDAO = LikeDAO.getInstance();
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class LikeController extends HttpServlet {
 //				PrintWriter out = response.getWriter();
 //				out.println("<script>alert('로그인하십시오.'); </script>");
 //				out.flush();
-				destPage = "${contextPath}/jsp/main.jsp";
+				destPage = "${contextPath}/jsp/login.jsp";
 			} else {
 				lvo = likeDAO.listisLiked(userId);
 				request.setAttribute("likeboard", lvo);

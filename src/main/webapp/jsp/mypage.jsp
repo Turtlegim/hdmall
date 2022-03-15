@@ -3,7 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<% int count=(int)request.getAttribute("count"); %>
+<% int count=(int)request.getAttribute("count"); 
+%>
+
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -36,6 +38,8 @@
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/common.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/layout.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/main.css?ver=18">
+    <link rel="stylesheet" href="${action}/hdmall/css/footer.css">
+    <link rel="stylesheet" href="${action}/hdmall/css/myhundai.css">
 
     <!-- main 이미지 슬라이더 -->
 	<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
@@ -173,7 +177,6 @@
 		      });
 		
 		      if ("<%=userId%>" != "admin") {
-		          console.log("userId" + <%=userName %>);
 		          document.getElementById("chim").style.display = "";
 		      } else {
 		          document.getElementById("chim").style.display = "none";
@@ -203,7 +206,7 @@
                           </strong>
                           <em>님</em>
                       </p>
-                      <a href="${action}/hdmall/userManage" style="text-decoration-line: underline;">회원정보 수정</a>
+                      <a href="${action}/hdmall/jsp/user_manage.jsp" style="text-decoration-line: underline;">회원정보 수정</a>
                   </div>
                   <div class="mypresent">
                       <dl>
@@ -212,9 +215,9 @@
                             </a>
                         </dl>
                         <dl id="chim">
-                            <a href="https://www.hddfs.com/shop/mm/myBnf/listSvmt.do">
+                            <a href="${action}/hdmall/like">
                                 <dt>찜한 갯수</dt>
-                                <dd id="svmtAmt"><strong>0</strong>개</dd>
+                                <dd id="svmtAmt"><strong>${count_like}</strong>개</dd>
                             </a>
                         </dl>
                         <dl>
@@ -274,14 +277,19 @@
 	                              </tr>
 	                          </thead>
 	                          <tbody>
-	                              <c:forEach var="qna_Board" items="${qboardList}">
-	                                  <tr>
-	                                      <td>${qna_Board.getNum()}</td>
-	                                      <td class="tl">${qna_Board.getTitle()}</td>
+	                              <c:forEach var="qna_Board" items="${qboardList}">	                            	                                   	                           	     	                                                         
+	                                    <tr> 
+	                                      <td>${qna_Board.getNum()}</td>	                                      
+	                                      <td class="tl" style="cursor:pointer;">	                                      
+	                                      <a href = "${contextPath}/QBoardDetail?ans_yn=${qna_Board.getAns_yn()}&qboard_id=${qna_Board.getId()}" >
+	                                      ${qna_Board.getTitle()}
+	                                      </a>
+	                                      </td>	                                    
 	                                      <td class="gray">${qna_Board.getIns_dt()}</td>
 	                                      <td class="gray" id="ansyn_chk">${qna_Board.getAns_yn()}
-	                                      </td>
+	                                      </td>	                        
 	                                  </tr>
+
 	                              </c:forEach>
 	                            </tbody>
 	                        </table>

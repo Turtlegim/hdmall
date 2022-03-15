@@ -27,9 +27,7 @@ public class UserManageController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
         
-    	String destPage = "/jsp/mypage.jsp";
-
-        PrintWriter out = response.getWriter();
+    	String destPage = "";
         
 		String pwd = request.getParameter("userPwd");
 		String name = request.getParameter("userName");
@@ -40,7 +38,7 @@ public class UserManageController extends HttpServlet {
 		HttpSession session = request.getSession();  
 		String id = (String) session.getAttribute("userId");
 		
-		int result = 0; // 회원 정보 수정을 실패하면 0 
+		int result = 0; // 회원정보 수정을 실패하면 0
 		
 		if (email2 == null) {
 			email2 = request.getParameter("emaildomain");
@@ -48,16 +46,13 @@ public class UserManageController extends HttpServlet {
 	    
         try {
     	    result = userDAO.updateUser(pwd, name, hpno, email1, email2, id);
+        	System.out.println(result);
         	
             if (result == 1) {
-            	out.print("{\"result\": 1}"); // 회원정보 수정 성공
-
-            	destPage = "/jsp/mypage.jsp";
+            	destPage = "/jsp/main.jsp";
             } else {
                 result = 0;
-            	out.print("{\"result\": 0}"); // 회원정보 수정 실패
-            	
-            	destPage = "/jsp/user_manage.jsp";
+            	destPage = "/jsp/main.jsp";
             }
             
             RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
