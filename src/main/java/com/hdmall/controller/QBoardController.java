@@ -19,6 +19,7 @@ public class QBoardController extends HttpServlet {
 	public void init() throws ServletException {
 		qnaDAO = QnaDAO.getInstance();
 	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doHandle(request, response);
@@ -28,36 +29,41 @@ public class QBoardController extends HttpServlet {
 			throws ServletException, IOException {
 		doHandle(request, response);
 	}
-
-	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-		response.setContentType("\"text/html;charset=utf-8\"");
+	
+	
+	private void doHandle(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
-
-		String loginUser = (String) session.getAttribute("userId");
-        String context = request.getParameter("context"); 
-		String title = request.getParameter("title");   
-        
+		/* 배지현 : 한글화 처리 */
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("\"text/html;charset=utf-8\"");
 
-		int result = qnaDAO.insertQna(loginUser,context, title);
-		String destpage ="/jsp/qna_insert.jsp";
+		/* 배지현 : session 값에서 login한 user_id 받아옴 */
+		HttpSession session = request.getSession();
+		String loginUser = (String) session.getAttribute("userId");
 		
-		if(result == 0) {
-			 request.setAttribute("message", "문의등록을 실패하였습니다.");
+		/* 배지현 : 등록할 내용과 제목 받아옴 */
+		String context = request.getParameter("context");
+		String title = request.getParameter("title");
+
+		/* 배지현 : 문의 등록 */
+		int result = qnaDAO.insertQna(loginUser, context, title);
+		String destpage = "/jsp/qna_insert.jsp";
+
+		if (result > 1) {
+			request.setAttribute("message", "문의등록을 성공하였습니다.");
 		} else {
-			 request.setAttribute("message", "문의등록을 성공하였습니다.");
+			request.setAttribute("message", "문의등록을 실패하였습니다.");
 		}
 		
+		/* 경민영 : 로그인 유효성 체크함수 */
 		if (loginUser == null) {
 			destpage = "/login";
 			System.out.println("문의 등록은 로그인 후 이용 가능합니다.");
-		} 
-		
-        RequestDispatcher dispatcher = request.getRequestDispatcher(destpage);
+		}
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher(destpage);
 		dispatcher.forward(request, response);
-	
+
 	}
 }

@@ -20,14 +20,12 @@ import com.hdmall.vo.QBoardVO;
 
 import util.Tool;
 
-/*2022- 03-14 배지현*/
 
 @WebServlet("/QBoardList")
 public class QBoardListController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	
-	QnaDAO qnaDAO;
-	UserDAO userDAO;
+	private static final long serialVersionUID = 1L;			
+		QnaDAO qnaDAO;
+		UserDAO userDAO;
 	
 	public void init() throws ServletException {
 		qnaDAO = QnaDAO.getInstance();
@@ -35,70 +33,67 @@ public class QBoardListController extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String destpage = "";
-		
-		/*한글화 처리*/
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("\"text/html;charset=utf-8\"");
-		
-		/*session 값에서 login한 user_id 받아옴*/
-		HttpSession session = request.getSession();
-		String loginUser = (String) session.getAttribute("userId");
-		
-		/* user_type 받아와서 ADmin or user 확인*/
-
+				
 		int count; 
 		int count_combo;
 		int count_like;
-	
-		//  널값이면 ""를 반환하고  널이 아니면 그냥 자기 값을 반환한다.
-		
-		/*분기처리*/
-		List<QBoardVO> qboardList = new ArrayList<QBoardVO>();
+		String destpage = "";
 		String user_type;
 		
+		List<QBoardVO> qboardList = new ArrayList<QBoardVO>();
+		
+		/*배지현 : 한글화 처리*/
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("\"text/html;charset=utf-8\"");
+		
+		/*배지현 : session 값에서 login한 user_id 받아옴*/
+		HttpSession session = request.getSession();
+		String loginUser = (String) session.getAttribute("userId");
+																	
 		try {
 			if (loginUser != null) {
+				
+				/* 배지현 : USER_TYPE ADMIN or USER 확인 */
 				user_type = userDAO.getUserType(loginUser);
 				
-				String col = Tool.checknull(request.getParameter("searchType"));
+				
+				String col = Tool.checknull(request.getParameter("searchType")); 
 				System.out.println("첫 col" + col);
 				String word = Tool.checknull(request.getParameter("searchword"));
-				System.out.println("첫" + word);
-			
+				System.out.println("첫 word" + word);
+				
+				/* 배지현 : 분기처리 */
 				if(user_type.equals("ADMIN")) {
-				 	qboardList = qnaDAO.qBoardListAll(col,word);				 	/*ADMIN 게시글 입력 값에 따른 list*/
+				 	qboardList = qnaDAO.qBoardListAll(col,word);				 			/*배지현 : ADMIN :검색 입력 값에 따른 list*/
 				 	request.setAttribute("qboardList", qboardList);
 				 
-				 	count = qnaDAO.getAllProductCount_A();							/* ADMIN 답변 되지 않은 총 list count*/
+				 	count = qnaDAO.getAllProductCount_A();									/*배지현 : ADMIN 답변 되지 않은 총 list count*/
 			        request.setAttribute("count", count);
 			        
-			        count_combo = qnaDAO.getAllProductCount_COMBO_A(col,word);  	/*ADMIN 게시글 입력 값에 따라 count*/
+			        count_combo = qnaDAO.getAllProductCount_COMBO_A(col,word);  			/*배지현 : ADMIN 검색 입력 값에 따라 count*/
 			        request.setAttribute("count_combo", count_combo);
 			 	} else {	
-			 		qboardList = qnaDAO.qBoardlistType_U(loginUser,col,word);		 /*USER 게시글 입력 값에 따른 list*/
+			 		qboardList = qnaDAO.qBoardlistType_U(loginUser,col,word);		 		/*배지현 : USER 검색 입력 값에 따른 list*/
 				 	request.setAttribute("qboardList", qboardList);
 				 	
-				    count = qnaDAO.getAllProductCount_U(loginUser);					/*USER 게시글 총 count*/
+				    count = qnaDAO.getAllProductCount_U(loginUser);							/*배지현 : USER 게시글 총 count*/
 				    request.setAttribute("count", count);
 				    
-			        count_combo = qnaDAO.getAllProductCount_COMBO_U(loginUser,col,word);  /*USER 게시글 입력 값에 따라 count*/
+			        count_combo = qnaDAO.getAllProductCount_COMBO_U(loginUser,col,word);  	/*배지현 : USER 검색 입력 값에 따라 count*/
 			        request.setAttribute("count_combo", count_combo);
 			        
-			        count_like = qnaDAO.getLikeProductCount(loginUser); 				  /*USER가 찜한 목록 count*/
+			        count_like = qnaDAO.getLikeProductCount(loginUser); 				  	/*배지현 : USER가 찜한 목록 count*/
 			        request.setAttribute("count_like", count_like);
-			 	}
-			
-				destpage = "/jsp/mypage.jsp";
+			 	}			
+				destpage = "/jsp/mypage.jsp";												
 			} else {
-				destpage = "/login";
+				destpage = "/login";														/*경민영 : 로그인 유효성 체크 */
 				System.out.println("마이페이지는 로그인 후 이용 가능합니다.");
 			}
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher(destpage);
 			dispatcher.forward(request, response);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}	 
