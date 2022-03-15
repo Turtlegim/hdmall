@@ -35,23 +35,6 @@ public class QBoardListController extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			doHandle(request, response);
-		} catch (ServletException | IOException | SQLException e) {
-			e.printStackTrace();
-		}
-	}	 
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			doHandle(request, response);
-		} catch (ServletException | IOException | SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void doHandle(HttpServletRequest request,  HttpServletResponse response) throws ServletException, IOException, SQLException{
-		 
 		String destpage = "";
 		
 		/*한글화 처리*/
@@ -68,45 +51,59 @@ public class QBoardListController extends HttpServlet {
 		int count_combo;
 		int count_like;
 	
-		//  널값이면 ""를 반환하고  널이 아니면 그냥 자기 값을 반환한다
-
+		//  널값이면 ""를 반환하고  널이 아니면 그냥 자기 값을 반환한다.
+		
 		/*분기처리*/
 		List<QBoardVO> qboardList = new ArrayList<QBoardVO>();
-		String user_type = userDAO.getUserType(loginUser);
+		String user_type;
 		
-		String col = Tool.checknull(request.getParameter("searchType"));
-		System.out.println("첫 col" + col);
-		String word = Tool.checknull(request.getParameter("searchword"));
-		System.out.println("첫" + word);
-		
-		 if(user_type.equals("ADMIN")) {
-		 	qboardList = qnaDAO.qBoardListAll(col,word);				 	/*ADMIN 게시글 입력 값에 따른 list*/
-		 	request.setAttribute("qboardList", qboardList);
-		 
-		 	count = qnaDAO.getAllProductCount_A();							/* ADMIN 답변 되지 않은 총 list count*/
-	        request.setAttribute("count", count);
-	        
-	        count_combo = qnaDAO.getAllProductCount_COMBO_A(col,word);  	/*ADMIN 게시글 입력 값에 따라 count*/
-	        request.setAttribute("count_combo", count_combo);
-	        
-	        destpage = "/jsp/mypage.jsp";
-		 } else {	
-		 	qboardList = qnaDAO.qBoardlistType_U(loginUser,col,word);		 /*USER 게시글 입력 값에 따른 list*/
-		 	request.setAttribute("qboardList", qboardList);
-		 	
-		    count = qnaDAO.getAllProductCount_U(loginUser);					/*USER 게시글 총 count*/
-		    request.setAttribute("count", count);
-		    
-	        count_combo = qnaDAO.getAllProductCount_COMBO_U(loginUser,col,word);  /*USER 게시글 입력 값에 따라 count*/
-	        request.setAttribute("count_combo", count_combo);
-	        
-	        count_like = qnaDAO.getLikeProductCount(loginUser); 				  /*USER가 찜한 목록 count*/
-	        request.setAttribute("count_like", count_like);
-	        
-	        destpage = "/jsp/mypage.jsp";
-		 }
+		try {
+			if (loginUser != null) {
+				user_type = userDAO.getUserType(loginUser);
+				
+				String col = Tool.checknull(request.getParameter("searchType"));
+				System.out.println("첫 col" + col);
+				String word = Tool.checknull(request.getParameter("searchword"));
+				System.out.println("첫" + word);
+			
+				if(user_type.equals("ADMIN")) {
+				 	qboardList = qnaDAO.qBoardListAll(col,word);				 	/*ADMIN 게시글 입력 값에 따른 list*/
+				 	request.setAttribute("qboardList", qboardList);
+				 
+				 	count = qnaDAO.getAllProductCount_A();							/* ADMIN 답변 되지 않은 총 list count*/
+			        request.setAttribute("count", count);
+			        
+			        count_combo = qnaDAO.getAllProductCount_COMBO_A(col,word);  	/*ADMIN 게시글 입력 값에 따라 count*/
+			        request.setAttribute("count_combo", count_combo);
+			 	} else {	
+			 		qboardList = qnaDAO.qBoardlistType_U(loginUser,col,word);		 /*USER 게시글 입력 값에 따른 list*/
+				 	request.setAttribute("qboardList", qboardList);
+				 	
+				    count = qnaDAO.getAllProductCount_U(loginUser);					/*USER 게시글 총 count*/
+				    request.setAttribute("count", count);
+				    
+			        count_combo = qnaDAO.getAllProductCount_COMBO_U(loginUser,col,word);  /*USER 게시글 입력 값에 따라 count*/
+			        request.setAttribute("count_combo", count_combo);
+			        
+			        count_like = qnaDAO.getLikeProductCount(loginUser); 				  /*USER가 찜한 목록 count*/
+			        request.setAttribute("count_like", count_like);
+			 	}
+			
+				destpage = "/jsp/mypage.jsp";
+			} else {
+				destpage = "/jsp/login.jsp";
+				System.out.println("마이페이지는 로그인 후 이용 가능합니다.");
+			}
 
-		 RequestDispatcher dispatcher = request.getRequestDispatcher(destpage);
-		 dispatcher.forward(request, response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher(destpage);
+			dispatcher.forward(request, response);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}	 
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
 }

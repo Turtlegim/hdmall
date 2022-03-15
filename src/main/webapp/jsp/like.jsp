@@ -130,6 +130,13 @@
 <%@ include file="header.jsp"%>
 <div id="wrap">
 		<!-- container -->
+	<script>
+		$( document ).ready(function() {
+	    	if (userName == null) {
+	    		alert("찜하기 화면은 로그인 후 이용 가능합니다.");
+	    	}
+	    });
+	</script>
 	<main id="container" class="container">
 
 		<form id="selfReplace"

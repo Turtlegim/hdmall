@@ -36,7 +36,12 @@ public class QnaDAO {
 			cstmt.setString(2, context);
 			cstmt.setString(3, title);
 			result = cstmt.executeUpdate();
-
+			
+			if (result == 1) {
+				System.out.println("문의사항 등록 성공");
+			} else {
+				System.out.println("문의사항 등록 실패");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

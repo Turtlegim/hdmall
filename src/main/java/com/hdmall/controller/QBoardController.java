@@ -51,6 +51,11 @@ public class QBoardController extends HttpServlet {
 			 request.setAttribute("message", "문의등록을 성공하였습니다.");
 		}
 		
+		if (loginUser == null) {
+			destpage = "/jsp/login.jsp";
+			System.out.println("문의 등록은 로그인 후 이용 가능합니다.");
+		} 
+		
         RequestDispatcher dispatcher = request.getRequestDispatcher(destpage);
 		dispatcher.forward(request, response);
 	

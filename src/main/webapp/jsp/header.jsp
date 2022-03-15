@@ -6,8 +6,25 @@
 	String userName = (String)session.getAttribute("userName");
 %>
 
- <header id="header">
-		<section class="box">
+<script>
+	function clickMenuFunction() {
+		if (<%=userId%> == null) {
+			alert("로그인 후 이용 가능한 서비스입니다.");
+		}
+	}
+</script>
+
+<style>
+	.like_item {
+		display: block;
+    	width: 26px;
+    	height: 24px;
+    	text-indent: -9999px;
+	}
+</style>
+
+<header id="header">
+	<section class="box">
 			<a href="javascript:" class="btn_gnb">Navigation Drawer</a>
 			<h1 onclick="goMainPage();" style="cursor: pointer; height: 48px"><img id="mainLogo" src="${action}/hdmall/image/logo.png">
 			</h1> <!-- 로고 이미지 src 변경 부분 -->
@@ -17,17 +34,17 @@
 				<a> <%=userName%>님 </a>
 				<a href="${action}/hdmall/logout" id="logoutBtn">로그아웃</a>
 			<%}else { %> 
-				<a href="${action}/hdmall/jsp/login.jsp" id="loginBtn">로그인</a>
+				<a href="${action}/hdmall/login" id="loginBtn">로그인</a>
 			<%} %>
 				<ul>
-                <li class="item_01">
-                    <a href="${contextPath}/like">찜하기</a>
+                <li class="like_item">
+                    <a href="${contextPath}/like" id="like" onclick="clickMenuFunction();"><image src="${action}/hdmall/image/heart.png"/></a>
                 </li>
                 <li class="item_03">
-                    <a href="${contextPath}/QBoardList">마이현대</a>
+                    <a href="${contextPath}/QBoardList" id="mypage" onclick="clickMenuFunction();">마이현대</a>
                 </li>
                 <li class="item_04">
-                    <a href="${contextPath}/QBoardIns">고객센터</a>
+                    <a href="${contextPath}/QBoardIns" id="qna" onclick="clickMenuFunction();">고객센터</a>
                 </li>
             </ul>
         </div>
@@ -141,6 +158,6 @@
 			</div>
 			<button class="gnb_close">닫기</button>
 		</nav>
-		</section>
+	</section>
 </header>
 <!-- 히든메뉴 END 03.05 경민영 -->

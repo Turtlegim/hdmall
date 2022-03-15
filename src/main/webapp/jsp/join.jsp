@@ -89,6 +89,8 @@
                     			alert("중복된 아이디입니다.");
                        	 	} else if(result.result == 0) {
                     			alert("사용 가능한 아이디입니다.");	
+
+                    			form.userId.readonly = true;
                     			idCheck = true;
                        	   	} else {
                     			console.log('develop : 서버 오류');
@@ -114,10 +116,6 @@
         		if (pwd != rePwd) { // 비밀번호와 비밀번호 확인에 입력한 내용이 일치하지 않는 경우
         	   		alert("입력한 비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
         	   	}
-        		
-        		if (idCheck == false) { // 아이디 중복 확인을 안한 경우
-        			alert("아이디 중복 확인을 해주세요.");
-        		}
         	});
         });
     </script>

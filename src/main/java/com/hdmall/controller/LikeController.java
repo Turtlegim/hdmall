@@ -56,13 +56,11 @@ public class LikeController extends HttpServlet {
 		List<ProductVO> lvo = null;
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
-		// request.setAttribute("cate_no", cate_no);
+		
 		try {
 			if (userId == null) {
-//				PrintWriter out = response.getWriter();
-//				out.println("<script>alert('로그인하십시오.'); </script>");
-//				out.flush();
-				destPage = "${contextPath}/jsp/login.jsp";
+				destPage = "/jsp/login.jsp";
+				System.out.println("찜하기는 로그인 후 이용 가능합니다.");
 			} else {
 				lvo = likeDAO.listisLiked(userId);
 				request.setAttribute("likeboard", lvo);
