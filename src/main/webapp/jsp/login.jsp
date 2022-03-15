@@ -84,16 +84,12 @@
 		}
 
         $( document ).ready(function() {
-        	var result = "<c:out value="${result}"/>";
-
         	$('#btnLgin').click(function(){
         		var id = document.getElementById('userId').value;
             	var pwd = document.getElementById('userPwd').value;
             	
         		if(id == "" || pwd == "") {
             		alert("빈칸이 존재합니다.");
-        		} else if (result == 1) { // 다시 보완하기
-        			alert("아이디와 비밀번호를 다시 입력해주세요.");
         		}
         	});
         });
