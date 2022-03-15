@@ -93,13 +93,12 @@
         });
 
         function goMainPage() {
-            sessionStorage.setItem("selMainSwiperPos", 1);
-            location.href = "${action}/hdmall/jsp/main.jsp";
-        }
+			sessionStorage.setItem("selMainSwiperPos", 1);
+			location.href = "${action}/hdmall/main.do";
+		}
        
-        
         // 찜하기 버튼이 로그인시에만 이용가능하고 버튼을 누를 떄 하트 색이 변경하는 함수  김민수 03/13            
-       $(function () {
+       	$(function () {
             let like = document.querySelector("#likeheart").style.color;
             let userId = '<%= (String)session.getAttribute("userId") %>';
 			let prodId = '${productVO.id}';
@@ -125,7 +124,7 @@
                         data: {"userId": userId, "prodId" : prodId, "isLike" : isLike},
                         success: function(result) {
                         	if(result == 1) {
-                    			alert("상품을 찜을 취소 또는 재등록하였습니다.");
+                    			alert("상품을 찜을 취소 또는 재등록하였습니다."); // 찜했던 상품을 누르면 찜을 취소하고, 찜을 안했던 상품을 누르면 찜하기 동작 실행
                        	 	} else if(result == 2) {
                     			alert("상품을 찜하였습니다.");	
                        	   	} else {
@@ -174,12 +173,10 @@
 			
             <article id="content" class="productdetail">
                 <section class="pd_area">
-                    <div class="pd_visual" style="padding: 100px 18px;">
-                        <div>                       
-                            <img src="./image/product/${productVO.img}" style="width: 460px; height: 460px"/>
-                        </div>
+                	<div style="margin-left: 200px; margin-top: 150px; float: left;">                       
+                        <img src="./image/product/${productVO.img}" style="width: 460px; height: 460px"/>
                     </div>
-                    <div class="pd_info">
+                    <div class="pd_info" style="height: 830px;">
                         <div class="summary_info" style="margin-top: 150px;">
                             <h2><strong>Product Info 제품정보</strong></h2>
 
@@ -203,7 +200,7 @@
                                         <p style="font-size: 18px; padding-top: 8px;">
                                             ${productVO.cate_no}</p>
                                     </li>
-                                    <li>
+                                    <li style="width: 400px;">
                                         <strong style="font-size: 19px;">
                                             제품설명</strong>
                                         <p style="font-size: 18px; padding-top: 8px;">
@@ -214,6 +211,12 @@
                                             좋아요</strong>
                                         <p style="font-size: 18px; padding-top: 8px;">
                                             ${likecount}개</p>
+                                    </li>
+                                    <li>
+                                        <strong style="font-size: 19px;">
+                                            조회수</strong>
+                                        <p style="font-size: 18px; padding-top: 8px;">
+                                            ${productVO.getHitnum()}</p>
                                     </li>
                                 </ul>
                             </div>

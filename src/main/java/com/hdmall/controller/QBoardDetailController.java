@@ -54,8 +54,6 @@ public class QBoardDetailController extends HttpServlet {
 		String qboard_id =request.getParameter("qboard_id");	
 		System.out.println(qboard_id);	
 		
-		
-		
 		String qboard_ans_yn = request.getParameter("ans_yn");
 		System.out.println("클릭시 답변 유무 " + qboard_ans_yn);
 		

@@ -144,9 +144,11 @@ public class ProductDAO {
 			cstmt.registerOutParameter(2, OracleTypes.CURSOR);
 			cstmt.registerOutParameter(3, java.sql.Types.VARCHAR);
 			cstmt.registerOutParameter(4, java.sql.Types.NUMERIC);
-
+			
 			cstmt.executeQuery();
 			rs = (ResultSet)cstmt.getObject(2);
+			
+			int hitcount = cstmt.getInt(4) + 1;
 			
 			while (rs.next()) { 
 				product = new ProductVO();
@@ -156,8 +158,9 @@ public class ProductDAO {
 				product.setPrice(rs.getString("prod_price"));
 				product.setImg(rs.getString("prod_img"));
 				product.setContext(rs.getString("prod_context"));
-			}
-			countUpdate(cstmt.getString(3), cstmt.getInt(4) + 1); // 조회수 업데이트
+				product.setHitnum(hitcount);
+				}
+			countUpdate(cstmt.getString(3), hitcount); // 조회수 업데이트
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

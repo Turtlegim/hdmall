@@ -52,7 +52,7 @@ public class QBoardController extends HttpServlet {
 		}
 		
 		if (loginUser == null) {
-			destpage = "/jsp/login.jsp";
+			destpage = "/login";
 			System.out.println("문의 등록은 로그인 후 이용 가능합니다.");
 		} 
 		

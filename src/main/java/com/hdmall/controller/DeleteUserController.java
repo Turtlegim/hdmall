@@ -58,7 +58,7 @@ public class DeleteUserController extends HttpServlet {
 	            session.setAttribute("userName", null);
 	            session.invalidate();
 	            
-	        	destPage = "/jsp/main.jsp";
+	        	destPage = "/main.do";
 	        } else {
 	        	System.out.println("회원 탈퇴 실패");
 	        	out.print("{\"result\": 0}");

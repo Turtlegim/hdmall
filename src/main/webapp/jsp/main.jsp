@@ -117,7 +117,7 @@
 
 		function goMainPage() {
 			sessionStorage.setItem("selMainSwiperPos", 1);
-			location.href = "${action}/hdmall/jsp/main.jsp";
+			location.href = "${action}/hdmall/main.do";
 		}
 	</script>
 
@@ -161,33 +161,33 @@
     
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
-        //구글차트 
-        google.charts.load('current', {'packages':['corechart']}); 
-        google.charts.setOnLoadCallback(drawChart);
-        function drawChart() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string','Foods');
-            data.addColumn('number','비중');
-
-            data.addRows([ 
-            		<% 
-            	 	while (entries.hasNext()) {
-            			Map.Entry<String, Integer> entry = entries.next(); %>
-            			['<%=entry.getKey()%>',<%=entry.getValue()%>]<%if(entries.hasNext()){%>
-            				, <%}}%>
-						]);
-            var opt = {
-                    'title':'상품별 찜한 사용자수',
-                    'width':600,
-                    'height':600,
-                    pieSliceText:'label',
-                    legend:'none' 
-            };
-            var chart = new google.visualization.PieChart(document.getElementById('myChart'));
-            chart.draw(data,opt);
-        }
-        </script>
+	        //구글차트 
+	        google.charts.load('current', {'packages':['corechart']}); 
+	        google.charts.setOnLoadCallback(drawChart);
+	        function drawChart() {
+	            var data = new google.visualization.DataTable();
+	            data.addColumn('string','Foods');
+	            data.addColumn('number','비중');
+	
+	            data.addRows([ 
+	            		<% 
+	            	 	while (entries.hasNext()) {
+	            			Map.Entry<String, Integer> entry = entries.next(); %>
+	            			['<%=entry.getKey()%>',<%=entry.getValue()%>]<%if(entries.hasNext()){%>
+	            				, <%}}%>
+							]);
+	            var opt = {
+	                    'title':'상품별 찜한 사용자수',
+	                    'width':600,
+	                    'height':600,
+	                    pieSliceText:'label',
+	                    legend:'none' 
+	            };
+	            var chart = new google.visualization.PieChart(document.getElementById('myChart'));
+	            chart.draw(data,opt);
+	        }
+       </script>
         
         
-	<div id="myChart" style="margin:0 auto;"></div>
+		<div id="myChart" style="margin:0 auto;"></div>
 <%@ include file = "footer.jsp"%>			

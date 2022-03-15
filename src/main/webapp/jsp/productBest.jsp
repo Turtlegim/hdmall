@@ -145,7 +145,7 @@
 
 		function goMainPage() {
 			sessionStorage.setItem("selMainSwiperPos", 1);
-			location.href = "main.html";
+			location.href = "${action}/hdmall/main.do";
 		}
 	</script>
 

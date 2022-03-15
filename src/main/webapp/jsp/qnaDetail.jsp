@@ -95,8 +95,8 @@
 		});
 		
 		function goMainPage() {
-		    sessionStorage.setItem("selMainSwiperPos", 1);
-		    location.href = "${action}/hdmall/jsp/main.jsp";
+			sessionStorage.setItem("selMainSwiperPos", 1);
+			location.href = "${action}/hdmall/main.do";
 		}
 		
 	</script>
@@ -116,13 +116,12 @@
 			max-height: 100%;
 			max-width: 100%;
 		}
-	.btn_basic4:hover{
-    			background: #dcdcdc;
-    			color: white;
-    			transition: all 0.5s;
-    			}
 		
-	
+		.btn_basic4:hover{
+   			background: #dcdcdc;
+   			color: white;
+   			transition: all 0.5s;
+		}
 	</style>
 </head>
 
@@ -169,12 +168,6 @@
             }
             return false;
 		}  
-
-			
-
-
-	
-		
 
 		</script>
 			<div id="wrap">
@@ -244,12 +237,4 @@
 				</div>
 			</div>	
 				<!-- container END -->
-	<%@ include file="footer.jsp" %>
-	
-	
-
-
-</body>
-
-
-</html>
+<%@ include file="footer.jsp" %>
