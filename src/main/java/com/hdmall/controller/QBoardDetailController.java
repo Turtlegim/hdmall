@@ -52,19 +52,23 @@ public class QBoardDetailController extends HttpServlet {
 		
 		/*클릭한 qboard_id 받아옴*/
 		String qboard_id =request.getParameter("qboard_id");	
-		System.out.println(qboard_id);
+		System.out.println(qboard_id);	
+		
+		
 		
 		String qboard_ans_yn = request.getParameter("ans_yn");
 		System.out.println("클릭시 답변 유무 " + qboard_ans_yn);
 		
 		try {
 			
-			QBoardVO qboard_detail = qnaDAO.getQboardDetail(qboard_id); /*getQboardDetail 함수 만들어야함 03.14 dao 에서*/
+			QBoardVO qboard_detail = qnaDAO.getQboardDetail(qboard_id); /*getQboardDetail 함수*/
 			request.setAttribute("qboard_detail", qboard_detail); 
 			
-			String user_type= userDAO.getUserType(loginUser);   /*user_id 값 받아서 user_type 반환 함수 만들기*/	
+			String user_type= userDAO.getUserType(loginUser);   /*user_id 값 받아서 user_type 반환 함수*/	
 			request.setAttribute("user_type", user_type);
 		
+			request.setAttribute("qboard_id",qboard_id);
+			
 			destPage = "/jsp/qnaDetail.jsp";
 			
 			RequestDispatcher dispatch = request.getRequestDispatcher(destPage);

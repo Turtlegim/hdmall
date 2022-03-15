@@ -140,6 +140,7 @@
 		      		}
 		      }else{
 		    	  	  document.getElementById("ans_div_insert").style.display = "none";
+		    	  	  document.getElementById("saveANS").style.display = "none";  //답변등록하기 버튼 hidden
 		    	  if ("${qboard_detail.ans_yn}" == 0){
 		    		  document.getElementById("ans_div").style.display = "none";
 		    		  
@@ -153,6 +154,7 @@
 		function gomyPage() {
 			location.href = "${contextPath}/QBoardList";
 		}
+		
 		function goinsert(){
 		
 			var title = $('#title').val();
@@ -167,6 +169,12 @@
             }
             return false;
 		}  
+
+			
+
+
+	
+		
 
 		</script>
 			<div id="wrap">
@@ -212,7 +220,7 @@
                         <tr>
                            <th scope="row">제목<em class="essential">*</em></th>
                             <td><input type="text" class="required" valmsg="제목을 입력해주세요." id="title" name="title" value="" placeholder="제목을 입력해주세요." style="width: 100% ; margin: 11px 0 20px 0px;" maxlength="50" onpaste="false; "></td>
-                       		<td id ="qboard_id" style = "display : none">${qboardId}</td>
+                       		<td><input type= hidden name ="qboard_id"  value="<%=qboardId%>"></td>
                        </tr>
                        <tr>
                           <th scope="row">내용<em class="essential">*</em></th>
@@ -229,7 +237,7 @@
 					<div class="basic_btn_box">
 						<button type="button" class="btn_basic4"
 							onclick = "gomyPage();">마이페이지로</button>
-						<button type = "submit" class = "btn_basic4"
+						<button type ="submit" class = "btn_basic4"
 							id ="saveANS">답변등록</button>	
 					</div>
 				  </form>	
