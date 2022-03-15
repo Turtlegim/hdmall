@@ -188,11 +188,11 @@
 									<c:forEach var="vo" items="${best}" begin="0" end="2"
 										varStatus="status">
 										<li style="height: 420px">
-											<a href="${contextPath }/productdetail/product?prod_id=${vo.getId() }">
+											<a href="${contextPath }/productdetail?prod_id=${vo.getId() }">
 												<i class="tnr_font "><em><c:out value="${status.count}" />.</em></i>
 												<div class="img_w">
-													<img data-src=<c:out value="./${vo.getImg() }"/>
-														src=<c:out value="./${vo.getImg() }"/>
+													<img data-src=<c:out value="./image/product/${vo.getImg() }"/>
+														src=<c:out value="./image/product/${vo.getImg() }"/>
 														alt=<c:out value="${vo.getContext() }"/>
 														onerror="this.src='https://cdn.hddfs.com/front/images/KO/common/noimg.png?sf=webp&RS=252x252';"
 														class="lazy">
@@ -215,8 +215,8 @@
 											<a href="${contextPath }/productdetail?prod_id=${vo.getId() }">
 												<i class="tnr_font "><em><c:out value="${status.index + 1}" />.</em></i>
 												<div class="img_w">
-													<img data-src=<c:out value="./${vo.getImg() }"/>
-														src=<c:out value="./${vo.getImg() }"/>
+													<img data-src=<c:out value="./image/product/${vo.getImg() }"/>
+														src=<c:out value="./image/product/${vo.getImg() }"/>
 														alt=<c:out value="${vo.getContext() }"/>
 														onerror="this.src='https://cdn.hddfs.com/front/images/KO/common/noimg.png?sf=webp&RS=252x252';"
 														class="lazy">
