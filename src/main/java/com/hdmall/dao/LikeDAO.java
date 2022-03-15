@@ -217,7 +217,35 @@ public class LikeDAO {
 		}
 		return result;
 	}
+	
+	public int updateLike(String islike, String userId, String prodId) {
+		int result = 0;
+		String sql = "update like_t "
+				+ "set is_liked = ?" +
+				"where user_id= ? AND prod_id= ?";	     
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
 
+			pstmt.setString(1, islike);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, prodId);
+
+			result = pstmt.executeUpdate();
+
+			if (result == 1) {
+				System.out.println("찜하기 수정");
+			} else {
+				System.out.println("찜하기 수정실패");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+	
 	public LikeVO checkLikeUser(String userId, String prodId) throws SQLException{
 		LikeVO like = null;
 		String query = "select * from like_t b where user_id = ? AND prod_id = ?";
