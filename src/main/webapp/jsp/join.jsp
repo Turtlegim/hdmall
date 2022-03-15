@@ -109,13 +109,25 @@
         		var rePwd = document.getElementById('reUserPwd').value;
         		var email1 = document.getElementById('email1').value;
         		
-        		if (name == "" || id == "" || hpno == "" || email1 == "") { // 빈칸이 존재하는 경우
+        		var isPwdEqual = <%= session.getAttribute("isPwdEqual") %>;
+        		var idCheckResult = <%= session.getAttribute("idCheckResult") %>;
+        		var joinResult = <%= session.getAttribute("joinResult") %>;
+        		
+        		if (name == "" || id == "" || hpno == "" || email1 == "" || pwd == "" || rePwd == "") { // 빈칸이 존재하는 경우
         			alert("필수 정보들을 모두 입력해주세요.");
         	   	}
         		
-        		if (pwd != rePwd) { // 비밀번호와 비밀번호 확인에 입력한 내용이 일치하지 않는 경우
+        		if (isPwdEqual == 1) { // 비밀번호와 비밀번호 확인에 입력한 내용이 일치하지 않는 경우
         	   		alert("입력한 비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
         	   	}
+        		
+        		if (idCheckResult == 1) {
+        			alert("중복된 아이디로 회원가입을 하실 수 없습니다. 다시 입력해주세요.");
+        		}
+        		
+        		if (joinResult == 0) {
+        			alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+        		}
         	});
         });
     </script>

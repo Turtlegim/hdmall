@@ -30,12 +30,12 @@ public class JoinController extends HttpServlet {
         
     	String destPage = "/jsp/main.jsp";
 
-        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();  
         
 		String name = request.getParameter("userName");
 		String id = request.getParameter("userId");
 		String pwd = request.getParameter("userPwd");
+		String rePwd = request.getParameter("reUserPwd");
 		String hpno = request.getParameter("userHpno");
 		String email1 = request.getParameter("email1");
 		String email2 = request.getParameter("email2");   
@@ -45,6 +45,10 @@ public class JoinController extends HttpServlet {
 		if (email2 == null) {
 			email2 = request.getParameter("emaildomain");
 		}
+		
+		if (pwd != rePwd) {
+			session.setAttribute("isPwdEqual", 1);
+		}
 	    
         try {
     	    int checkHpno = userDAO.checkHpno(hpno); // 전화번호 중복 확인 
@@ -53,9 +57,10 @@ public class JoinController extends HttpServlet {
     	    
         	session.setAttribute("userId", id);
         	
-            if (result == 1 && checkHpno == 0) {
-            } else {
-                if (checkHpno == 1) { // Controller에서 실행되도록 변경하기
+            if (result == 1) { // 회원가입 성공
+            	result = 1;
+            } else { // 회원가입 실패
+                if (checkHpno == 1) { // 전화번호 중복으로 회원가입 실패한 경우
                 	result = 2;
                 }
                 
@@ -63,6 +68,8 @@ public class JoinController extends HttpServlet {
             	
             	destPage = "/jsp/join.jsp";
             }
+            
+            session.setAttribute("joinResult", result); // 회원가입의 결과를 세션에 저장
             
             RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
             dispatcher.forward(request, response);

@@ -25,6 +25,7 @@ public class IdCheckController extends HttpServlet {
 		response.setContentType("application/json; charset=utf-8");
 		
 	    PrintWriter out = response.getWriter();
+	    HttpSession session = request.getSession();
 	    
 	    String userId = request.getParameter("userId");
 	    System.out.println("전달된 useId : " + userId);
@@ -36,6 +37,7 @@ public class IdCheckController extends HttpServlet {
 	        	out.print("{\"result\": 1}"); // json문법은 객체 표현할때 프라퍼티 앞에 백슬러시 큰따옴표가 필요 
 	        } else {
 	        	out.print("{\"result\": 0}");
+	        	session.setAttribute("idCheckResult", result);
 	        }
 	    } catch (SQLException e) {
 			e.printStackTrace();
