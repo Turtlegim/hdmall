@@ -63,7 +63,7 @@ public class ProductDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(conn, pstmt, rs);
+			DBManager.close(conn, cstmt, rs);
 		}
 		return count;
 	}
@@ -128,7 +128,7 @@ public class ProductDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(conn, pstmt, rs);
+			DBManager.close(conn, cstmt, rs);
 		}
 		return count;
 	}
@@ -147,8 +147,7 @@ public class ProductDAO {
 
 			cstmt.executeQuery();
 			rs = (ResultSet)cstmt.getObject(2);
-//		    System.out.println(rs);
-		    
+			
 			while (rs.next()) { 
 				product = new ProductVO();
 				product.setId(rs.getString("prod_id"));
@@ -201,7 +200,7 @@ public class ProductDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(conn, pstmt, rs);
+			DBManager.close(conn, cstmt, rs);
 		}
 		return count;
 	}
