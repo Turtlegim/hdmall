@@ -145,6 +145,11 @@ public class LikeDAO {
 			cstmt.registerOutParameter(2, java.sql.Types.INTEGER);
 			result = cstmt.executeUpdate();
 			res = cstmt.getInt(2);
+			if (res == 0) {
+				System.out.println("찜한 목록 삭제를 실패하였습니다.");
+			} else {
+				System.out.println("찜한 목록 삭제를 성공하였습니다.");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -161,17 +166,14 @@ public class LikeDAO {
 	// 해당 유저가 찜한 목록이 존재하는지 확인하는 함수
 	public int isExistLike(String userId) throws SQLException {
 		int count = 0;
-		ResultSet result = null;
 		try {
 			conn = DBManager.getConnection();
-			String query = "{call isExistLike_PROC(?,?)}";
+			String query = "{? = call isExistLike_FUNC(?)}";
 			cstmt = conn.prepareCall(query);
-			cstmt.setString(1, userId);
-			cstmt.registerOutParameter(2, java.sql.Types.NUMERIC);
-			result = cstmt.executeQuery();
-			if (result.next()) {
-				count = result.getInt(1);
-			}
+			cstmt.setString(2, userId);
+			cstmt.registerOutParameter(1, java.sql.Types.NUMERIC);
+			cstmt.executeUpdate();
+			count = cstmt.getInt(1);
 			System.out.println("Total rows : " + count);
 
 			if (count == 0) {

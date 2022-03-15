@@ -388,15 +388,12 @@ public class QnaDAO {
 		
 		try {
 			conn = DBManager.getConnection();
-			String query = "{call isexist_qna_func(?)}";
+			String query = "{? = call isexist_qna_func(?)}";
 			cstmt = conn.prepareCall(query);
-			cstmt.setString(1, userId);
+			cstmt.registerOutParameter(1, java.sql.Types.NUMERIC);
+			cstmt.setString(2, userId);
 			result = cstmt.executeQuery();
-			
-			if (result.next()) {
-				count = result.getInt(1);
-			}
-			
+			count = cstmt.getInt(1);
 			System.out.println("Total rows : " + count);
 
 			if (count == 0) {
