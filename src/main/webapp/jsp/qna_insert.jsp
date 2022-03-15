@@ -54,9 +54,9 @@
 		});
     
 	    function goMainPage() {
-	        sessionStorage.setItem("selMainSwiperPos", 1);
-	        location.href = "${action}/hdmall/jsp/main.jsp";
-	    }
+			sessionStorage.setItem("selMainSwiperPos", 1);
+			location.href = "${action}/hdmall/main.do";
+		}
 	</script>
 
 	<style>

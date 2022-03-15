@@ -52,9 +52,9 @@
 			});
 		});
 	
-		function goMainPage() {
+	    function goMainPage() {
 			sessionStorage.setItem("selMainSwiperPos", 1);
-			location.href = "${action}/hdmall/jsp/main.jsp";
+			location.href = "${action}/hdmall/main.do";
 		}
         
         function email_change(form) {

@@ -93,13 +93,12 @@
         });
 
         function goMainPage() {
-            sessionStorage.setItem("selMainSwiperPos", 1);
-            location.href = "${action}/hdmall/jsp/main.jsp";
-        }
+			sessionStorage.setItem("selMainSwiperPos", 1);
+			location.href = "${action}/hdmall/main.do";
+		}
        
-        
         // 찜하기 버튼이 로그인시에만 이용가능하고 버튼을 누를 떄 하트 색이 변경하는 함수  김민수 03/13            
-       $(function () {
+       	$(function () {
             let like = document.querySelector("#likeheart").style.color;
             let userId = '<%= (String)session.getAttribute("userId") %>';
 			let prodId = '${productVO.id}';
@@ -125,7 +124,7 @@
                         data: {"userId": userId, "prodId" : prodId, "isLike" : isLike},
                         success: function(result) {
                         	if(result == 1) {
-                    			alert("상품을 찜을 취소 또는 재등록하였습니다.");
+                    			alert("상품을 찜을 취소 또는 재등록하였습니다."); // 찜했던 상품을 누르면 찜을 취소하고, 찜을 안했던 상품을 누르면 찜하기 동작 실행
                        	 	} else if(result == 2) {
                     			alert("상품을 찜하였습니다.");	
                        	   	} else {
