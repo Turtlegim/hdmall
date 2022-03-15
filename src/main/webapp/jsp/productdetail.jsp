@@ -120,20 +120,11 @@
                 sessionStorage.setItem("selMainSwiperPos", 1);
                 location.href = "${action}/hdmall/jsp/main.jsp";
             }
-           /*  
-            function LikeBtn(String userId) {
-            	let like = false;
-            	if ( userId != null ) {
-            		alert("로그인되어있습니다");
-            	}
-            	else {
-            		alert("찜하기는 로그인시 이용가능합니다.");
-            	}
-            } */
+           
             
-            // 찜하기 버튼이 로그인시에만 이용가능하고 버튼을 누를 떄 하트 색이 변경하는 함수  김민수 03/13 
-            $(function () {
-                let like = false;
+            // 찜하기 버튼이 로그인시에만 이용가능하고 버튼을 누를 떄 하트 색이 변경하는 함수  김민수 03/13            
+           $(function () {
+                let like = document.querySelector("#likeheart").style.color;
                 let userId = '<%= (String)session.getAttribute("userId") %>';
 				let prodId = '${productVO.id}';
 				let isLike = '${likeVO.is_liked}';
@@ -142,13 +133,14 @@
                 	if ( userId == "null" ) {
                 		alert("찜하기는 로그인시 이용가능합니다.");
                 	}
-                	else {               
-                		if (!like) {
-	                        document.querySelector("#likeheart").style.color = "red";
-	                        like = true;
-	                    } else {
+                	else {
+                		
+                		if (like == "red") {
 	                        document.querySelector("#likeheart").style.color = "white";
-	                        like = false;
+	                        like = "white"
+	                    } else {
+	                        document.querySelector("#likeheart").style.color = "red";
+	                        like = "red"
 	                    }
                 		
                 		$.ajax({
@@ -156,9 +148,9 @@
                             method: "post", // 요청방식은 post
                             data: {"userId": userId, "prodId" : prodId, "isLike" : isLike},
                             success: function(result) {
-                            	if(result.result == 1) {
-                        			alert("찜하기를 수정하였습니다.");
-                           	 	} else if(result.result == 2) {
+                            	if(result == 1) {
+                        			alert("상품을 찜을 취소 또는 재등록하였습니다.");
+                           	 	} else if(result == 2) {
                         			alert("상품을 찜하였습니다.");	
                            	   	} else {
                         			console.log('develop : 서버 오류');
@@ -166,10 +158,10 @@
                             }, error:function(error){
                                	alert("AJAX요청 실패 : 에러코드=" + error.status); // status 에러확인 
                             }
-                         });
+                         });              		              		
                 	}
                 })
-            });
+            });            
             </script>
 
 
@@ -248,7 +240,7 @@
 	                            line-height: 60px;">찜하기 
 	
 	                        	<c:choose>  
-									<c:when test="${ likeVO.is_liked == '1'}"> 
+									<c:when test="${ likeVO.is_liked == true}"> 
 										<span id="likeheart" style="color:red">♥</span>
 									</c:when> 
 									<c:otherwise> 

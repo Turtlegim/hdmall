@@ -1,4 +1,5 @@
 package com.hdmall.dao;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,11 +7,13 @@ import java.util.ArrayList;
 
 import com.hdmall.vo.ProductVO;
 
+import oracle.jdbc.OracleTypes;
 import util.DBManager;
 
 public class ProductDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
+	private CallableStatement cstmt;
 	
 	private ProductDAO() {  } // 싱글톤 패턴
 	private static ProductDAO instance = new ProductDAO();
@@ -45,7 +48,7 @@ public class ProductDAO {
 				product.setImg(rs.getString("prod_img"));
 				product.setName(rs.getString("pboard_title"));
 				product.setContext(rs.getString("pboard_context"));
-				product.setCate_no(rs.getString("is_liked"));
+				product.setPrice(rs.getString("is_liked"));
 				productList.add(product);
 			}
 		} catch (Exception e){
@@ -57,15 +60,14 @@ public class ProductDAO {
 
 	}
 
-	public int getAllCount() {
+	public int getNewCount() {
 		int count = 0;
-		String sql = "SELECT count(*) FROM product_t a ,pboard_t b WHERE a.prod_id = b.prod_id";	    
-
-		ResultSet rs = null;    	    
+		ResultSet rs = null;
+		
 		try {
 			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
+			cstmt = conn.prepareCall("select newcount_product_func() from dual");
+			rs = cstmt.executeQuery();
 
 			if (rs.next())
 				count = rs.getInt(1);
@@ -78,24 +80,38 @@ public class ProductDAO {
 		return count;
 	}
 
-	public ArrayList<ProductVO> listProductCategory(String cate_no) {
+	public ArrayList<ProductVO> listProductCategory(String cate_no, String user_id) {
 		ArrayList<ProductVO> productList = new ArrayList<ProductVO>();
-		String sql = "SELECT * FROM product_t a ,pboard_t b WHERE a.prod_id = b.prod_id AND a.CATE_NO = ?";
-
+		String sql = "select *"
+				+ " from (select a.prod_id, a.cate_no, a.prod_img, b.pboard_title, b.pboard_context "
+				+ " from product_t a, pboard_t b"
+				+ " where a.prod_id = b. prod_id"
+				+ "    AND a.cate_no = ?) t1"
+				+ " left outer join "
+				+ " (select b.prod_id, is_liked"
+				+ " from user_t a, pboard_t b, like_t c"
+				+ " where a.user_id = c.user_id"
+				+ "    AND b.prod_id = c.prod_id"
+				+ "    AND a.user_id = ?) t2"
+				+ " on t1.prod_id = t2.prod_id";
+		System.out.println(sql);
 		ResultSet rs = null;
 		try {
 			conn =  DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, cate_no);
+			pstmt.setString(2, user_id);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				ProductVO product = new ProductVO();
 				product.setId(rs.getString("prod_id"));
-				product.setCate_no(rs.getString("cate_no"));
 				product.setImg(rs.getString("prod_img"));
+				product.setCate_no(rs.getString("cate_no"));
 				product.setName(rs.getString("pboard_title"));
 				product.setContext(rs.getString("pboard_context"));
+				product.setPrice(rs.getString("is_liked"));
+						
 				productList.add(product);
 			}
 		} catch (Exception e){
@@ -106,17 +122,17 @@ public class ProductDAO {
 		return productList;
 
 	}
+	
 
 	public int getCategoryCount(String cate_no) {
 		int count = 0;
-		String sql = "SELECT count(*) FROM product_t a ,pboard_t b WHERE a.prod_id = b.prod_id AND a.CATE_NO = ?";	    
-
-		ResultSet rs = null;    	    
+		ResultSet rs = null;
+		
 		try {
 			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, cate_no);
-			rs = pstmt.executeQuery();
+			cstmt = conn.prepareCall("select catecount_product_func(?) from dual");
+			cstmt.setString(1, cate_no);
+			rs = cstmt.executeQuery();
 
 			if (rs.next())
 				count = rs.getInt(1);
@@ -131,15 +147,18 @@ public class ProductDAO {
 
 	public ProductVO getProduct(String prod_id) {
 		ProductVO product = null;
-		String sql = "select * from product_t where prod_id=?";	 
 		
 		ResultSet rs = null;    	    
 		try {
 			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, prod_id);
-			rs = pstmt.executeQuery();
-			if (rs.next()) { 
+			cstmt = conn.prepareCall("{call get_product_proc(?, ?)}");
+			cstmt.setString(1, prod_id);
+			cstmt.registerOutParameter(2, OracleTypes.CURSOR);
+			cstmt.executeQuery();
+			rs = (ResultSet)cstmt.getObject(2);
+		    System.out.println(rs);
+		    
+			while (rs.next()) { 
 				product = new ProductVO();
 				product.setId(rs.getString("prod_id"));
 				product.setCate_no(rs.getString("cate_no"));;
@@ -151,30 +170,28 @@ public class ProductDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(conn, pstmt, rs);
+			DBManager.close(conn, cstmt, rs);
 		}
 		return product;
 	}
 
 	public int getLikeCount(String prod_id) {
 		int count = 0;
-		String sql = "select count(a.prod_id) from product_t a, like_T b where a.prod_id = b.prod_id AND b.prod_id = ?";	    
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;    	    
+		ResultSet rs = null;
+		
 		try {
-			con = DBManager.getConnection();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, prod_id);
-			rs = pstmt.executeQuery();
+			conn = DBManager.getConnection();
+			cstmt = conn.prepareCall("select likecount_product_func(?) from dual");
+			cstmt.setString(1, prod_id);
+			rs = cstmt.executeQuery();
 
 			if (rs.next())
 				count = rs.getInt(1);
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(con, pstmt, rs);
+			DBManager.close(conn, pstmt, rs);
 		}
 		return count;
 	}

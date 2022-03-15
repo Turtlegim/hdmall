@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,43 +37,46 @@ public class ProductListController extends HttpServlet {
 	
 	private void doHandle(HttpServletRequest request,  HttpServletResponse response) throws ServletException, IOException {
 		String destPage = "";
+		
 		// 한글화 처리
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		
+		
 		HttpSession session = request.getSession();
 		
-		// ProductListContrller에서 선택하여 들어간 상품 아이디를 받아옴 
+		// 쿼리스트링을 통해 전달된 cate_no 이라는 변수 값을 getParameter로 받아온다.
 		String cate_no = request.getParameter("cate_no");
+		
+		// 세션에 저장된 user_id를 getAttribute
 		String user_id = (String) session.getAttribute("userId");
 		
-		System.out.println(cate_no);
-		System.out.println(user_id);
-		
-		request.setAttribute("cate", cate_no);
-		
+		System.out.println("카테고리 : " + cate_no + " user id : " + user_id);
+
+		// 각 상품 카테고리 페이지에 있는 상품 갯수를 담아두기 위한 선언
 		int count; 
 		
-		// 커맨드 출력
+
 		try {
 			List<ProductVO> productList = new ArrayList<ProductVO>();
-		
-			if(cate_no.equals("신상품")) {
-				
+			
+			if(cate_no.equals("신상품")) {				
 				productList = productDAO.listProductNew(user_id);			
-				count = productDAO.getAllCount();						
-				destPage =  "/jsp/productcategory.jsp";
+				count = productDAO.getNewCount();						
 			}
 			else {	
-
-				productList = productDAO.listProductCategory(cate_no);			
+				productList = productDAO.listProductCategory(cate_no, user_id);			
 				count = productDAO.getCategoryCount(cate_no);				
-				destPage = "/jsp/productcategory.jsp";
 			}
 			
+			// setAttribute하여 jsp에서 사용할 값들을 념겨준다. (선택한 카테고리, 상품 리스트, 상품 갯수)
+			request.setAttribute("cate", cate_no);
 			request.setAttribute("productList", productList);
 			request.setAttribute("count", count);
+			
 			destPage =  "/jsp/productcategory.jsp";
+			
+			
 			RequestDispatcher dispatch = request.getRequestDispatcher(destPage);
 			dispatch.forward(request, response);
 		}	

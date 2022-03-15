@@ -1,5 +1,6 @@
 package com.hdmall.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ import util.DBManager;
 public class LikeDAO {	
 	private Connection conn;
 	private PreparedStatement pstmt;
+	private CallableStatement cstmt;
 	
 	private LikeDAO() { } // 싱글턴 패턴 처리
 	private static LikeDAO instance = new LikeDAO();
@@ -173,38 +175,39 @@ public class LikeDAO {
         	System.out.println("해당 유저의 찜한 목록이 존재하지 않습니다.");
         }
         
-        DBManager.close(conn, pstmt);
+        conn.close();
         
 		return count;
 	}
 	
-	// 김민수
+	// 김민수 
 	public int insertLike(String userId, String prodId, String isLike) throws SQLException {
-		String query = "insert into like_t (user_id, prod_id, is_liked) values (?, ?, ?)";
-		System.out.println(query);
 		int result = 0;
-
+		conn = DBManager.getConnection();
+		
 		try {
-			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, userId);
-			pstmt.setString(2, prodId);
-			pstmt.setString(3, isLike);
+			cstmt = conn.prepareCall("{call INSERT_LIKE_PROC(?, ?, ?)}");
+			
+			System.out.println(cstmt);
+			cstmt.setString(1, userId);
+			cstmt.setString(2, prodId);
+			cstmt.setString(3, isLike);
 
-			result = pstmt.executeUpdate();
-
+			result = cstmt.executeUpdate();
+			
+			System.out.println(result);
 			if (result == 1) {
 				System.out.println("상품을 찜하였습니다.");
 			} else {
-				System.out.println("찜하기 수정실패");
+				System.out.println("상품 찜하기 실패");
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-
-		conn.close();
-
+		finally {
+			DBManager.close(conn, cstmt);
+		}
 		return result;
 	}
 
@@ -263,25 +266,23 @@ public class LikeDAO {
 	}
 
 	public int checkLikeInfo(String userId, String prodId) throws SQLException{
-		int check = 0; // 이미있으면 1 없으면 0
-		String query = "select * from like_t b where user_id = ? AND prod_id = ?";
-		System.out.println(query);
-
-		ResultSet result = null;
-
+		int count = 0; // 이미있으면 1 없으면 0
+		
 		try {
 			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, userId);
-			pstmt.setString(2, prodId);
-			result = pstmt.executeQuery();
-
-			if (result.next()) {
-				check = 1;
+			cstmt = conn.prepareCall("{call checkinfo_like_func(?, ?, ?)}");
+			cstmt.setString(1, userId);
+			cstmt.setString(2, prodId);
+			cstmt.registerOutParameter(3, java.sql.Types.NUMERIC);
+			
+			cstmt.execute();
+			
+			count = cstmt.getInt(3);
+			
+			if (count == 1) {
 				System.out.println("테이블에 정보가 존재합니다.");
 			}
-			else {
-				check = 0;
+			else if (count == 0){
 				System.out.println("테이블에 정보가 존재하지 않습니다.");
 			}
 
@@ -289,8 +290,8 @@ public class LikeDAO {
 			e.printStackTrace();
 		} 
 
-		conn.close();
+		 conn.close();
 
-		return check;
+		return count;
 	}
 }

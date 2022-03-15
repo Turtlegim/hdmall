@@ -131,8 +131,7 @@
             sessionStorage.setItem("selMainSwiperPos", 1);
             location.href = "${action}/hdmall/jsp/main.jsp";
         }
-
-        $(function () {
+        /* $(function () {
             let heart = false;
             $(".heartBtn").on("click", function () {
                 if (!heart) {
@@ -143,7 +142,7 @@
                     heart = false;
                 }
             })
-        });
+        }); */
     </script>
 
 <%@ include file="header.jsp" %> 
@@ -186,34 +185,37 @@
 				
                         <div class="product_list goosMoreArea ">
                             <ul>
-                            	<c:forEach var="new_pro_view" items="${productList}">
+                            	<c:forEach var="product" items="${productList}">
                                 <!-- 상품 목록 for문으로 삽입하기 -->
                                 <li data-gooscd="10229250014901" data-minbuyqty="1"
                                     class="product_itme goosList 10229250014901">
-                                    <div class="img_w">
-                                        <div style="position: absolute; width: 35px; height: 35px">
-	                                        <button class="heartBtn">
-	                                        <c:choose>
-	                                        	<c:when test="${ new_pro_view.cate_no == 1}">                                    
-	                                        		<img id="heartImg" src="./image/heart_black.png" />
-	                                        	</c:when>
-	                                        	<c:otherwise>
-	                                        		<img id="heartImg" src="./image/heart.png" />
-	                                        	</c:otherwise>
-	                                        </c:choose>
-	                                        </button>
-                                        </div> 
-                                        <div>                                
-                                            <img src="./image/product/${new_pro_view.img}">                                        
-                                        </div>
-                                        <div class="on_btn">
-                                        </div>
-                                    </div>
+                                    <a href = "${contextPath}/productdetail?prod_id=${product.id}">
+	                                    <div class="img_w">
+	                                        <div style="position: absolute; width: 35px; height: 35px">
+		                                        <button class="heartBtn" onclick="LikeBtn();">
+			                                        <c:choose>
+			                                        	<c:when test="${ product.price == 1}">                                    
+			                                        		<c:set var="src" value="./image/heart_black.png"/>
+			                                        	</c:when>
+			                                        	<c:otherwise>
+			                                        		<c:set var="src" value="./image/heart.png" />
+			                                        	</c:otherwise>                                  
+			                                        </c:choose>
+			                                        <img id="heartImg" src= ${ src } />
+		                                        </button>
+	                                        </div> 
+	                                        <div>                                
+	                                            <img src="./image/product/${product.img}">                                        
+	                                        </div>
+	                                        <div class="on_btn">
+	                                        </div>
+	                                    </div>
+                                    </a>
                                     <div class="pro_i">
-                                    	<a href = "${contextPath}/productdetail?prod_id=${new_pro_view.id}"> 
-                                        	<p class="ti_brand">${ new_pro_view.name}</p>
-                                        </a>
-                                        	<p class="tx_ex goosNm">${ new_pro_view.context}</p>
+                                    	
+                                        	<p class="ti_brand">${ product.name}</p>
+                                      
+                                        	<p class="tx_ex goosNm">${ product.context}</p>
                                     </div>
                                 </li>
                                 </c:forEach>
