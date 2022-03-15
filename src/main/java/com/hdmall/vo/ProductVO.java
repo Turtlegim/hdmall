@@ -7,12 +7,13 @@ public class ProductVO {
 	private String price;
 	private String context;
 	private String img;
+	private int hitnum;
 
 	public ProductVO() {
 
 	}
 
-	public ProductVO(String id, String cate_no, String name, String price, String context, String img) {
+	public ProductVO(String id, String cate_no, String name, String price, String context, String img, int hitnum) {
 		super();
 		this.id = id;
 		this.cate_no = cate_no;
@@ -20,6 +21,7 @@ public class ProductVO {
 		this.price = price;
 		this.context = context;
 		this.img = img;
+		this.hitnum = hitnum;
 	}
 
 	public String getId() {
@@ -69,4 +71,12 @@ public class ProductVO {
 	public void setImg(String img) {
 		this.img = img;
 	}
+
+	public int getHitnum() {
+		return hitnum;
+	}
+
+	public void setHitnum(int hitnum) {
+		this.hitnum = hitnum;
+	}	
 }

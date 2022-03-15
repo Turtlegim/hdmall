@@ -212,6 +212,12 @@
                                         <p style="font-size: 18px; padding-top: 8px;">
                                             ${likecount}개</p>
                                     </li>
+                                    <li>
+                                        <strong style="font-size: 19px;">
+                                            조회수</strong>
+                                        <p style="font-size: 18px; padding-top: 8px;">
+                                            ${productVO.getHitnum()}</p>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
