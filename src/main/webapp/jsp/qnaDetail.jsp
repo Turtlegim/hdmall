@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ <%  String qboardId = (String)request.getAttribute("qboard_id"); %>
+
     
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -114,6 +116,13 @@
 			max-height: 100%;
 			max-width: 100%;
 		}
+	.btn_basic4:hover{
+    			background: #dcdcdc;
+    			color: white;
+    			transition: all 0.5s;
+    			}
+		
+	
 	</style>
 </head>
 
@@ -138,12 +147,26 @@
 		    		  document.getElementById("ans_div").style.display = "";
 		    	  }  
 		      }
+		      
 		  });
 		
 		function gomyPage() {
 			location.href = "${contextPath}/QBoardList";
 		}
+		function goinsert(){
 		
+			var title = $('#title').val();
+            var context = $('#context').val();
+
+            if (title == "" || context == "") {
+                alert("제목과 내용을 작성해주세요.");
+
+            } else if (confirm("답변을 등록하시겠습니까?")) {
+                alert("등록되었습니다.");
+                return true;
+            }
+            return false;
+		}  
 
 		</script>
 			<div id="wrap">
@@ -181,12 +204,15 @@
 						</div>
 					</div>
 				</div>
+			<form id="counForm" name="counForm" method="post"
+                        action="${action}/hdmall/QBoardAnsInsert" onsubmit="return goinsert()">	
 				<div id = "ans_div_insert" class = "ans_div2" style = "border-top: 1px solid #333333; border-bottom: 1px solid #e5e5e5; padding: 25px 20px 28px 20px;">
 					<h2 class="h3_type_ans" style ="margin: 0px 0px 14px 0px;">답변</h2>
 					<tbody>
                         <tr>
                            <th scope="row">제목<em class="essential">*</em></th>
                             <td><input type="text" class="required" valmsg="제목을 입력해주세요." id="title" name="title" value="" placeholder="제목을 입력해주세요." style="width: 100% ; margin: 11px 0 20px 0px;" maxlength="50" onpaste="false; "></td>
+                       		<td id ="qboard_id" style = "display : none">${qboardId}</td>
                        </tr>
                        <tr>
                           <th scope="row">내용<em class="essential">*</em></th>
@@ -198,15 +224,24 @@
                        </tr>
                     </tbody>
                </div> 
-               
+             
+              
 					<div class="basic_btn_box">
 						<button type="button" class="btn_basic4"
 							onclick = "gomyPage();">마이페이지로</button>
+						<button type = "submit" class = "btn_basic4"
+							id ="saveANS">답변등록</button>	
 					</div>
+				  </form>	
 				</div>
 			</div>	
 				<!-- container END -->
 	<%@ include file="footer.jsp" %>
+	
+	
+
+
 </body>
+
 
 </html>
