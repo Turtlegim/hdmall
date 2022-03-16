@@ -1,5 +1,6 @@
 package com.hdmall.vo;
 
+/* 경민영 : UserVO */
 public class UserVO {
 	String id;
 	String pwd;
@@ -13,7 +14,7 @@ public class UserVO {
 		System.out.println("LoginVO 생성자 호출");
 	}
 	
-	public UserVO(String id, String pwd) { // 로그인 
+	public UserVO(String id, String pwd) { // 로그인
 		super();
 		this.id = id;
 		this.pwd = pwd;

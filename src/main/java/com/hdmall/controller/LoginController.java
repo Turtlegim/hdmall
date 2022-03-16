@@ -26,7 +26,7 @@ public class LoginController extends HttpServlet {
 		
         String userId = request.getParameter("userId");
         String userPwd = request.getParameter("userPwd");
-        String id_rem = request.getParameter("id_rem"); // 아이디 저장 체크 박스의 체크 여부 
+        String id_rem = request.getParameter("id_rem"); // 아이디 저장 체크 박스의 체크 여부를 받아와 저장 
         System.out.println("전달된 아이디 체크 여부 : " + id_rem);
         
         HttpSession session = request.getSession();
@@ -41,7 +41,6 @@ public class LoginController extends HttpServlet {
         	
         	if (user != null) {
                 System.out.println("로그인 성공");
-                String userName = user.getName(); // 이름 저장 후 보여주기 
                 
                 if(id_rem != null) { // 아이디 저장 여부를 보고 쿠키로 아이디값 저장 
                     cookie = new Cookie("userId", userId);
@@ -57,8 +56,8 @@ public class LoginController extends HttpServlet {
                     response.addCookie(cookie);
                 }
                 
-                session.setAttribute("userId", userId);
-                session.setAttribute("userName", userName);
+                session.setAttribute("userId", user.getId());
+                session.setAttribute("userName", user.getName());
                 session.setAttribute("remember", id_rem);
 
                 destPage = "/main.do";

@@ -10,6 +10,9 @@ import util.DBManager;
 
 import com.hdmall.vo.ProductVO;
 import com.hdmall.vo.QBoardVO;
+
+import oracle.jdbc.OracleTypes;
+
 import java.util.ArrayList;
 
 public class QnaDAO {
@@ -52,7 +55,6 @@ public class QnaDAO {
 		return result;
 	}
 
-	
 	/* 배지현 : 찜하기 총 count */
 	public int getLikeProductCount(String session_id) {
 
@@ -73,7 +75,6 @@ public class QnaDAO {
 		return count;
 	}
 
-	
 	/* 배지현 : 각 USER의 문의사항 list count */
 	public int getAllProductCount_U(String session_id) {
 
@@ -94,7 +95,6 @@ public class QnaDAO {
 		return count;
 	}
 
-	
 	/* 배지현 : 각 USER가 검색한 문의사항 list count */
 	public int getAllProductCount_COMBO_U(String session_id, String col, String word) {
 
@@ -132,11 +132,11 @@ public class QnaDAO {
 	}
 
 	
-	/* 배지현 : ADMIN이 답변 하지 않은 list 총count */
+	/* 배지현 : ADMIN이 답변 하지 않은 list 총 count */
 	public int getAllProductCount_A() {
 
 		int count = 0;
-		String query = "SELECT count(*) FROM qBOARD_T where ans_yn = 0"; //배지현 : "ans_yn = 0" 은 답변미완료.
+		String query = "SELECT count(*) FROM qBOARD_T where ans_yn = 0"; // 배지현 : "ans_yn = 0" 은 답변미완료.
 		ResultSet rs = null;
 		System.out.println(query);
 		try {
@@ -155,7 +155,6 @@ public class QnaDAO {
 		return count;
 	}
 
-	
 	/* 배지현 : ADMIN의 검색한 문의사항 list count */
 	public int getAllProductCount_COMBO_A(String col, String word) {
 
@@ -191,78 +190,41 @@ public class QnaDAO {
 
 	/* 배지현 : USER_TYPE이 USER 일 때, 검색입력에 따른 문의한 list */
 	public ArrayList<QBoardVO> qBoardlistType_U(String session_id, String col, String word) {
-
-		ArrayList<QBoardVO> productList = new ArrayList<QBoardVO>();
-
 		System.out.println("session_id" + session_id);
 
+		ArrayList<QBoardVO> productList = new ArrayList<QBoardVO>();
 		ResultSet rs = null;
-
 		try {
 			conn = DBManager.getConnection();
-			StringBuffer query = new StringBuffer();
+			if (col.equals("all")) { /* 배지현 : 콤보박스 전체 의미 */
+				String query = "{call QBOARD_USERLIST_ALL_QNA_PROC(?,?,?,?)}";
+				cstmt = conn.prepareCall(query);
+				cstmt.setString(1, session_id);
+				cstmt.setString(2, word);
+				cstmt.setString(3, word);
+				cstmt.registerOutParameter(4, OracleTypes.CURSOR);
+				cstmt.executeQuery();
+				rs = (ResultSet) cstmt.getObject(4);
 
-			if (col.equals("all")) {  									/*배지현 : 콤보박스 전체 의미*/
-				query.append("SELECT * FROM (");
-				query.append(" SELECT ROWNUM AS row_num");
-				query.append(",pb.qboard_title");
-				query.append(",pb.qboard_context");
-				query.append(",pb.ins_dt");
-				query.append(",DECODE(pb.ans_yn, '0', '미완료', '1' ,'완료') AS ans_yn");
-				query.append(",pb.qboard_id");
-				query.append(" FROM (");
-				query.append(" SELECT * FROM QBOARD_T");
-				query.append(" WHERE user_id = ?");
-				query.append(" AND qboard_title LIKE ? AND qboard_context LIKE ?");
-				query.append(" ORDER BY ins_dt DESC");
-				query.append(") pb)");
-				pstmt = conn.prepareStatement(query.toString());
-				pstmt.setString(1, session_id);
-				pstmt.setString(2, "%" + word + "%");
-				pstmt.setString(3, "%" + word + "%");
-				System.out.println(query);
-
-			} else if (col.equals("title")) {							/*배지현 : 콤보박스 제목 의미*/
-				query.append("SELECT * FROM (");
-				query.append(" SELECT ROWNUM AS row_num");
-				query.append(",pb.qboard_title");
-				query.append(",pb.qboard_context");
-				query.append(",pb.ins_dt");
-				query.append(",DECODE(pb.ans_yn, '0', '미완료', '1' ,'완료') AS ans_yn");
-				query.append(",pb.qboard_id");
-				query.append(" FROM (");
-				query.append(" SELECT * FROM QBOARD_T");
-				query.append(" WHERE user_id = ?");
-				query.append(" AND qboard_title LIKE ?");
-				query.append(" ORDER BY ins_dt DESC");
-				query.append(") pb)");
-				System.out.println(query);
-				pstmt = conn.prepareStatement(query.toString());
-				pstmt.setString(1, session_id);
-				pstmt.setString(2, "%" + word + "%");
+			} else if (col.equals("title")) { /* 배지현 : 콤보박스 제목 의미 */
+				String query = "{call QBOARD_USERLIST_TITLE_QNA_PROC(?,?,?)}";
+				cstmt = conn.prepareCall(query);
+				cstmt.setString(1, session_id);
+				cstmt.setString(2, word);
+				cstmt.registerOutParameter(3, OracleTypes.CURSOR);
+				cstmt.executeQuery();
+				rs = (ResultSet) cstmt.getObject(3);
 
 			} else {
-				query.append("SELECT * FROM (");
-				query.append(" SELECT ROWNUM AS row_num");
-				query.append(",pb.qboard_title");
-				query.append(",pb.qboard_context");
-				query.append(",pb.ins_dt");
-				query.append(",DECODE(pb.ans_yn, '0', '미완료', '1' ,'완료') AS ans_yn");
-				query.append(",pb.qboard_id");
-				query.append(" FROM (");
-				query.append(" SELECT * FROM QBOARD_T");
-				query.append(" WHERE user_id = ?");
-				query.append(" ORDER BY ins_dt DESC");
-				query.append(") pb)");
-				System.out.println(query);
-				pstmt = conn.prepareStatement(query.toString());
-				pstmt.setString(1, session_id);
-
+				String query = "{call QBOARD_USERLIST_ELSE_QNA_PROC(?,?)}";
+				cstmt = conn.prepareCall(query);
+				cstmt.setString(1, session_id);
+				cstmt.registerOutParameter(2, OracleTypes.CURSOR);
+				cstmt.executeQuery();
+				rs = (ResultSet) cstmt.getObject(2);
 			}
-			rs = pstmt.executeQuery();
 
 			while (rs.next() == true) {
-
 				QBoardVO list = new QBoardVO();
 				list.setNum(rs.getInt("row_num"));
 				list.setTitle(rs.getString("qboard_title"));
@@ -272,11 +234,10 @@ public class QnaDAO {
 				list.setId(rs.getString("qboard_id"));
 				productList.add(list);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(conn, pstmt, rs);
+			DBManager.close(conn, cstmt, rs);
 		}
 		return productList;
 
@@ -284,60 +245,36 @@ public class QnaDAO {
 
 	/* 배지현 : USER_TYPE이 ADMIN 일 때, 검색입력에 따른 문의한 list */
 	public ArrayList<QBoardVO> qBoardListAll(String col, String word) {
-		ArrayList<QBoardVO> productList = new ArrayList<QBoardVO>();
 
+		ArrayList<QBoardVO> productList = new ArrayList<QBoardVO>();
 		ResultSet rs = null;
 
 		try {
 			conn = DBManager.getConnection();
-			StringBuffer query = new StringBuffer();
-
 			if (col.equals("all")) {
-				query.append("SELECT * FROM (");
-				query.append(" SELECT ROWNUM AS row_num");
-				query.append(",pb.qboard_title");
-				query.append(",pb.qboard_context");
-				query.append(",pb.ins_dt");
-				query.append(",DECODE(pb.ans_yn, '0', '미완료', '1' ,'완료') AS ans_yn");
-				query.append(",pb.qboard_id");
-				query.append(" FROM (");
-				query.append(" SELECT * FROM QBOARD_T");
-				query.append(" WHERE qboard_title LIKE ? AND qboard_context LIKE ?");
-				query.append(" AND ans_yn = 0");
-				query.append(" ORDER BY ins_dt DESC");
-				query.append(") pb)");
-				pstmt = conn.prepareStatement(query.toString());
-				pstmt.setString(1, "%" + word + "%");
-				pstmt.setString(2, "%" + word + "%");
-				System.out.println(query);
+				String query = "{call QBOARD_ADMINLIST_ALL_QNA_PROC(?,?,?)}";
+				cstmt = conn.prepareCall(query);
+				cstmt.setString(1, word);
+				cstmt.setString(2, word);
+				cstmt.registerOutParameter(3, OracleTypes.CURSOR);
+				cstmt.executeQuery();
+				rs = (ResultSet) cstmt.getObject(3);
 
 			} else if (col.equals("title")) {
-				query.append("SELECT * FROM (");
-				query.append(" SELECT ROWNUM AS row_num");
-				query.append(",pb.qboard_title");
-				query.append(",pb.qboard_context");
-				query.append(",pb.ins_dt");
-				query.append(",DECODE(pb.ans_yn, '0', '미완료', '1' ,'완료') AS ans_yn");
-				query.append(",pb.qboard_id");
-				query.append(" FROM (");
-				query.append(" SELECT * FROM QBOARD_T");
-				query.append(" WHERE qboard_title LIKE ?");
-				query.append(" AND ans_yn = 0");
-				query.append(" ORDER BY ins_dt DESC");
-				query.append(") pb)");
-				System.out.println(query);
-				pstmt = conn.prepareStatement(query.toString());
-				pstmt.setString(1, "%" + word + "%");
-
+				String query = "{call QBOARD_ADMINLIST_TITLE_QNA_PROC(?,?)}";
+				cstmt = conn.prepareCall(query);
+				cstmt.setString(1, word);
+				cstmt.registerOutParameter(2, OracleTypes.CURSOR);
+				cstmt.executeQuery();
+				rs = (ResultSet) cstmt.getObject(2);
 			} else {
-				query.append("SELECT * FROM QBOARD_VIEW_ADMIN");
-				System.out.println(query);
-				pstmt = conn.prepareStatement(query.toString());
+				String query = "{call QBOARD_ADMINLIST_ELSE_QNA_PROC(?)}";
+				cstmt = conn.prepareCall(query);
+				cstmt.registerOutParameter(1, OracleTypes.CURSOR);
+				cstmt.executeQuery();
+				rs = (ResultSet) cstmt.getObject(1);
 			}
-			rs = pstmt.executeQuery();
-
 			while (rs.next() == true) {
-
 				QBoardVO list = new QBoardVO();
 				list.setNum(rs.getInt("row_num"));
 				list.setTitle(rs.getString("qboard_title"));
@@ -346,18 +283,15 @@ public class QnaDAO {
 				list.setAns_yn(rs.getString("ans_yn"));
 				list.setId(rs.getString("qboard_id"));
 				productList.add(list);
-
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(conn, pstmt, rs);
+			DBManager.close(conn, cstmt, rs);
 		}
 		return productList;
 	}
 
-	
 	/* 경민영 : 회원 탈퇴 전 문의 내역 지우기 */
 	public int deleteQna(String userId) throws SQLException {
 		int count = 0;
@@ -391,15 +325,13 @@ public class QnaDAO {
 	/* 경민영 : 해당 유저가 문의한 내역이 존재하는지 확인하는 함수 */
 	public int isExistQna(String userId) throws SQLException {
 		int count = 0;
-		ResultSet result = null;
-
 		try {
 			conn = DBManager.getConnection();
 			String query = "{? = call isexist_qna_func(?)}";
 			cstmt = conn.prepareCall(query);
 			cstmt.registerOutParameter(1, java.sql.Types.NUMERIC);
 			cstmt.setString(2, userId);
-			result = cstmt.executeQuery();
+			cstmt.executeQuery();
 			count = cstmt.getInt(1);
 			System.out.println("Total rows : " + count);
 
@@ -415,7 +347,6 @@ public class QnaDAO {
 		return count;
 	}
 
-	
 	/* 배지현 : qboard_id에 해당하는 문의사항 호출함수 */
 	public QBoardVO getQboardDetail(String qprod_id) {
 		QBoardVO qboard = null;
@@ -447,7 +378,6 @@ public class QnaDAO {
 		return qboard;
 	}
 
-	
 	/* 배지현 : 답변 등록 */
 	public int UpdateAns(int qboard_id, String context, String title) {
 		int result = 0;
