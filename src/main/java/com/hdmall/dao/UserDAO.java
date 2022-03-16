@@ -55,7 +55,7 @@ public class UserDAO {
 	    return user;
 	}
 	
-	/* USER_TYPE 가져오기 */
+	/*배지현 : USER_TYPE 가져오는 함수*/
    public String getUserType(String session_id) throws SQLException{    
       System.out.println("getUserType_session_id : " + session_id);
       String user_type = "";

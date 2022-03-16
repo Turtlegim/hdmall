@@ -121,8 +121,7 @@
 		.top_line {
     		border-top: 3px solid #1b1e23;
     		margin: 0 auto;
-		}
-		
+		}	
 		div#like_product {
    			 display: inline-flex;
     		 text-align: center;
@@ -186,15 +185,15 @@
 					<div class="top_line" id="CART">
 							<!-- 찜하기 목록이 비어있습니다 :) -->
 						<div class="cart_list" style="margin">
-						<c:forEach var="likelist" items="${likeboard }" varStatus="status">
+						<c:forEach var="likelist" items="${likeboard}" varStatus="status">
 						<div id="like_product" style="margin-top: 50px; margin-bottom:25px;">
-							<a href="${contextPath }/productdetail/product?prod_id=${likelist.getId() }">
+							<a href="${contextPath }/productdetail/product?prod_id=${likelist.getId()}">
 							<i class="tnr_font" style="width: 30px; height: 180px; float: left; margin-left: 25px; margin-right: 25px;"><em style="height: 180px;"><c:out value="${status.index+1}" />.</em></i>
 								<div class="prod" style="width: 1000px;">
 									<div class="img_w" style="width: 180px; float: left;">
-										<img id="prod_img" data-src=<c:out value="./${likelist.getImg() }"/>
-											src=<c:out value="./${likelist.getImg() }"/>
-											alt=<c:out value="${likelist.getContext() }"/>
+										<img id="prod_img" data-src=<c:out value="./${likelist.getImg()}"/>
+											src=<c:out value="./${likelist.getImg()}"/>
+											alt=<c:out value="${likelist.getContext()}"/>
 											onerror="this.src='https://cdn.hddfs.com/front/images/KO/common/noimg.png?sf=webp&RS=252x252';"
 											class="lazy">
 										<div class="on_btn"></div>
