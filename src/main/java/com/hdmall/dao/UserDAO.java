@@ -20,7 +20,7 @@ public class UserDAO {
     	return instance;
 	}
 	  
-	public UserVO loginUser(String userId, String userPwd) throws SQLException { // 로그인 후 필요한 정보 : 아이디, 비밀번호, 이름 
+	public UserVO loginUser(String userId, String userPwd) throws SQLException { // 로그인 후 세션에 저장할 회원 정보 : 아이디, 이름 
 		conn = DBManager.getConnection();
 		UserVO user = new UserVO();
 	    

@@ -55,7 +55,6 @@ public class QnaDAO {
 	
 	/* 배지현 : 찜하기 총 count */
 	public int getLikeProductCount(String session_id) {
-
 		ResultSet rs = null;
 		int count = 0;
 		try {
@@ -132,11 +131,11 @@ public class QnaDAO {
 	}
 
 	
-	/* 배지현 : ADMIN이 답변 하지 않은 list 총count */
+	/* 배지현 : ADMIN이 답변 하지 않은 list 총 count */
 	public int getAllProductCount_A() {
 
 		int count = 0;
-		String query = "SELECT count(*) FROM qBOARD_T where ans_yn = 0"; //배지현 : "ans_yn = 0" 은 답변미완료.
+		String query = "SELECT count(*) FROM qBOARD_T where ans_yn = 0"; // 배지현 : "ans_yn = 0" 은 답변미완료.
 		ResultSet rs = null;
 		System.out.println(query);
 		try {
