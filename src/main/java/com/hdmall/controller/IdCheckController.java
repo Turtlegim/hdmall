@@ -20,24 +20,26 @@ public class IdCheckController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		// 한글화 처리
 		response.setContentType("text/html;charset=UTF-8");
 		response.setContentType("application/json; charset=utf-8");
 		
 	    PrintWriter out = response.getWriter();
 	    HttpSession session = request.getSession();
 	    
+	    // join.jsp 에서 id가 userId인 input box에 입력한 내용 요청 후 저장 
 	    String userId = request.getParameter("userId");
 	    System.out.println("전달된 useId : " + userId);
 	    
 	    try {
 	        int result = userDAO.checkId(userId); // 아이디 중복 확인
 	        
-	        if (result > 0) {
-	        	out.print("{\"result\": 1}"); // json문법은 객체 표현할때 프라퍼티 앞에 백슬러시 큰따옴표가 필요 
-	        } else {
-	        	out.print("{\"result\": 0}");
-	        	session.setAttribute("idCheckResult", result);
+	        if (result > 0) { // 아이디가 중복된 경우 
+	        	out.print("{\"result\": 1}"); // join.jsp로 result 1 값 전달  
+	        } else { // 아이디가 중복이 아닌 경우 
+	        	out.print("{\"result\": 0}"); // join.jsp로 result 0 값 전달 
+	        	session.setAttribute("idCheckResult", result); // 세션에 결과 저장
 	        }
 	    } catch (SQLException e) {
 			e.printStackTrace();

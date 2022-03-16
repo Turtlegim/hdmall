@@ -111,7 +111,8 @@
 			location.href = "${action}/hdmall/main.do";
 		}
 		
-		$(document).on('click', '#pwdCheck', function () { // 회원정보 수정 전 비밀번호 입력 확인 버튼 (개인정보 보호용)
+		/* 경민영 : 회원정보 수정 전 비밀번호 입력 확인 버튼 (개인정보 보호용) */
+		$(document).on('click', '#pwdCheck', function () {
 			var userPwd = document.getElementById("userPwd").value;
 
 			if (userPwd == "") {
@@ -125,9 +126,11 @@
 						if (result.result == 1) {
 							alert("비밀번호 확인 성공");
 							
+							// 비밀번호 입력 상단부 숨기고, 회원정보 수정 폼 보여주기
 							document.getElementById("headerSection").style.display = "none";
 							document.getElementById("bottomSection").style.display = "";
 						} else {
+							// 비밀번호가 회원 정보와 일치하지 않는 경우 초기화 후 alert창 띄워주기 
 							document.getElementById("userPwd").value = "";
 							alert("비밀번호를 다시 입력해주세요.");
 						}
@@ -138,21 +141,25 @@
 			}
 		});
 		
-		$(document).on('click', '#btnCancel', function () { // 회원정보 수정 하단에 있는 취소 버튼을 눌렀을 때 동작
+		/* 경민영 : 회원정보 수정 하단에 있는 취소 버튼을 눌렀을 때 동작하는 함수 */
+		$(document).on('click', '#btnCancel', function () {
 			alert("회원정보 수정을 취소하셨습니다.");
 			
 			document.getElementById("userPwd").value = ""; // 초기화
 			
+			// 회원정보관리 초기 화면으로 변경해주기 
 			document.getElementById("headerSection").style.display = "";
 			document.getElementById("bottomSection").style.display = "none";
 		});
 		
-		$(document).ready(function () { // 비밀번호 확인하는 section부터 보여주기
+		$(document).ready(function () {
+			// 화면 로드될 때 비밀번호 확인하는 상단부만 보여주기
 			document.getElementById("headerSection").style.display = "";
 			document.getElementById("bottomSection").style.display = "none";
 		});
 		
-		$(document).on('click', '#hpnoCheck', function () { // 전화번호 중복 확인
+		/* 경민영 : 전화번호 중복 확인 버튼을 눌렀을 때 동작하는 함수 */
+		$(document).on('click', '#hpnoCheck', function () {
 			var userHpno = document.getElementById("userHpno").value;
 			
 			if(userHpno == "") {
