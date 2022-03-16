@@ -1,5 +1,6 @@
 package com.hdmall.vo;
 
+// 김기범 : LikeVO
 public class LikeVO {
 	private String user_id;
 	private String prod_id;

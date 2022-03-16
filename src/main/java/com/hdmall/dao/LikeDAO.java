@@ -28,7 +28,7 @@ public class LikeDAO {
 		return instance;
 	}
 	
-	// Like Table 전체를 커서로 받아오는 함수.
+	// 김기범 : Like Table 전체를 커서로 받아오는 함수.
 	public ArrayList<LikeVO> listLike() {
 		ArrayList<LikeVO> likelist = new ArrayList<>();
 		String sql = "{call listLike_PROC(?)}";
@@ -55,7 +55,7 @@ public class LikeDAO {
 		return likelist;
 	}
 	
-	// 특정 User의 Like Table을 질의하는 함수.
+	// 김기범 : 특정 User의 Like Table을 질의하는 함수.
 	public ArrayList<LikeVO> listLikeTable(String userid) {
 		ArrayList<LikeVO> likelist = new ArrayList<>();
 		String sql = "{call listLikeTable_PROC(?,?)}";
@@ -82,20 +82,18 @@ public class LikeDAO {
 		return likelist;
 	}
 	
-	// 특정 User가 Like 한 상품들의 정보를 불러오는 함수.
+	// 김기범 : 특정 User가 Like 한 상품들의 정보를 불러오는 함수.
 	public ArrayList<ProductVO> listisLiked(String userid) {
 		ArrayList<ProductVO> productList = new ArrayList<>();
-		String sql = "select * " + "from ( " + "	  select * " + "	  from pb_p_id_view " + "	 ) t1 "
-				+ "left outer join " + "	( " + "	 select b.prod_id " + "	 		,c.is_liked "
-				+ "	 from   user_t    a " + "	        ,pboard_t b " + "	        ,like_t   c "
-				+ "	 where  a.user_id = c.user_id " + "	 	and b.prod_id = c.prod_id " + "	 	and a.user_id = ? "
-				+ "	) t2 " + "on t1.prod_id = t2.prod_id " + "WHERE t2.is_liked = 1";
+		String sql = "{call listisLiked_PROC(?,?)}";
 		ResultSet rs = null;
 		try {
 			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userid);
-			rs = pstmt.executeQuery();
+			cstmt = conn.prepareCall(sql);
+			cstmt.setString(1, userid);
+			cstmt.registerOutParameter(2, OracleTypes.CURSOR);
+			cstmt.executeQuery();
+			rs = (ResultSet) cstmt.getObject(2);
 			while (rs.next()) {
 				ProductVO product = new ProductVO();
 				product.setId(rs.getString("prod_id"));
@@ -108,12 +106,12 @@ public class LikeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(conn, pstmt, rs);
+			DBManager.close(conn, cstmt, rs);
 		}
 		return productList;
 	}
 	
-	// 특정 User의 특정 prod에 대한 Like를 취소하는 함수. (delete하지 않음.)
+	// 김기범 : 특정 User의 특정 prod에 대한 Like를 취소하는 함수. (delete하지 않음.)
 	public void cancelLike(String userid, String prodid) {
 		CallableStatement cstmt = null;
 		try {
@@ -250,6 +248,7 @@ public class LikeDAO {
 		return count;
 	}
 	
+	// 김기범 : 그래프 그리기 위해 상품이름과 좋아요 카운트 해쉬맵으로 받아오는 함수.
 	public HashMap<String, Integer> prodLikeInfo() {
 		HashMap<String, Integer> list = new HashMap<>();
 		String sql = "{call prodLikeInfo_PROC(?)}";
