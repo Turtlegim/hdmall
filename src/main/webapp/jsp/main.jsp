@@ -18,7 +18,7 @@
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>현대백화점인터넷면세점</title>
+	<title>현대픽픽스토어</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="format-detection" content="telephone=no">
 	<script src="https://cdn.hddfs.com/front/js/KO/jquery-1.12.4.min.js?ver=18"></script>
@@ -29,7 +29,8 @@
 	<script src="https://cdn.hddfs.com/front/js/KO/jquery.lazyloadxt.min.js?ver=18"></script>
 	<script src="https://cdn.hddfs.com/front/js/KO/common.ui.js?ver=18"></script>
 	<script src="https://cdn.hddfs.com/front/js/KO/main.ui.js?ver=18"></script>
-	<link rel="shortcut icon" href="https://cdn.hddfs.com/front/images/KO/common/favicon_H.ico">
+	
+	<link rel="icon" type="image/png" sizes="96x96" href="${action}/hdmall/image/favicon-96x96.png">
 	<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/jquery-ui.css?ver=18">
 	<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/swiper-bundle.min.css?ver=18">
 	<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/common.css?ver=18">
@@ -166,8 +167,8 @@
 	        google.charts.setOnLoadCallback(drawChart);
 	        function drawChart() {
 	            var data = new google.visualization.DataTable();
-	            data.addColumn('string','Foods');
-	            data.addColumn('number','비중');
+	            data.addColumn('string','상품명');
+	            data.addColumn('number','찜한 수');
 	
 	            data.addRows([ 
 	            		<% 
@@ -176,18 +177,23 @@
 	            			['<%=entry.getKey()%>',<%=entry.getValue()%>]<%if(entries.hasNext()){%>
 	            				, <%}}%>
 							]);
+	            
 	            var opt = {
-	                    'title':'상품별 찜한 사용자수',
-	                    'width':600,
+	                    'title':'상품별 사용자 관심 누적 수',
+	                    'width':1000,
 	                    'height':600,
-	                    pieSliceText:'label',
-	                    legend:'none' 
+	                    pieSliceText:'value' + '개',
+	                    legend:'labeled',
+	                    pieHole: 0.4,
+	                    colors: ['#FF0000', '#FF3E00', '#FF6F00', '#FFC600', '#FFF200', '#CDDD00', '#99C800', '#1E9600', 
+	                    	'3D8076', '#0083B0', '5B6BE5', '#00B4DB', '#4568DC', '#B06AB3', '#7D69C7']
 	            };
 	            var chart = new google.visualization.PieChart(document.getElementById('myChart'));
 	            chart.draw(data,opt);
 	        }
        </script>
         
-        
-		<div id="myChart" style="margin:0 auto;"></div>
+        <div id="wrap">
+			<div id="myChart" align='center'></div>
+		</body>
 <%@ include file = "footer.jsp"%>			

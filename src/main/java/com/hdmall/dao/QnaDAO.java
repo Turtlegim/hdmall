@@ -131,7 +131,8 @@ public class QnaDAO {
 		return count;
 	}
 
-	/* 배지현 : ADMIN이 답변 하지 않은 list 총count */
+	
+	/* 배지현 : ADMIN이 답변 하지 않은 list 총 count */
 	public int getAllProductCount_A() {
 
 		int count = 0;

@@ -8,7 +8,7 @@
 			
 <head>
     <meta charset="utf-8">
-    <title>현대백화점인터넷면세점</title>
+    <title>현대픽픽스토어</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://cdn.hddfs.com/front/js/KO/jquery-1.12.4.min.js?ver=18"></script>
     <script src="https://cdn.hddfs.com/front/js/KO/jquery-ui.js?ver=18"></script>
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/popup.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/common.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/layout.css?ver=18">
-    <link rel="shortcut icon" href="https://cdn.hddfs.com/front/images/KO/common/favicon_H.ico">
+	<link rel="icon" type="image/png" sizes="96x96" href="${action}/hdmall/image/favicon-96x96.png">
     <link rel="stylesheet" href="/inc/user/css/V2Join.css?20210420">
     <link rel="stylesheet" href="/assets/app/css/swiper.min.css">
     <link rel="stylesheet" href="/assets/app/css/screen.ui.css?version=202202170001" />
