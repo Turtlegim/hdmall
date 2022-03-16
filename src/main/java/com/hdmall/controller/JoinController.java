@@ -22,7 +22,6 @@ public class JoinController extends HttpServlet {
 	/* 경민영 : 회원 가입 */ 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
         
 		// 한글 처리
         request.setCharacterEncoding("utf-8");

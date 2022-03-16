@@ -50,13 +50,14 @@ public class LikeController extends HttpServlet {
 		
 		try {
 			if (userId == null) { // 아이디가 없으면
-				destPage = "/jsp/login.jsp"; // 로그인 페이지로 이동
+				destPage = "/login"; // 로그인 페이지로 이동
 				System.out.println("찜하기는 로그인 후 이용 가능합니다.");
 			} else { // 아이디를 가져오면
 				lvo = likeDAO.listisLiked(userId); // 유저가 찜한 목록을 받아
 				request.setAttribute("likeboard", lvo); // jsp로 넘겨주기 위해 request 에 set 함.
 				destPage = "/jsp/like.jsp";
 			}
+			
 			RequestDispatcher dispatch = request.getRequestDispatcher(destPage); // dispatch로 forward
 			dispatch.forward(request, response);
 		} catch (Exception e) {

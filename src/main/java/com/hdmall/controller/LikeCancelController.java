@@ -20,7 +20,7 @@ public class LikeCancelController extends HttpServlet {
 	public void init() throws ServletException {
 		likeDAO = LikeDAO.getInstance(); // 싱글톤 패턴.
 	}
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {

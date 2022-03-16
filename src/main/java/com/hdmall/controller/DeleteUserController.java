@@ -51,7 +51,7 @@ public class DeleteUserController extends HttpServlet {
 	        } else { // 회원 탈퇴 실패 
 	        	System.out.println("회원 탈퇴 실패");
 	        	
-	        	destPage = "/jsp/user_manage.jsp";
+	        	destPage = "/userManage";
 	        }
 	        
 	        RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);

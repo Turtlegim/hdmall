@@ -33,7 +33,7 @@
 	<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 	<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
 
-	<script language="javascript"> <!-- 남겨두기 -->
+	<script language="javascript">
 		// 현재 요청경로
 		var ctx_curr = "//www.hddfs.com/shop";
 		var ctx_shop = "https://www.hddfs.com/shop";

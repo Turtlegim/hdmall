@@ -35,7 +35,6 @@
 	 <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 	 <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
 	
-	
 	 <script language="javascript">
 	     //현재 요청경로
 	     var ctx_curr = "//www.hddfs.com/shop";
@@ -48,25 +47,17 @@
 	     var gUmbMbshUrl = "https://www.h-point.co.kr"; // 통합멤버쉽 주소		
 	 </script>
 	 
-	 <script type="text/javascript"
-	     src="https://cdn.hddfs.com/front/js/KO/crew/crew.source.js?ver=18"></script>
-	 <script type="text/javascript"
-	     src="https://cdn.hddfs.com/front/js/KO/crew/form/form.source.js?ver=18"></script>
+	 <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/crew.source.js?ver=18"></script>
+	 <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/form/form.source.js?ver=18"></script>
 	 <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/sns.js?ver=18"></script>
 	 <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/jquery.cookie.js?ver=18"></script>
 	 <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/common.js?ver=18"></script>
-	 <script type="text/javascript"
-	     src="https://cdn.hddfs.com/front/js/KO/diquest/dqAutoCompleteCommon.js?ver=18"></script>
-	 <script type="text/javascript"
-	     src="https://cdn.hddfs.com/front/js/KO/diquest/dqHeader.js?ver=18"></script>
-	 <script type="text/javascript"
-	     src="https://cdn.hddfs.com/front/js/KO/cloud-zoom.1.0.2.js?ver=18"></script>
+	 <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/diquest/dqAutoCompleteCommon.js?ver=18"></script>
+	 <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/diquest/dqHeader.js?ver=18"></script>
+	 <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/cloud-zoom.1.0.2.js?ver=18"></script>
 	 <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/SsoAjax.js?ver=18"></script>
-	 <script type="text/javascript"
-	     src="https://cdn.hddfs.com/front/js/KO/SsoHttpRequest.js?ver=18"></script>
-	
+	 <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/SsoHttpRequest.js?ver=18"></script>
 	 <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/makePCookie.js?ver=18"></script>
-	
 	 <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/hash.js?ver=18"></script>
 	
 	 <script>
@@ -151,7 +142,7 @@
 <%@ include file="header.jsp" %>
 
    	<script type="text/javascript">
-		<!--배지현 : 마이페이지 목록부분 hover 적용 -->
+		<!-- 배지현 : 마이페이지 목록부분 hover 적용 -->
          $(document).ready(function () {
         	 var $tmp = null;
 	         $('table tr').mouseover(function () {
@@ -163,7 +154,7 @@
 	             $tmp.css("backgroundColor", "#f5f7fa");
 			 });
 	         
-          	  	 <!--배지현, 경민영 : 관리자일 경우 찜 count 박스 히든 처리 적용-->
+        	 <!-- 배지현, 경민영 : 관리자일 경우 찜 count 박스 히든 처리 적용 -->
              if ("<%=userId%>" != "admin") {
             	 document.getElementById("chim").style.display = "";
            	 } else {

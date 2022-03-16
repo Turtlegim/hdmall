@@ -5,6 +5,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <%!
+	/* 경민영 : cookieName과 동일한 쿠키가 존재하면 쿠키에 저장된 값 반환 */
 	public String getCookieValue(Cookie[] cookies, String cookieName) { 
     	for (Cookie cookie : cookies) { 
          	if(cookie.getName().equals(cookieName)){ 
@@ -18,7 +19,7 @@
 
 <%
      Cookie[] cookies = request.getCookies();
-     String id = getCookieValue(cookies, "userId");
+     String id = getCookieValue(cookies, "userId"); // 아이디 저장 체크 후 로그인 했을 때 입력했던 쿠키 불러오기
 %>
 
 <head>
@@ -58,9 +59,7 @@
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/SsoHttpRequest.js?ver=18"></script>
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/makePCookie.js?ver=18"></script>
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/hash.js?ver=18"></script>
-  		
-	<script type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
     
     <script>
         $(function () {
@@ -71,7 +70,7 @@
                 $(".serviceMenu").parent().addClass("open");
                 $(".serviceMenu").css("display", "block");
 
-                //카테고리 JSONP load
+                // 카테고리 JSONP load
                 if ($(".serviceCtgList > li").length < 1) {
                     loadCtgList();
                 }
@@ -82,13 +81,14 @@
 			sessionStorage.setItem("selMainSwiperPos", 1);
 			location.href = "${action}/hdmall/main.do";
 		}
-
+		
+        <!-- 경민영 : 로그인 -->
         $( document ).ready(function() {
         	$('#btnLgin').click(function(){
         		var id = document.getElementById('userId').value;
             	var pwd = document.getElementById('userPwd').value;
             	
-        		if(id == "" || pwd == "") {
+        		if(id == "" || pwd == "") { // 빈칸이 존재하는 경우 
             		alert("빈칸이 존재합니다.");
         		} 
         	});

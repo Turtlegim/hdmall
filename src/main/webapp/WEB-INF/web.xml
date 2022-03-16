@@ -13,6 +13,6 @@
 
 <display-name>hdmall</display-name>
   <welcome-file-list>
-    <welcome-file>login.jsp</welcome-file>
+    <welcome-file>main.do</welcome-file>
   </welcome-file-list>
 </web-app>
