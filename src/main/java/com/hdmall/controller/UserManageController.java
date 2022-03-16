@@ -31,8 +31,8 @@ public class UserManageController extends HttpServlet {
 		String id = (String) session.getAttribute("userId");
         
         // destPage
-  		// 1. 회원정보 수정 성공시 메인 화면으로 이동
-  		// 2. 회원정보 수정 실패시 마이페이지로 이동
+  		// 1. 회원정보 수정 성공시 마이페이지로 이동 
+  		// 2. 회원정보 수정 실패시 회원정보관리 초기 화면으로 이동 
     	String destPage = "";
         
     	// user_manage.jsp 에 입력한 내용 요청 후 저장
@@ -53,10 +53,10 @@ public class UserManageController extends HttpServlet {
         	System.out.println(result);
         	
             if (result == 1) { // 회원정보 수정 성공
-            	destPage = "/main.do";
+            	destPage = "/QBoardList";
             } else { // 회원정보 수정 실패
                 result = 0;
-            	destPage = "/QBoardIns";
+            	destPage = "/userManage";
             }
             
             RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
