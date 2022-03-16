@@ -292,9 +292,9 @@ public class QnaDAO {
 		return productList;
 	}
 
-	/* 경민영 : 회원 탈퇴 전 문의 내역 지우기 */
+	/* 경민영 : 회원 탈퇴 전 문의 내역을 지우는 함수, 회원 탈퇴 전 문의 내역이 존재하면 지우고 회원 탈퇴 가능 */
 	public int deleteQna(String userId) throws SQLException {
-		int count = 0;
+		int count = 0; // 실패하면 0 
 
 		try {
 			conn = DBManager.getConnection();
@@ -324,15 +324,17 @@ public class QnaDAO {
 
 	/* 경민영 : 해당 유저가 문의한 내역이 존재하는지 확인하는 함수 */
 	public int isExistQna(String userId) throws SQLException {
-		int count = 0;
+		int count = 0; // 존재하지 않으면 0 
+		
 		try {
 			conn = DBManager.getConnection();
 			String query = "{? = call isexist_qna_func(?)}";
 			cstmt = conn.prepareCall(query);
 			cstmt.registerOutParameter(1, java.sql.Types.NUMERIC);
 			cstmt.setString(2, userId);
+			
 			cstmt.executeQuery();
-			count = cstmt.getInt(1);
+			count = cstmt.getInt(1); // 해당 유저가 문의한 내역을 COUNT하여 반환 
 			System.out.println("Total rows : " + count);
 
 			if (count == 0) {
