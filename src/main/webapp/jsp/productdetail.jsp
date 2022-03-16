@@ -169,7 +169,7 @@
             <article id="content" class="productdetail">
                 <section class="pd_area">
                 	<div style="margin-left: 200px; margin-top: 150px; float: left;">                       
-                        <img src="./image/product/${productVO.img}" style="width: 460px; height: 460px"/>
+                        <img src="./image/product/${productVO.getImg()}" style="width: 460px; height: 460px"/>
                     </div>
                     <div class="pd_info" style="height: 830px;">
                         <div class="summary_info" style="margin-top: 150px;">
@@ -181,25 +181,25 @@
                                         <strong style="font-size: 19px;">
                                             제품명 </strong>
                                         <p style="font-size: 18px; padding-top: 8px;">
-                                            ${productVO.name}</p>
+                                            ${productVO.getName()}</p>
                                     </li>
                                     <li>
                                         <strong style="font-size: 19px;">
                                             판매가 </strong>
                                         <p style="font-size: 18px; padding-top: 8px;">
-                                            ${productVO.price}원</p>
+                                            ${productVO.getPrice()}원</p>
                                     </li>
                                     <li>
                                         <strong style="font-size: 19px;">
                                             카테고리</strong>
                                         <p style="font-size: 18px; padding-top: 8px;">
-                                            ${productVO.cate_no}</p>
+                                            ${productVO.getCate_no()}</p>
                                     </li>
                                     <li style="width: 400px;">
                                         <strong style="font-size: 19px;">
                                             제품설명</strong>
                                         <p style="font-size: 18px; padding-top: 8px;">
-                                            ${productVO.context}</p>
+                                            ${productVO.getContext()}</p>
                                     </li>
                                     <li>
                                         <strong style="font-size: 19px;">
@@ -231,7 +231,7 @@
 	                            line-height: 60px;">찜하기 
 	
 	                        	<c:choose>  
-									<c:when test="${ likeVO.is_liked == true}"> 
+									<c:when test="${ islike == 1}"> 
 										<span id="likeheart" style="color:red">♥</span>
 									</c:when> 
 									<c:otherwise> 

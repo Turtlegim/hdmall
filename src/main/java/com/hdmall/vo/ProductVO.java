@@ -8,12 +8,13 @@ public class ProductVO {
 	private String context;
 	private String img;
 	private int hitnum;
-
+	private String islike;
+	
 	public ProductVO() {
 
 	}
 
-	public ProductVO(String id, String cate_no, String name, String price, String context, String img, int hitnum) {
+	public ProductVO(String id, String cate_no, String name, String price, String context, String img, int hitnum, String islike) {
 		super();
 		this.id = id;
 		this.cate_no = cate_no;
@@ -22,6 +23,7 @@ public class ProductVO {
 		this.context = context;
 		this.img = img;
 		this.hitnum = hitnum;
+		this.islike = islike;
 	}
 
 	public String getId() {
@@ -79,4 +81,11 @@ public class ProductVO {
 	public void setHitnum(int hitnum) {
 		this.hitnum = hitnum;
 	}	
+	public String getIslike() {
+		return islike;
+	}
+
+	public void setIslike(String islike) {
+		this.islike = islike;
+	}
 }

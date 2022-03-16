@@ -223,56 +223,57 @@ public class LikeDAO {
 	
 	public int updateLike(String islike, String userId, String prodId) {
 		int result = 0;
-		String sql = "update like_t "
-				+ "set is_liked = ?" +
-				"where user_id= ? AND prod_id= ?";	     
+	     
 		try {
 			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(sql);
+			cstmt = conn.prepareCall("{call update_like_proc(?, ?, ?)}");
 
-			pstmt.setString(1, islike);
-			pstmt.setString(2, userId);
-			pstmt.setString(3, prodId);
+			cstmt.setString(1, islike);
+			cstmt.setString(2, userId);
+			cstmt.setString(3, prodId);
 
-			result = pstmt.executeUpdate();
+			result = cstmt.executeUpdate();
 
 			if (result == 1) {
 				System.out.println("찜하기 수정");
 			} else {
 				System.out.println("찜하기 수정실패");
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(conn, pstmt);
+			DBManager.close(conn, cstmt);
 		}
 		return result;
 	}
 	
-	public LikeVO checkLikeUser(String userId, String prodId) throws SQLException{
-		LikeVO like = null;
-		String query = "select * from like_t b where user_id = ? AND prod_id = ?";
-		System.out.println(query);
+	public int checkLikeUser(String userId, String prodId) throws SQLException{
+//		LikeVO like = null;
 		ResultSet result = null;
+		int islike = 0;
 
 		try {
 			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, userId);
-			pstmt.setString(2, prodId);
-			result = pstmt.executeQuery();
-
+			cstmt = conn.prepareCall("select checkuser_like_func(?, ?) from dual");
+			cstmt.setString(1, userId);
+			cstmt.setString(2, prodId);
+		
+			result = cstmt.executeQuery();
+			
 			if (result.next()) {
-				like = new LikeVO();
-				like.setIs_liked(result.getBoolean("is_liked"));
-			}				
+				islike = result.getInt(1);
+//				like = new LikeVO();
+//				like.setIs_liked(result.getBoolean("is_liked"));
+			}		
+			System.out.println(islike);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 
 		conn.close();
 
-		return like;
+		return islike;
 	}
 
 	public int checkLikeInfo(String userId, String prodId) throws SQLException{
@@ -280,7 +281,7 @@ public class LikeDAO {
 		
 		try {
 			conn = DBManager.getConnection();
-			cstmt = conn.prepareCall("{call checkinfo_like_func(?, ?, ?)}");
+			cstmt = conn.prepareCall("{call checkinfo_like_proc(?, ?, ?)}");
 			cstmt.setString(1, userId);
 			cstmt.setString(2, prodId);
 			cstmt.registerOutParameter(3, java.sql.Types.NUMERIC);
