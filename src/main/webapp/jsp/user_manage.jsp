@@ -90,7 +90,7 @@
 				delay: 4000,
 			},
 		});
-
+		
 		$(function () {
 			$(".btn_gnb").on("click", function () {
 				$("#gnb > ul > li").removeClass("open").css("display", "");
