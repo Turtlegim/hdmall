@@ -54,9 +54,11 @@ public class UserManageController extends HttpServlet {
         	
             if (result == 1) { // 회원정보 수정 성공
             	destPage = "/QBoardList";
+            	System.out.println("회원정보 수정 성공");
             } else { // 회원정보 수정 실패
                 result = 0;
             	destPage = "/userManage";
+            	System.out.println("회원정보 수정 실패");
             }
             
             RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
