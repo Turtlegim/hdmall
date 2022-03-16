@@ -191,9 +191,11 @@
 	            var chart = new google.visualization.PieChart(document.getElementById('myChart'));
 	            chart.draw(data,opt);
 	        }
-       </script>
-        
+        </script>
+        <% if (!like_list.isEmpty()) { %>
         <div id="wrap">
 			<div id="myChart" align='center'></div>
-		</body>
+		</div>
+		<%} %>
+</body>
 <%@ include file = "footer.jsp"%>			

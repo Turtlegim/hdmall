@@ -132,62 +132,6 @@ public class LikeDAO {
 			DBManager.close(conn, cstmt);
 		}
 	}
-
-	/* 경민영 : 찜한 목록을 지우는 함수, 회원 탈퇴 전 찜한 목록이 존재하면 지우고 회원 탈퇴 가능 */
-	public int deleteLike(String userId) throws SQLException {
-		int result = 0; // 실패하면 0
-
-		try {
-			conn = DBManager.getConnection();
-			String query = "{call deleteLike_PROC(?, ?)}";
-			cstmt = conn.prepareCall(query);
-			cstmt.setString(1, userId);
-			
-			cstmt.registerOutParameter(2, java.sql.Types.INTEGER);
-			result = cstmt.executeUpdate();
-			result = cstmt.getInt(2);
-			
-			if (result == 0) {
-				System.out.println("찜한 목록 삭제를 실패하였습니다.");
-			} else {
-				System.out.println("찜한 목록 삭제를 성공하였습니다.");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.close(conn, cstmt);
-		}
-		
-		return result;
-	}
-
-	/* 경민영 : 해당 유저가 찜한 목록이 존재하는지 확인하는 함수 */
-	public int isExistLike(String userId) throws SQLException {
-		int count = 0; // 존재하지 않으면 0 
-		
-		try {
-			conn = DBManager.getConnection();
-			String query = "{? = call isExistLike_FUNC(?)}";
-			cstmt = conn.prepareCall(query);
-			cstmt.setString(2, userId);
-			
-			cstmt.registerOutParameter(1, java.sql.Types.NUMERIC);
-			cstmt.executeUpdate();
-			count = cstmt.getInt(1); // 해당 유저가 찜한 목록을 COUNT하여 반환
-			System.out.println("Total rows : " + count);
-
-			if (count == 0) {
-				System.out.println("해당 유저의 찜한 목록이 존재하지 않습니다.");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.close(conn, cstmt);
-		}
-		
-		return count;
-
-	}
 	
 	// 김민수 
 	public int insertLike(String userId, String prodId, String isLike) throws SQLException {

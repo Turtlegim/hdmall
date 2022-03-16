@@ -27,7 +27,7 @@ public class JoinController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
         
-    	String destPage = "/jsp/main.jsp";
+    	String destPage = "/main.do";
 
         HttpSession session = request.getSession();  
         
@@ -59,13 +59,13 @@ public class JoinController extends HttpServlet {
             if (result == 1) { // 회원가입 성공
             	result = 1;
             } else { // 회원가입 실패
-                if (checkHpno == 1) { // 전화번호 중복으로 회원가입 실패한 경우
-                	result = 2;
-                }
-                
-                result = 0;
-            	
-            	destPage = "/jsp/join.jsp";
+        		result = 0;
+        		
+        		destPage = "/jsp/join.jsp";
+            }
+            
+            if (checkHpno == 1){
+            	result = 2;
             }
             
             session.setAttribute("joinResult", result); // 회원가입의 결과를 세션에 저장

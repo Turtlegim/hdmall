@@ -13,13 +13,9 @@ import com.hdmall.dao.*;
 public class DeleteUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	UserDAO userDAO;
-	QnaDAO qnaDAO;
-	LikeDAO likeDAO;
 
 	public void init() throws ServletException {
 		userDAO = UserDAO.getInstance();
-		qnaDAO = QnaDAO.getInstance();
-		likeDAO = likeDAO.getInstance();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,17 +33,6 @@ public class DeleteUserController extends HttpServlet {
 	    System.out.println("전달된 userId : " + userId);
 	    
 	    try {
-	    	int qnaCount = qnaDAO.isExistQna(userId);
-	    	int likeCount = likeDAO.isExistLike(userId);
-	    	
-	    	if (qnaCount != 0) {
-	    		int deleteQna = qnaDAO.deleteQna(userId); // 문의 내역 삭제
-	    	}
-	    	
-	    	if (likeCount != 0) {
-		    	int deleteLike = likeDAO.deleteLike(userId); // 찜하기 목록 삭제 
-	    	}
-	    	
 	    	int result = userDAO.deleteUser(userId); // 회원 탈퇴
 	    	
 	        if (result == 1) { 
