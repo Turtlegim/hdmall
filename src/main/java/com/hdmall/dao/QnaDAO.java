@@ -274,7 +274,7 @@ public class QnaDAO {
 				cstmt.executeQuery();
 				rs = (ResultSet) cstmt.getObject(1);
 			}
-			while (rs.next() == true) {
+			while (rs.next()) {
 				QBoardVO list = new QBoardVO();
 				list.setNum(rs.getInt("row_num"));
 				list.setTitle(rs.getString("qboard_title"));

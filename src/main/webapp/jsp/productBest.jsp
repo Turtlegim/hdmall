@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page isELIgnored="false"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
+<!-- 김기범 : productBest.jsp -->
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -176,8 +176,7 @@
 						<div class="special_content lank_top">
 							<div class="product_list best_three" style="height: 540px">
 								<ul style="height: 440px">
-									<c:forEach var="vo" items="${best}" begin="0" end="2"
-										varStatus="status">
+									<c:forEach var="vo" items="${best}" begin="0" end="2" varStatus="status"> <%-- controller로부터 받아온 best 리스트 상위 3개 출력 --%>
 										<li style="height: 420px">
 											<a href="${contextPath }/productdetail?prod_id=${vo.getId()}">
 												<i class="tnr_font "><em><c:out value="${status.count}" />.</em></i>
@@ -201,7 +200,7 @@
 						<div class="bstpro_num">
 							<div class="product_list">
 								<ul>
-									<c:forEach var="vo" items="${best}" begin="3" end="6" varStatus="status">
+									<c:forEach var="vo" items="${best}" begin="3" end="6" varStatus="status"> <%-- controller로부터 받아온 best 리스트 상위 3~7번째 출력 --%>
 										<li class="product_item">
 											<a href="${contextPath }/productdetail?prod_id=${vo.getId() }">
 												<i class="tnr_font "><em><c:out value="${status.index + 1}" />.</em></i>
