@@ -12,7 +12,6 @@ import util.DBManager;
 
 public class ProductDAO {
 	private Connection conn;
-	private PreparedStatement pstmt;
 	private CallableStatement cstmt;
 	
 	private ProductDAO() {  } // 싱글톤 패턴
@@ -37,7 +36,7 @@ public class ProductDAO {
 				product.setImg(rs.getString("prod_img"));
 				product.setName(rs.getString("pboard_title"));
 				product.setContext(rs.getString("pboard_context"));
-				product.setPrice(rs.getString("is_liked"));
+				product.setIslike(rs.getString("is_liked"));
 				productList.add(product);
 			}
 		} catch (Exception e){
@@ -70,26 +69,16 @@ public class ProductDAO {
 
 	public ArrayList<ProductVO> listProductCategory(String cate_no, String user_id) {
 		ArrayList<ProductVO> productList = new ArrayList<ProductVO>();
-		String sql = "select *"
-				+ " from (select a.prod_id, a.cate_no, a.prod_img, b.pboard_title, b.pboard_context "
-				+ " from product_t a, pboard_t b"
-				+ " where a.prod_id = b. prod_id"
-				+ "    AND a.cate_no = ?) t1"
-				+ " left outer join "
-				+ " (select b.prod_id, is_liked"
-				+ " from user_t a, pboard_t b, like_t c"
-				+ " where a.user_id = c.user_id"
-				+ "    AND b.prod_id = c.prod_id"
-				+ "    AND a.user_id = ?) t2"
-				+ " on t1.prod_id = t2.prod_id";
-		System.out.println(sql);
+		String sql = "{call listProductCategory_PROC(?, ?, ?)}";
 		ResultSet rs = null;
 		try {
 			conn =  DBManager.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, cate_no);
-			pstmt.setString(2, user_id);
-			rs = pstmt.executeQuery();
+			cstmt = conn.prepareCall(sql);
+			cstmt.setString(1, cate_no);
+			cstmt.setString(2, user_id);
+			cstmt.registerOutParameter(3, OracleTypes.CURSOR);
+			cstmt.executeQuery();
+			rs = (ResultSet)cstmt.getObject(3);
 
 			while (rs.next()) {
 				ProductVO product = new ProductVO();
@@ -98,14 +87,13 @@ public class ProductDAO {
 				product.setCate_no(rs.getString("cate_no"));
 				product.setName(rs.getString("pboard_title"));
 				product.setContext(rs.getString("pboard_context"));
-				product.setPrice(rs.getString("is_liked"));
-						
+				product.setIslike(rs.getString("is_liked"));		
 				productList.add(product);
 			}
 		} catch (Exception e){
 			e.printStackTrace();
 		} finally {
-			DBManager.close(conn, pstmt, rs);
+			DBManager.close(conn, cstmt, rs);
 		}
 		return productList;
 

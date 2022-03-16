@@ -129,18 +129,6 @@
 			sessionStorage.setItem("selMainSwiperPos", 1);
 			location.href = "${action}/hdmall/main.do";
 		}
-        /* $(function () {
-            let heart = false;
-            $(".heartBtn").on("click", function () {
-                if (!heart) {
-                    document.querySelector("#heartImg").src = "./image/heart_black.png"
-                    heart = true;
-                } else {
-                    document.querySelector("#heartImg").src = "./image/heart.png"
-                    heart = false;
-                }
-            })
-        }); */
     </script>
 
 <%@ include file="header.jsp" %> 
@@ -187,12 +175,12 @@
                                 <!-- 상품 목록 for문으로 삽입하기 -->
                                 <li data-gooscd="10229250014901" data-minbuyqty="1"
                                     class="product_itme goosList 10229250014901">
-                                    <a href = "${contextPath}/productdetail?prod_id=${product.id}">
+                                    <a href = "${contextPath}/productdetail?prod_id=${product.getId()}">
 	                                    <div class="img_w">
 	                                        <div style="position: absolute; width: 35px; height: 35px">
-		                                        <button class="heartBtn" onclick="LikeBtn();">
+		                                        <button class="heartBtn">
 			                                        <c:choose>
-			                                        	<c:when test="${ product.price == 1}">                                    
+			                                        	<c:when test="${ product.getIslike() == 1}">                                    
 			                                        		<c:set var="src" value="./image/heart_black.png"/>
 			                                        	</c:when>
 			                                        	<c:otherwise>
@@ -203,7 +191,7 @@
 		                                        </button>
 	                                        </div> 
 	                                        <div>                                
-	                                            <img src="./image/product/${product.img}">                                        
+	                                            <img src="./image/product/${product.getImg()}">                                        
 	                                        </div>
 	                                        <div class="on_btn">
 	                                        </div>
@@ -211,9 +199,9 @@
                                     </a>
                                     <div class="pro_i">
                                     	
-                                        	<p class="ti_brand">${ product.name}</p>
+                                        	<p class="ti_brand">${ product.getName()}</p>
                                       
-                                        	<p class="tx_ex goosNm">${ product.context}</p>
+                                        	<p class="tx_ex goosNm">${ product.getContext()}</p>
                                     </div>
                                 </li>
                                 </c:forEach>

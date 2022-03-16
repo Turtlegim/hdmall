@@ -63,8 +63,8 @@ public class ProductDetailController extends HttpServlet {
 			int likecount = productDAO.getLikeCount(prod_id);				
 			request.setAttribute("likecount", likecount);
 			
-			LikeVO likeVO = likeDAO.checkLikeUser(user_id, prod_id);
-			request.setAttribute("likeVO", likeVO); 
+			int islike = likeDAO.checkLikeUser(user_id, prod_id);
+			request.setAttribute("islike", islike); 
 			
 			destPage = "/jsp/productdetail.jsp";
 			
