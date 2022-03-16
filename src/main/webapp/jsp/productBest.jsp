@@ -176,8 +176,7 @@
 						<div class="special_content lank_top">
 							<div class="product_list best_three" style="height: 540px">
 								<ul style="height: 440px">
-									<c:forEach var="vo" items="${best}" begin="0" end="2" <%-- controller로부터 받아온 best 리스트 상위 3개 출력 --%>
-										varStatus="status">
+									<c:forEach var="vo" items="${best}" begin="0" end="2" varStatus="status"> <%-- controller로부터 받아온 best 리스트 상위 3개 출력 --%>
 										<li style="height: 420px">
 											<a href="${contextPath }/productdetail?prod_id=${vo.getId()}">
 												<i class="tnr_font "><em><c:out value="${status.count}" />.</em></i>
