@@ -90,7 +90,7 @@
 				delay: 4000,
 			},
 		});
-
+		
 		$(function () {
 			$(".btn_gnb").on("click", function () {
 				$("#gnb > ul > li").removeClass("open").css("display", "");
@@ -110,6 +110,12 @@
 			sessionStorage.setItem("selMainSwiperPos", 1);
 			location.href = "${action}/hdmall/main.do";
 		}
+		
+		$(document).ready(function () {
+			// 화면 로드될 때 비밀번호 확인하는 상단부만 보여주기
+			document.getElementById("headerSection").style.display = "";
+			document.getElementById("bottomSection").style.display = "none";
+		});
 		
 		/* 경민영 : 회원정보 수정 전 비밀번호 입력 확인 버튼 (개인정보 보호용) */
 		$(document).on('click', '#pwdCheck', function () {
@@ -146,14 +152,6 @@
 			alert("회원정보 수정을 취소하셨습니다.");
 			
 			document.getElementById("userPwd").value = ""; // 초기화
-			
-			// 회원정보관리 초기 화면으로 변경해주기 
-			document.getElementById("headerSection").style.display = "";
-			document.getElementById("bottomSection").style.display = "none";
-		});
-		
-		$(document).ready(function () {
-			// 화면 로드될 때 비밀번호 확인하는 상단부만 보여주기
 			document.getElementById("headerSection").style.display = "";
 			document.getElementById("bottomSection").style.display = "none";
 		});
@@ -239,6 +237,9 @@
 				<section id="bottomSection" style="width: 800px; margin:0 auto; margin-top: 75px;">
 					<div class="content_wrap">
 						<h3 class="h3_type line">회원정보 수정</h3>
+						<ul class="dot_list mgts">
+                        	<li>수정하고 싶은 정보를 입력한 후 확인 버튼을 눌러주세요.</li><br>
+                    	</ul>
 						<form name="userManage" method="post" action="${contextPath}/userManage">
 							<table class="tb_write01 vm">
 								<colgroup>
@@ -263,14 +264,6 @@
 										<td>
 											<span>
 												<input type="password" id="userPwd" name="userPwd" onkeypress="javascript:noSpaceEvnt(event);">
-											</span>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">비밀번호 확인</th>
-										<td>
-											<span>
-												<input type="password" id="reUserPwd" name="reUserPwd" onkeypress="javascript:noSpaceEvnt(event);">
 											</span>
 										</td>
 									</tr>

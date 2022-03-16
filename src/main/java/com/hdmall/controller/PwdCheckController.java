@@ -9,7 +9,8 @@ import javax.servlet.http.*;
 
 import com.hdmall.dao.*;
 import com.hdmall.vo.UserVO;
- 
+
+/* 경민영: 비밀번호 확인 (회원정보 수정 전) */
 @WebServlet("/pwdCheck")
 public class PwdCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -21,12 +22,14 @@ public class PwdCheckController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		// 한글화 처리
 		response.setContentType("text/html;charset=UTF-8");
 		response.setContentType("application/json; charset=utf-8");
 		
 	    PrintWriter out = response.getWriter();
 	    
+	    // user_manage.jsp 에 입력한 내용 요청 후 저장 
 	    String userId = (String) request.getSession().getAttribute("userId");
 	    String userPwd = request.getParameter("userPwd");
 	    System.out.println("전달된 userPwd : " + userPwd);
