@@ -18,6 +18,7 @@ import oracle.jdbc.internal.OracleCallableStatement;
 import oracle.jdbc.internal.OracleTypes;
 import util.DBManager;
 
+// 김기범 : pboardDAO
 public class PBoardDAO {
 	private CallableStatement cstmt = null;
 	private Connection conn = null;
@@ -82,7 +83,7 @@ public class PBoardDAO {
 	    } catch (Exception e) {
 	      e.printStackTrace();
 	    } finally {
-	      //DBManager.close(conn, cstmt, rs);
+	      DBManager.close(conn, cstmt, rs);
 	    }
 	    return productList;
 	}

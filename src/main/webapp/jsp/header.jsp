@@ -6,34 +6,36 @@
 	String userName = (String)session.getAttribute("userName");
 %>
 
-<script>
-	function clickMenuFunction() {
-		if (<%=userId%> == null) {
-			alert("로그인 후 이용 가능한 서비스입니다.");
-		}
-	}
-</script>
-
-<style>
-	.like_item {
-		display: block;
-    	width: 26px;
-    	height: 24px;
-    	text-indent: -9999px;
-	}
-</style>
-
 <header id="header">
+	<script>
+		/* 경민영 : 로그인하지 않고 상단에 존재하는 메뉴를 누르는 경우 안내창 띄워주기 */
+		function clickMenuFunction() {
+			if (<%=userId%> == null) {
+				alert("로그인 후 이용 가능한 서비스입니다.");
+			}
+		}
+	</script>
+
+	<style>
+		.like_item {
+			display: block;
+	    	width: 26px;
+	    	height: 24px;
+	    	text-indent: -9999px;
+		}
+	</style>
+	
 	<section class="box">
 			<a href="javascript:" class="btn_gnb">Navigation Drawer</a>
 			<h1 onclick="goMainPage();" style="cursor: pointer; height: 48px"><img id="mainLogo" src="${action}/hdmall/image/logo.png">
 			</h1> <!-- 로고 이미지 src 변경 부분 -->
 
 			<div class="default_menu">
+			<!-- 경민영 : 로그인을 한 경우 (세션에 값이 존재하는 경우) @@@님 로그아웃 태그 보여주기 -->
 			<%if (userName != null) { %>
 				<a> <%=userName%>님 </a>
 				<a href="${action}/hdmall/logout" id="logoutBtn">로그아웃</a>
-			<%}else { %> 
+			<%}else { %> <!-- 로그아웃을 하지 않은 경우 로그인 태그 보여주기 -->
 				<a href="${action}/hdmall/login" id="loginBtn">로그인</a>
 			<%} %>
 				<ul>
@@ -48,8 +50,8 @@
                 </li>
             </ul>
         </div>
-
-		<!-- 히든메뉴 START -->
+		
+		<!-- 히든 메뉴 -->
 		<script type="text/javascript">
 			function goMainPage() {
 				sessionStorage.setItem("selMainSwiperPos", 1);
@@ -161,4 +163,3 @@
 		</nav>
 	</section>
 </header>
-<!-- 히든메뉴 END 03.05 경민영 -->

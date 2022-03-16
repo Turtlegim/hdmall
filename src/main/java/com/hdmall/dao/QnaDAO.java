@@ -274,7 +274,7 @@ public class QnaDAO {
 				cstmt.executeQuery();
 				rs = (ResultSet) cstmt.getObject(1);
 			}
-			while (rs.next() == true) {
+			while (rs.next()) {
 				QBoardVO list = new QBoardVO();
 				list.setNum(rs.getInt("row_num"));
 				list.setTitle(rs.getString("qboard_title"));
@@ -290,61 +290,6 @@ public class QnaDAO {
 			DBManager.close(conn, cstmt, rs);
 		}
 		return productList;
-	}
-
-	/* 경민영 : 회원 탈퇴 전 문의 내역 지우기 */
-	public int deleteQna(String userId) throws SQLException {
-		int count = 0;
-
-		try {
-			conn = DBManager.getConnection();
-			String query = "{call delete_qna_proc(?, ?)}";
-			cstmt = conn.prepareCall(query);
-			cstmt.setString(1, userId);
-			cstmt.registerOutParameter(2, java.sql.Types.NUMERIC);
-			ResultSet result = cstmt.executeQuery();
-
-			if (result.next()) {
-				count = result.getInt(2);
-			}
-
-			System.out.println("Total rows : " + count);
-
-			if (count == 0) {
-				System.out.println("해당 유저의 문의 목록이 존재하지 않습니다.");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.close(conn, cstmt);
-		}
-
-		return count;
-	}
-
-	/* 경민영 : 해당 유저가 문의한 내역이 존재하는지 확인하는 함수 */
-	public int isExistQna(String userId) throws SQLException {
-		int count = 0;
-		try {
-			conn = DBManager.getConnection();
-			String query = "{? = call isexist_qna_func(?)}";
-			cstmt = conn.prepareCall(query);
-			cstmt.registerOutParameter(1, java.sql.Types.NUMERIC);
-			cstmt.setString(2, userId);
-			cstmt.executeQuery();
-			count = cstmt.getInt(1);
-			System.out.println("Total rows : " + count);
-
-			if (count == 0) {
-				System.out.println("해당 유저의 문의 내역이 존재하지 않습니다.");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.close(conn, cstmt);
-		}
-
-		return count;
 	}
 
 	/* 배지현 : qboard_id에 해당하는 문의사항 호출함수 */

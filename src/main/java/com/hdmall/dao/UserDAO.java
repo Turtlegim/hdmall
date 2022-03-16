@@ -152,12 +152,6 @@ public class UserDAO {
 		    cstmt.setString(7, "USER"); // 회원가입시 회원의 유형은 USER로 설정 (기본값), ADMIN 계정은 Table 내에 존재
 		    
 		    result = cstmt.executeUpdate();
-		    
-	    	if (result == 1) {
-        		System.out.println("회원가입 성공");
-	        } else {
-	        	System.out.println("회원가입 실패");
-	        }
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    } finally {

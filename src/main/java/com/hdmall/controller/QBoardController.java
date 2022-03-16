@@ -56,7 +56,7 @@ public class QBoardController extends HttpServlet {
 			request.setAttribute("message", "문의등록을 실패하였습니다.");
 		}
 		
-		/* 경민영 : 로그인 유효성 체크함수 */
+		/* 경민영 : 로그인 유효성 체크 함수 */
 		if (loginUser == null) {
 			destpage = "/login";
 			System.out.println("문의 등록은 로그인 후 이용 가능합니다.");

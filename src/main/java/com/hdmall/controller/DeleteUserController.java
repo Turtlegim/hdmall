@@ -8,62 +8,50 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import com.hdmall.dao.*;
- 
+
 @WebServlet("/deleteUser")
 public class DeleteUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	UserDAO userDAO;
-	QnaDAO qnaDAO;
-	LikeDAO likeDAO;
 
 	public void init() throws ServletException {
 		userDAO = UserDAO.getInstance();
-		qnaDAO = QnaDAO.getInstance();
-		likeDAO = likeDAO.getInstance();
 	}
 
+	/* 경민영 : 회원 탈퇴 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		// 한글 처리 
 		response.setContentType("text/html;charset=UTF-8");
 		response.setContentType("application/json; charset=utf-8");
-		
-		String destPage = "/jsp/mypage.jsp";
+	
+		// destPage
+		// 1. 회원 탈퇴 성공 시 메인 화면으로 이동
+		// 2. 회원 탈퇴 실패 시 회원정보관리 초기 화면으로 이동 
+		String destPage = "/main.do";
 		
 		HttpSession session = request.getSession();
-	    PrintWriter out = response.getWriter();
 	    
 	    String userId = (String) session.getAttribute("userId");
 	    System.out.println("전달된 userId : " + userId);
 	    
 	    try {
-	    	int qnaCount = qnaDAO.isExistQna(userId);
-	    	int likeCount = likeDAO.isExistLike(userId);
+	    	int result = userDAO.deleteUser(userId); // 회원 탈퇴 
 	    	
-	    	if (qnaCount != 0) {
-	    		int deleteQna = qnaDAO.deleteQna(userId); // 문의 내역 삭제
-	    	}
-	    	
-	    	if (likeCount != 0) {
-		    	int deleteLike = likeDAO.deleteLike(userId); // 찜하기 목록 삭제 
-	    	}
-	    	
-	    	int result = userDAO.deleteUser(userId); // 회원 탈퇴
-	    	
-	        if (result == 1) { 
-	        	System.out.println("회원 탈퇴 성공");
-	        	out.print("{\"result\": 1}"); // json문법은 객체 표현할때 프라퍼티 앞에 백슬러시 큰따옴표가 필요 
+	        if (result == 1) { // 회원 탈퇴 성공
+	        	System.out.println("회원 탈퇴 성공"); 
 
+	        	// 세션에 저장한 로그인 회원 정보 초기화
 	            session.setAttribute("userId", null);
 	            session.setAttribute("userName", null);
 	            session.invalidate();
 	            
 	        	destPage = "/main.do";
-	        } else {
+	        } else { // 회원 탈퇴 실패 
 	        	System.out.println("회원 탈퇴 실패");
-	        	out.print("{\"result\": 0}");
 	        	
-	        	destPage = "/jsp/user_manage.jsp";
+	        	destPage = "/userManage";
 	        }
 	        
 	        RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
@@ -71,11 +59,6 @@ public class DeleteUserController extends HttpServlet {
 	    } catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private void getInstance() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

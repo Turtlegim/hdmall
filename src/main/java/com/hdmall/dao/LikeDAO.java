@@ -28,7 +28,7 @@ public class LikeDAO {
 		return instance;
 	}
 	
-	// Like Table 전체를 커서로 받아오는 함수.
+	// 김기범 : Like Table 전체를 커서로 받아오는 함수.
 	public ArrayList<LikeVO> listLike() {
 		ArrayList<LikeVO> likelist = new ArrayList<>();
 		String sql = "{call listLike_PROC(?)}";
@@ -55,7 +55,7 @@ public class LikeDAO {
 		return likelist;
 	}
 	
-	// 특정 User의 Like Table을 질의하는 함수.
+	// 김기범 : 특정 User의 Like Table을 질의하는 함수.
 	public ArrayList<LikeVO> listLikeTable(String userid) {
 		ArrayList<LikeVO> likelist = new ArrayList<>();
 		String sql = "{call listLikeTable_PROC(?,?)}";
@@ -82,20 +82,18 @@ public class LikeDAO {
 		return likelist;
 	}
 	
-	// 특정 User가 Like 한 상품들의 정보를 불러오는 함수.
+	// 김기범 : 특정 User가 Like 한 상품들의 정보를 불러오는 함수.
 	public ArrayList<ProductVO> listisLiked(String userid) {
 		ArrayList<ProductVO> productList = new ArrayList<>();
-		String sql = "select * " + "from ( " + "	  select * " + "	  from pb_p_id_view " + "	 ) t1 "
-				+ "left outer join " + "	( " + "	 select b.prod_id " + "	 		,c.is_liked "
-				+ "	 from   user_t    a " + "	        ,pboard_t b " + "	        ,like_t   c "
-				+ "	 where  a.user_id = c.user_id " + "	 	and b.prod_id = c.prod_id " + "	 	and a.user_id = ? "
-				+ "	) t2 " + "on t1.prod_id = t2.prod_id " + "WHERE t2.is_liked = 1";
+		String sql = "{call listisLiked_PROC(?,?)}";
 		ResultSet rs = null;
 		try {
 			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userid);
-			rs = pstmt.executeQuery();
+			cstmt = conn.prepareCall(sql);
+			cstmt.setString(1, userid);
+			cstmt.registerOutParameter(2, OracleTypes.CURSOR);
+			cstmt.executeQuery();
+			rs = (ResultSet) cstmt.getObject(2);
 			while (rs.next()) {
 				ProductVO product = new ProductVO();
 				product.setId(rs.getString("prod_id"));
@@ -108,12 +106,12 @@ public class LikeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(conn, pstmt, rs);
+			DBManager.close(conn, cstmt, rs);
 		}
 		return productList;
 	}
 	
-	// 특정 User의 특정 prod에 대한 Like를 취소하는 함수. (delete하지 않음.)
+	// 김기범 : 특정 User의 특정 prod에 대한 Like를 취소하는 함수. (delete하지 않음.)
 	public void cancelLike(String userid, String prodid) {
 		CallableStatement cstmt = null;
 		try {
@@ -132,69 +130,14 @@ public class LikeDAO {
 			DBManager.close(conn, cstmt);
 		}
 	}
-
-	// 찜한 목록을 지우는 함수
-	public int deleteLike(String userId) throws SQLException { // 회원 탈퇴 전 문의 내역 지우기
-		int result = 0;
-
-		try {
-			conn = DBManager.getConnection();
-			String query = "{call deleteLike_PROC(?, ?)}";
-			cstmt = conn.prepareCall(query);
-			cstmt.setString(1, userId);
-			int res = 0;
-			cstmt.registerOutParameter(2, java.sql.Types.INTEGER);
-			result = cstmt.executeUpdate();
-			res = cstmt.getInt(2);
-			if (res == 0) {
-				System.out.println("찜한 목록 삭제를 실패하였습니다.");
-			} else {
-				System.out.println("찜한 목록 삭제를 성공하였습니다.");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.close(conn, cstmt);
-		}
-		if (result > 0) {
-			System.out.println("찜한 목록 삭제 성공");
-		} else { // 회원 탈퇴 실패
-			System.out.println("찜한 목록 삭제 실패");
-		}
-		return result;
-	}
-
-	// 해당 유저가 찜한 목록이 존재하는지 확인하는 함수
-	public int isExistLike(String userId) throws SQLException {
-		int count = 0;
-		try {
-			conn = DBManager.getConnection();
-			String query = "{? = call isExistLike_FUNC(?)}";
-			cstmt = conn.prepareCall(query);
-			cstmt.setString(2, userId);
-			cstmt.registerOutParameter(1, java.sql.Types.NUMERIC);
-			cstmt.executeUpdate();
-			count = cstmt.getInt(1);
-			System.out.println("Total rows : " + count);
-
-			if (count == 0) {
-				System.out.println("해당 유저의 찜한 목록이 존재하지 않습니다.");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.close(conn, cstmt);
-		}
-		return count;
-
-	}
 	
 	// 김민수 : 상품 상세페이지에서 유저가 해당 살품을 처음 찜하기를 했을때 insert 
 	public int insertLike(String userId, String prodId, String isLike) throws SQLException {
 		int result = 0;
-		conn = DBManager.getConnection();
 		
 		try {
+			conn = DBManager.getConnection();
+			
 			cstmt = conn.prepareCall("{call INSERT_LIKE_PROC(?, ?, ?)}");
 			
 			System.out.println(cstmt);
@@ -306,7 +249,9 @@ public class LikeDAO {
 		return count;
 	}
 	
-	public HashMap<String, Integer> prodLikeInfo() throws SQLException{
+
+	// 김기범 : 그래프 그리기 위해 상품이름과 좋아요 카운트 해쉬맵으로 받아오는 함수.
+	public HashMap<String, Integer> prodLikeInfo() {
 		HashMap<String, Integer> list = new HashMap<>();
 		String sql = "{call prodLikeInfo_PROC(?)}";
 		ResultSet rs = null;

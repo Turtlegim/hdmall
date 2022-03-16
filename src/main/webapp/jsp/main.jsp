@@ -3,14 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
+<!-- 김기범 -->
+<!-- hashmap을 이용하기 위한 import -->
 <%@ page import = "java.util.*" %>
 <%@ page import = "java.util.Map.Entry" %>
 <%
-	HashMap<String, Integer> like_list = null;
-	Object obj = (Object) request.getAttribute("likelist");;
+	HashMap<String, Integer> like_list = null; // 상품명과 좋아요 수를 저장하기 위한 객체 선언 
+	Object obj = (Object) request.getAttribute("likelist"); // servlet으로부터 객체를 받아옴.
 	if (obj != null)
-		like_list = (HashMap<String, Integer>)obj;
-	Iterator <Entry<String, Integer>> entries = like_list.entrySet().iterator();
+		like_list = (HashMap<String, Integer>)obj; // 제대로 받아왔으면 형변환하여 변수에 대입
+	Iterator <Entry<String, Integer>> entries = like_list.entrySet().iterator(); // hash에서 데이터를 꺼내오기 위한 이터레이터 선언.
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -170,7 +173,8 @@
 	            data.addColumn('string','상품명');
 	            data.addColumn('number','찜한 수');
 	
-	            data.addRows([ 
+	            data.addRows([
+	            	// key(상품명-varchar2) 와 value(찜 수-number)를 받아서 차트 생성
 	            		<% 
 	            	 	while (entries.hasNext()) {
 	            			Map.Entry<String, Integer> entry = entries.next(); %>
@@ -191,9 +195,11 @@
 	            var chart = new google.visualization.PieChart(document.getElementById('myChart'));
 	            chart.draw(data,opt);
 	        }
-       </script>
-        
+        </script>
+        <% if (!like_list.isEmpty()) { %>
         <div id="wrap">
 			<div id="myChart" align='center'></div>
-		</body>
+		</div>
+		<%} %>
+</body>
 <%@ include file = "footer.jsp"%>			

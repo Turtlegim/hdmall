@@ -12,7 +12,8 @@ import javax.servlet.http.*;
 import com.hdmall.dao.*;
 import com.hdmall.vo.*;
 
-@WebServlet("/main.do")
+// 김기범 : MainController
+@WebServlet("/main.do") // servlet annotation 설정
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	PBoardDAO pboardDAO;
@@ -23,44 +24,34 @@ public class MainController extends HttpServlet {
 		pboardDAO = PBoardDAO.getInstance();
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
 			doHandle(request, response);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
 			doHandle(request, response);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String destPage = "/jsp/main.jsp";
+		String destPage = "/jsp/main.jsp"; // dest page 설정 
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 
-		HashMap<String, Integer> l_list = likeDAO.prodLikeInfo();
-		request.setAttribute("likelist", l_list);
+		HashMap<String, Integer> l_list = likeDAO.prodLikeInfo(); // 구글 차트에 사용할 상품명과 찜 갯수를 받아옴.
+		request.setAttribute("likelist", l_list); // jsp에 넘겨주기 위해 설정.
 		try {
 			
-			RequestDispatcher dispatch = request.getRequestDispatcher(destPage);
+			RequestDispatcher dispatch = request.getRequestDispatcher(destPage); // dispatcher로 forward.
 			dispatch.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();

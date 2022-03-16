@@ -74,20 +74,21 @@
         $( document ).ready(function() {
         	var idCheck = false;
         	
+        	/* 경민영 : 아이디 중복 확인 버튼을 눌렀을 때 동작하는 함수 */
         	$(document).on('click', '#idCheck', function () {
             	var userId = document.getElementById("userId").value;
             	
-    	       	if(userId == ""){
+    	       	if(userId == ""){ // 빈 문자열인 경우 
          		  	alert("아이디를 입력해주세요.");
-         		} else { // IdCheckController 요청
+         		} else { // IdCheckController에 전송
          			$.ajax({
                         url: "${action}/hdmall/idCheck",
                         method: "post", // 요청방식은 post
                         data: {"userId": userId},
                         success: function(result) {
-                        	if(result.result == 1) {
+                        	if(result.result == 1) { // 중복된 아이디인 경우 
                     			alert("중복된 아이디입니다.");
-                       	 	} else if(result.result == 0) {
+                       	 	} else if(result.result == 0) { // 중복되지 않은 아이디인 경우 
                     			alert("사용 가능한 아이디입니다.");	
 
                     			form.userId.readonly = true;
@@ -102,6 +103,7 @@
        			}
        		});
         	
+        	/* 경민영 : 가입하기 버튼을 눌렀을 때 동작하는 함수 */
         	$('#btnJoin').click(function(){
         		var name = document.getElementById('userName').value;
         		var id = document.getElementById('userId').value;
@@ -109,24 +111,25 @@
         		var rePwd = document.getElementById('reUserPwd').value;
         		var email1 = document.getElementById('email1').value;
         		
+        		// Controller에 저장한 세션 값들을 저장 
         		var isPwdEqual = <%= session.getAttribute("isPwdEqual") %>;
         		var idCheckResult = <%= session.getAttribute("idCheckResult") %>;
         		var joinResult = <%= session.getAttribute("joinResult") %>;
         		
         		if (name == "" || id == "" || hpno == "" || email1 == "" || pwd == "" || rePwd == "") { // 빈칸이 존재하는 경우
         			alert("필수 정보들을 모두 입력해주세요.");
-        	   	}
+        	   	} 
         		
         		if (isPwdEqual == 1) { // 비밀번호와 비밀번호 확인에 입력한 내용이 일치하지 않는 경우
         	   		alert("입력한 비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
-        	   	}
+        	   	} 
         		
-        		if (idCheckResult == 1) {
+        		if (idCheckResult == 1) { // 중복된 아이디를 입력한 후 회원가입을 누른 경우 
         			alert("중복된 아이디로 회원가입을 하실 수 없습니다. 다시 입력해주세요.");
         		}
         		
-        		if (joinResult == 0) {
-        			alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+        		if (joinResult == 0) { // 회원가입을 실패한 경우
+        			alert("회원가입에 실패했습니다. 다시 입력해주세요.");
         		}
         	});
         });

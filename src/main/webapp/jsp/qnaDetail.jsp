@@ -199,27 +199,24 @@
                            <th scope="row">제목<em class="essential">*</em></th>
                             <td><input type="text" class="required" valmsg="제목을 입력해주세요." id="title" name="title" value="" placeholder="제목을 입력해주세요." style="width: 100% ; margin: 11px 0 20px 0px;" maxlength="50" onpaste="false; "></td>
                        		<td><input type= hidden name ="qboard_id"  value="<%=qboardId%>"></td>
-                       </tr>
-                       <tr>
-                          <th scope="row">내용<em class="essential">*</em></th>
-                          <td>
+                        </tr>
+                        <tr>
+                           <th scope="row">내용<em class="essential">*</em></th>
+                           <td>
                            <div class="textarea_wrap">
                              <textarea placeholder="내용을 입력해주세요." id="context" name="context" maxlength="500" class="required" style = "margin: 12px 0 0 0;height: 150px;"></textarea>
                            </div>
-                         </td>
+                          </td>
                        </tr>
                     </tbody>
-               </div> 
-             
+               </div>              
               	<!--배지현 : 답변등록 버튼 마이페이지 버튼 적용 -->
 					<div class="basic_btn_box">
-						<button type="button" class="btn_basic4"
-							onclick = "gomyPage();">마이페이지로</button>
-						<button type ="submit" class = "btn_basic4"
-							id ="saveANS">답변등록</button>	
+						<button type="button" class="btn_basic4" onclick = "gomyPage();">마이페이지로</button>
+						<button type ="submit" class = "btn_basic4" id ="saveANS">답변등록</button>	
 					</div>
-				  </form>	
-				</div>
-			</div>	
-				<!-- container END -->
+			</form>	
+	   </div>
+</div>	
+<!-- container END -->
 <%@ include file="footer.jsp" %>
