@@ -86,13 +86,15 @@ public class QBoardListController extends HttpServlet {
 			        request.setAttribute("count_like", count_like);
 			 	}			
 				destpage = "/jsp/mypage.jsp";												
+
+				RequestDispatcher dispatcher = request.getRequestDispatcher(destpage);
+				dispatcher.forward(request, response);
 			} else {
-				destpage = "/login";														/*경민영 : 로그인 유효성 체크 */
+				destpage = "/hdmall/login";														/*경민영 : 로그인 유효성 체크 */
 				System.out.println("마이페이지는 로그인 후 이용 가능합니다.");
+				response.sendRedirect(destpage);
 			}
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher(destpage);
-			dispatcher.forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -153,8 +153,8 @@ public class ProductDAO {
 				product.setContext(rs.getString("prod_context"));
 				product.setHitnum(hitcount);
 				}
-			countUpdate(cstmt.getString(3), hitcount); // 조회수 업데이트
-		} catch (Exception e) {
+			countUpdate(cstmt.getString(3), hitcount); // 김기범 : 조회수 업데이트 함수 호출
+ 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, cstmt, rs);
@@ -162,7 +162,7 @@ public class ProductDAO {
 		return product;
 	}
 	
-	// 조회수 업데이트 해주는 함수
+	// 김기범 : 조회수 업데이트 해주는 함수
 	public int countUpdate(String pboardId, int currhit) throws SQLException{
 		String sql = "{call countUpdate_PROC(?, ?)}";
 		int updatedRowCount = 0;
@@ -172,6 +172,11 @@ public class ProductDAO {
 			cstmt.setString(1, pboardId);
 			cstmt.setInt(2, currhit);
 			updatedRowCount = cstmt.executeUpdate();
+			if (updatedRowCount != 1) {
+				System.out.println("조회수 업데이트에 실패하였습니다.");
+			} else {
+				System.out.println("조회수 업데이트에 성공하였습니다.");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

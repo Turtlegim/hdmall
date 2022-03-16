@@ -58,12 +58,13 @@ public class QBoardController extends HttpServlet {
 		
 		/* 경민영 : 로그인 유효성 체크 함수 */
 		if (loginUser == null) {
-			destpage = "/login";
+			destpage = "/hdmall/login";
 			System.out.println("문의 등록은 로그인 후 이용 가능합니다.");
+			response.sendRedirect(destpage);
 		}
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher(destpage);
-		dispatcher.forward(request, response);
-
+		else {
+			RequestDispatcher dispatcher = request.getRequestDispatcher(destpage);
+			dispatcher.forward(request, response);
+		}
 	}
 }
