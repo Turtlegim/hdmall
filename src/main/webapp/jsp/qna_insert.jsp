@@ -4,7 +4,6 @@
 <html lang="ko">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-
 <head>
     <meta charset="utf-8">
     <title>현대백화점인터넷면세점</title>
@@ -91,7 +90,7 @@
             }
         </style>
 
-        <!-- 저장 alert 함수 배지현 03/11 -->
+        <!-- 배지현 : 저장 alert 함수 배지현-->
         <script type="text/javascript">
             function fnSaveCoun() {
                 var title = $('#title').val();
@@ -106,8 +105,7 @@
                 }
                 return false;
             }
-            
-        	// 취소 input값초기화 함수 배지현 03 / 11
+            <!-- 배지현 : 취소시 input박수 값 초기화 함수  -->
              function fnClearForm() {
                  if (confirm("문의등록을 취소하시겠습니까?")) {
                      $("#title").val("");
@@ -125,6 +123,7 @@
                         <li>문의하신 내용에 대한 답변은 마이페이지&gt; 문의내역 에서 확인하실 수 있습니다.</li>
                         <br>
                     </ul>
+                    <!-- 배지현 : 문의등록폼 배지현-->
                     <form id="counForm" name="counForm" method="post"
                         action="${action}/hdmall/QBoardIns" onsubmit="return fnSaveCoun()">
                         <div class="counsel_write">
