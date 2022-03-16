@@ -137,6 +137,7 @@
 			location.href = "${contextPath}/QBoardList";
 		}
 		
+		<!-- 배지현 : 저장 alert 함수 배지현-->
 		function goinsert(){
 		
 			var title = $('#title').val();
@@ -153,6 +154,7 @@
 		}  
 
 		</script>
+		 <!--배지현 : 문의사항 상세사항 표출 -->
 			<div id="wrap">
 				<div class="lnb_content" style="width: 760px; margin: 0 auto; margin-top: 60px; margin-bottom: 80px;">
 					<h3 class="h3_type">문의사항</h3>
@@ -170,6 +172,7 @@
 							</p>
 						</div>
 					</div>
+				<!--배지현 : 답변 완료일시 답변 등록 화면 표출 -->
 					<div id = "ans_div">
 					<h3 class="h3_type_ans">답변</h3>
 					<div class="div_view mgtsl">
@@ -186,6 +189,7 @@
 						</div>
 					</div>
 				</div>
+				<!--배지현 : 관리자로그인 일때 답변 등록 화면 표출 -->
 			<form id="counForm" name="counForm" method="post"
                         action="${action}/hdmall/QBoardAnsInsert" onsubmit="return goinsert()">	
 				<div id = "ans_div_insert" class = "ans_div2" style = "border-top: 1px solid #333333; border-bottom: 1px solid #e5e5e5; padding: 25px 20px 28px 20px;">
@@ -207,7 +211,7 @@
                     </tbody>
                </div> 
              
-              
+              	<!--배지현 : 답변등록 버튼 마이페이지 버튼 적용 -->
 					<div class="basic_btn_box">
 						<button type="button" class="btn_basic4"
 							onclick = "gomyPage();">마이페이지로</button>
