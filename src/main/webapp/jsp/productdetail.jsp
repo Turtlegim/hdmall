@@ -91,20 +91,24 @@
 			sessionStorage.setItem("selMainSwiperPos", 1);
 			location.href = "${action}/hdmall/main.do";
 		}
-       
-        // 찜하기 버튼이 로그인시에만 이용가능하고 버튼을 누를 떄 하트 색이 변경하는 함수  김민수 03/13            
+       	
+
+        // 김민수 : 찜하기 버튼이 로그인시에만 이용가능하고 버튼을 누를 떄 하트 색이 변경하는 함수                     
        	$(function () {
+       		// 현재 찜하기 하트 색상, userid, prodid, islike 저장
             let like = document.querySelector("#likeheart").style.color;
             let userId = '<%= (String)session.getAttribute("userId") %>';
 			let prodId = '${productVO.id}';
-			let isLike = '${likeVO.is_liked}';
+			let isLike = '${islike}';
             
-            $(".likebtn").on("click", function () {
+			// 버튼 클릭시 로그인여부에 따라 처리 
+			$(document).on("click", ".likebtn", function () {
             	if ( userId == "null" ) {
             		alert("찜하기는 로그인시 이용가능합니다.");
             	}
             	else {
             		
+            		// 클릭시 버튼 색상 변경
             		if (like == "red") {
                         document.querySelector("#likeheart").style.color = "white";
                         like = "white"
@@ -113,15 +117,18 @@
                         like = "red"
                     }
             		
-            		$.ajax({
-                        url: "${contextPath}/LikeProduct",
+            		// ajax로 LikeProduct에 data를 전달
+            		 $.ajax ({
+                        url: "${contextPath}/LikeProduct?t=" + new Date().getTime(),
                         method: "post", // 요청방식은 post
                         data: {"userId": userId, "prodId" : prodId, "isLike" : isLike},
-                        success: function(result) {
+                        success: function(result) { 
                         	if(result == 1) {
-                    			alert("상품을 찜을 취소 또는 재등록하였습니다."); // 찜했던 상품을 누르면 찜을 취소하고, 찜을 안했던 상품을 누르면 찜하기 동작 실행
-                       	 	} else if(result == 2) {
-                    			alert("상품을 찜하였습니다.");	
+                    			alert("상품을 찜을 취소하였습니다."); // 찜했던 상품을 누르면 찜을 취소하고, 찜을 안했던 상품을 누르면 찜하기 동작 실행
+                    			isLike = 0;
+                        	} else if(result == 2) {
+                    			alert("상품을 찜하였습니다.");
+                    			isLike = 1;
                        	   	} else {
                     			console.log('develop : 서버 오류');
                        	   	}
@@ -131,7 +138,8 @@
                      });              		              		
             	}
             })
-        });            
+        }); 
+		
         </script>
     
     <style>
@@ -152,6 +160,20 @@
             margin: 0 auto;
             max-height: 100%;
             max-width: 100%;
+        }
+        .likebtn {
+        	width: 100%;
+        	background: #1b1e23;
+	        color: #fff;
+	        font-size: 16px;
+	        font-weight: 600;
+	        text-align: center;
+	        line-height: 60px;
+        }
+        
+        #pdinfo {
+        	font-size: 18px; 
+        	padding-top: 8px;
         }
     </style>
 </head>
@@ -180,37 +202,37 @@
                                     <li>
                                         <strong style="font-size: 19px;">
                                             제품명 </strong>
-                                        <p style="font-size: 18px; padding-top: 8px;">
+                                        <p id="pdinfo">
                                             ${productVO.getName()}</p>
                                     </li>
                                     <li>
                                         <strong style="font-size: 19px;">
                                             판매가 </strong>
-                                        <p style="font-size: 18px; padding-top: 8px;">
+                                        <p id="pdinfo">
                                             ${productVO.getPrice()}원</p>
                                     </li>
                                     <li>
                                         <strong style="font-size: 19px;">
                                             카테고리</strong>
-                                        <p style="font-size: 18px; padding-top: 8px;">
+                                        <p id="pdinfo">
                                             ${productVO.getCate_no()}</p>
                                     </li>
                                     <li style="width: 400px;">
                                         <strong style="font-size: 19px;">
                                             제품설명</strong>
-                                        <p style="font-size: 18px; padding-top: 8px;">
+                                        <p id="pdinfo">
                                             ${productVO.getContext()}</p>
                                     </li>
                                     <li>
                                         <strong style="font-size: 19px;">
                                             좋아요</strong>
-                                        <p style="font-size: 18px; padding-top: 8px;">
+                                        <p id="pdinfo">
                                             ${likecount}개</p>
                                     </li>
                                     <li>
                                         <strong style="font-size: 19px;">
                                             조회수</strong>
-                                        <p style="font-size: 18px; padding-top: 8px;">
+                                        <p id="pdinfo">
                                             ${productVO.getHitnum()}</p>
                                     </li>
                                 </ul>
@@ -221,15 +243,9 @@
                             <hr style="border: solid 1px rgb(109, 101, 101);">
                         </div>
   	                    <div class="button_area">
-	                           <button class="likebtn" style="    
-	                            width: 100%;
-	                            background: #1b1e23;
-	                            color: #fff;
-	                            font-size: 16px;
-	                            font-weight: 600;
-	                            text-align: center;
-	                            line-height: 60px;">찜하기 
-	
+	                           <button class="likebtn">찜하기 
+								
+								<!-- 김민수 : 상품 상세페이지에서 user의 찜하기 여부에 따라 하트 색상 변경-->
 	                        	<c:choose>  
 									<c:when test="${ islike == 1}"> 
 										<span id="likeheart" style="color:red">♥</span>

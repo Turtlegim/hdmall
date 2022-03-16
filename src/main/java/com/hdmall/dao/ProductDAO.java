@@ -3,6 +3,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.hdmall.vo.ProductVO;
@@ -20,7 +21,8 @@ public class ProductDAO {
 		return instance;
 	} 	
 	
-	public ArrayList<ProductVO> listProductNew(String user_id) {
+	// 김민수 : 신상품 카테고리에 포함된 상품 리스트 
+	public ArrayList<ProductVO> listProductNew(String user_id) throws SQLException {
 		ArrayList<ProductVO> productList = new ArrayList<ProductVO>();
 		String sql = "{call listProductNew_PROC(?, ?)}";
 		try {
@@ -46,8 +48,9 @@ public class ProductDAO {
 		}
 		return productList;
 	}
-
-	public int getNewCount() {
+	
+	// 김민수 : 신상품 카테고리에 포함된 상품 총 갯수 count
+	public int getNewCount() throws SQLException {
 		int count = 0;
 		ResultSet rs = null;
 		
@@ -66,8 +69,9 @@ public class ProductDAO {
 		}
 		return count;
 	}
-
-	public ArrayList<ProductVO> listProductCategory(String cate_no, String user_id) {
+	
+	// 김민수 : 여성/남성캐쥬얼 카테고리에 포함된 상품 리스트 
+	public ArrayList<ProductVO> listProductCategory(String cate_no, String user_id) throws SQLException {
 		ArrayList<ProductVO> productList = new ArrayList<ProductVO>();
 		String sql = "{call listProductCategory_PROC(?, ?, ?)}";
 		ResultSet rs = null;
@@ -99,8 +103,8 @@ public class ProductDAO {
 
 	}
 	
-
-	public int getCategoryCount(String cate_no) {
+	// 김민수 : 여성/남성캐쥬얼 카테고리에 포함된 상품의 총 갯수 count
+	public int getCategoryCount(String cate_no) throws SQLException {
 		int count = 0;
 		ResultSet rs = null;
 		
@@ -120,8 +124,9 @@ public class ProductDAO {
 		}
 		return count;
 	}
-
-	public ProductVO getProduct(String prod_id) {
+	
+	// 김민수 : 상품 상세페이지에서 나타나는 상품 정보
+	public ProductVO getProduct(String prod_id) throws SQLException {
 		ProductVO product = null;
 		
 		ResultSet rs = null;    	    
@@ -158,7 +163,7 @@ public class ProductDAO {
 	}
 	
 	// 조회수 업데이트 해주는 함수
-	public int countUpdate(String pboardId, int currhit) {
+	public int countUpdate(String pboardId, int currhit) throws SQLException{
 		String sql = "{call countUpdate_PROC(?, ?)}";
 		int updatedRowCount = 0;
 		try {
@@ -174,8 +179,9 @@ public class ProductDAO {
 		}
 		return updatedRowCount;
 	}
-
-	public int getLikeCount(String prod_id) {
+	
+	// 김민수 : 상품 상세페이지에서 해당 상품의 총 찜하기 갯수 count
+	public int getLikeCount(String prod_id) throws SQLException {
 		int count = 0;
 		ResultSet rs = null;
 		

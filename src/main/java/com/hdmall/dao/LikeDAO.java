@@ -189,7 +189,7 @@ public class LikeDAO {
 
 	}
 	
-	// 김민수 
+	// 김민수 : 상품 상세페이지에서 유저가 해당 살품을 처음 찜하기를 했을때 insert 
 	public int insertLike(String userId, String prodId, String isLike) throws SQLException {
 		int result = 0;
 		conn = DBManager.getConnection();
@@ -220,7 +220,8 @@ public class LikeDAO {
 		return result;
 	}
 	
-	public int updateLike(String islike, String userId, String prodId) {
+	// 김민수 : 상품 상세페이지에서 찜하기 버튼을 누를 때 찜하기 등록/취소 update 
+	public int updateLike(String islike, String userId, String prodId) throws SQLException {
 		int result = 0;
 	     
 		try {
@@ -247,8 +248,8 @@ public class LikeDAO {
 		return result;
 	}
 	
-	public int checkLikeUser(String userId, String prodId) throws SQLException{
-//		LikeVO like = null;
+	// 김민수 : 로그인한 유저가 상품 상세페이지 접속시 해당 상품 찜하기가 되어있는지 확인
+	public int checkLikeUser(String userId, String prodId) throws SQLException {
 		ResultSet result = null;
 		int islike = 0;
 
@@ -262,20 +263,20 @@ public class LikeDAO {
 			
 			if (result.next()) {
 				islike = result.getInt(1);
-//				like = new LikeVO();
-//				like.setIs_liked(result.getBoolean("is_liked"));
 			}		
 			System.out.println(islike);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-
-		conn.close();
+		 finally {
+			DBManager.close(conn, cstmt, result);
+		}
 
 		return islike;
 	}
-
-	public int checkLikeInfo(String userId, String prodId) throws SQLException{
+	
+	// 김민수 : Like_t 테이블에 user가 찜하기를 했던 기록이 있는지 확인
+	public int checkLikeInfo(String userId, String prodId) throws SQLException {
 		int count = 0; // 이미있으면 1 없으면 0
 		
 		try {
@@ -298,14 +299,14 @@ public class LikeDAO {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
-
-		 conn.close();
+		} finally {
+			DBManager.close(conn, cstmt);
+		}
 
 		return count;
 	}
 	
-	public HashMap<String, Integer> prodLikeInfo() {
+	public HashMap<String, Integer> prodLikeInfo() throws SQLException{
 		HashMap<String, Integer> list = new HashMap<>();
 		String sql = "{call prodLikeInfo_PROC(?)}";
 		ResultSet rs = null;

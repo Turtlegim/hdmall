@@ -16,6 +16,7 @@ import com.hdmall.dao.ProductDAO;
 import com.hdmall.vo.LikeVO;
 import com.hdmall.vo.ProductVO;
 
+// 김민수 : 상품 리스트에서 특정 상품을 선택하면 실행되는 컨트롤러
 @WebServlet("/productdetail")
 public class ProductDetailController extends HttpServlet {
 
@@ -25,8 +26,9 @@ public class ProductDetailController extends HttpServlet {
 	LikeDAO likeDAO;
 	
 	public void init(ServletConfig config) throws ServletException {
+		// 싱글톤 패턴
 		productDAO = ProductDAO.getInstance();
-		likeDAO = LikeDAO.getInstance(); // 싱글톤 패턴
+		likeDAO = LikeDAO.getInstance(); 
 	}
 
 	//get 요청시 doHand..로 전달
@@ -42,28 +44,33 @@ public class ProductDetailController extends HttpServlet {
 	private void doHandle(HttpServletRequest request,  HttpServletResponse response) throws ServletException, IOException {
 		
 		String destPage = "";
-		// 한글화 처리
+		
+		// 김민수 : 한글화 처리
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 
-
+		// 김민수 : 세션에서 로그인한 user id를 받아옴
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("userId");
-		System.out.println(user_id);
-		// ProductListContrller에서 선택하여 들어간 상품 아이디를 받아옴 
-		String prod_id =request.getParameter("prod_id");	
-		System.out.println(prod_id);
 		
-		//커맨드 출력
+		// 김민수 : ProductListContrller에서 선택하여 들어간 상품 아이디 저장 
+		String prod_id =request.getParameter("prod_id");	
+		
+		System.out.println("user_id : " + user_id + " prod_id " + prod_id);
+		
 		try {
-			// 받아온 상품 아이디를 통해 getProduct함수의 인자로 전해주어 상품테이블의 컬럼을 가져옴
+			// 김민수 : 해당 상품 테이블 행 저장 
 			ProductVO productVO = productDAO.getProduct(prod_id);
-			request.setAttribute("productVO", productVO); 
 			
-			int likecount = productDAO.getLikeCount(prod_id);				
-			request.setAttribute("likecount", likecount);
+			// 김민수 : 해당 상품의 찜하기 총 갯수 저장 
+			int likecount = productDAO.getLikeCount(prod_id);
 			
+			// 김민수 : 상품 상세페이지에 해당 유저가 해당 상품을 좋아요 눌렀는지 확인
 			int islike = likeDAO.checkLikeUser(user_id, prod_id);
+			
+			// 김민수 : jsp에 다음의 값들을 setAttribute로 전달
+			request.setAttribute("productVO", productVO); 
+			request.setAttribute("likecount", likecount);
 			request.setAttribute("islike", islike); 
 			
 			destPage = "/jsp/productdetail.jsp";

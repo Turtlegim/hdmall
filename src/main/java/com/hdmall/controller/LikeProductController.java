@@ -13,43 +13,34 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hdmall.dao.LikeDAO;
 
-/**
- * Servlet implementation class LikeController
- */
+// 김민수 : 상품 상세페이지에서 찜하기 버튼 클릭시 수행되는 컨트롤러
 @WebServlet("/LikeProduct")
 public class LikeProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	LikeDAO likeDAO;
-	/**
-	 * @see Servlet#init(ServletConfig)
-	 */
+
 	public void init(ServletConfig config) throws ServletException {
 		likeDAO = LikeDAO.getInstance(); // 싱글톤 패턴
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doHandle(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doHandle(request, response);
 	}
 	
 	private void doHandle(HttpServletRequest request,  HttpServletResponse response) throws ServletException, IOException {
-		// 한글화 처리
+		// 김민수 : 한글화 처리
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
-		
-		// 서블릿에서 클라이언트에 데아토를 보내기위해 사용하는 변수
+				
+		// 김민수 : 서블릿에서 클라이언트에 데아토를 보내기위해 사용하는 변수
 		PrintWriter out = response.getWriter();
 		
+		// 김민수 : jsp파일에서 ajax로 전해진 데이터를 변수로 사용하기 위해 저장
 		String userId = request.getParameter("userId");
 		String prodId = request.getParameter("prodId");
 		String isLike = request.getParameter("isLike");
@@ -60,41 +51,50 @@ public class LikeProductController extends HttpServlet {
 	    int result = 0;
 	    
 		try {
-			// checkLikeInfo 함수에서 이미 유저한 찜한 기록이 있는지를 1 또는 0으로 받아와 check 변수에 저장
+			// 김민수 : checkLikeInfo 함수에서 이미 유저한 찜한 기록이 있는지를 1 또는 0으로 받아와 check 변수에 저장
 			int check = likeDAO.checkLikeInfo(userId, prodId);
-			System.out.println("테이블 정보 존재하면 1 아니면 0 : " + check);
 			
-			// 1이면 like_t 테이블에 이미 user 정보가 존재 
+			// 김민수 : 1이면 like_t 테이블에 이미 user 정보가 존재 
 			if (check == 1) {
-				String like;
 				
-				// if else 문으로 찜하기가 되어있을 때 0으로 안되있을 때 1로 반대로 바꿈
-				if (isLike.equals("true")) {
-					like = "0";
+				// 김민수 : if else 문으로 찜하기가 되어있을 때 0으로 안되있을 때 1로 반대로 바꿈
+				if (isLike.equals("1")) {
+					isLike = "0";
 				}
 				else {
-					like = "1";
+					isLike = "1";
 				}
 						
-				// updateLike 함수에서 찜하기 수정 성공여부 1또는 0을 result에 저장
-				result = likeDAO.updateLike(like, userId, prodId);
-				System.out.println("update 실행");
+				// 김민수 : updateLike 함수에서 찜하기 수정 성공여부 1또는 0을 result에 저장
+				result = likeDAO.updateLike(isLike, userId, prodId);
 				
-				if (result == 1) {
-		        	out.print("1"); // ajax 가 sussses 이면 1을 보내줌 
+				// 김민수 : if문으로 updateLike 함수의 성공여부와 isLike 변수 값을 확인하여 
+				//        찜하기를 취소하는 것인지 다시 등록하는것이 판단후 ajax에 값을 전달 
+				if (result == 1 && isLike.equals("0")) {
+					System.out.println("업데이트 취소");
+					out.print(1);
 		        } 
+				else if (result == 1 && isLike.equals("1")) {
+					System.out.println("업데이트 다시 등록");
+					out.print(2);
+				}
+				else {
+					out.print("0");
+				}
 			
-			// 0이면 like_t 테이블에 user 정보가 존재하지 않으므로 insert
-			} else {
-				String like = "1";
+			// 김민수 : 0이면 like_t 테이블에 user 정보가 존재하지 않으므로 insert
+			} else {				
 				
-				// insertLike 함수에서 찜하기 수정 성공여부 1또는 0을 result에 저장
-				result = likeDAO.insertLike(userId, prodId, like);	
+				//김민수 : insertLike 함수에서 찜하기 등록 성공여부 1또는 0을 result에 저장
+				result = likeDAO.insertLike(userId, prodId, "1");	
 				System.out.println("insert 실행");
-				
-				if (result == 1) {				
-		        	out.print("2"); // ajax 가 sussses 이면 2을 보내줌
+								
+				if (result == 1) {	
+					out.print(2);
 		        } 
+				else {
+					out.print("0");
+				}
 			}
 		
 		}	

@@ -99,12 +99,6 @@
 
 <body>
     <script type="text/javascript">
-        $(window).load(function () {
-            fnLnbCountInfo();
-            orderStatusInfo();
-
-        });
-
         $(function () {
             $(".btn_gnb").on("click", function () {
                 $("#gnb > ul > li").removeClass("open").css("display", "");
@@ -129,7 +123,6 @@
 <%@ include file="header.jsp" %> 
     <div id="wrap">
         <main id="container">
-
             <article class="location">
                 <section class="box">
                     <a class="home">홈</a>
@@ -172,18 +165,17 @@
                                     class="product_itme goosList 10229250014901">
                                     <a href = "${contextPath}/productdetail?prod_id=${product.getId()}">
 	                                    <div class="img_w">
-	                                        <div style="position: absolute; width: 35px; height: 35px">
-		                                        <button class="heartBtn">
-			                                        <c:choose>
-			                                        	<c:when test="${ product.getIslike() == 1}">                                    
-			                                        		<c:set var="src" value="./image/heart_black.png"/>
-			                                        	</c:when>
-			                                        	<c:otherwise>
-			                                        		<c:set var="src" value="./image/heart.png" />
-			                                        	</c:otherwise>                                  
-			                                        </c:choose>
-			                                        <img id="heartImg" src= ${ src } />
-		                                        </button>
+	                                    	<div style="position: absolute; width: 35px; height: 35px">
+		                                    	<!-- 김민수 : 상품 리스트에서 user의 찜하기 여부에 따라 하트 이미지 변경-->
+		                                    	<c:choose>
+			                                    	<c:when test="${ product.getIslike() == 1}">                                    
+			                                        	<c:set var="src" value="./image/heart_black.png"/>
+			                                        </c:when>
+			                                        <c:otherwise>
+			                                        	<c:set var="src" value="./image/heart.png" />
+			                                        </c:otherwise>                                  
+			                                	</c:choose>
+			                                    <img id="heartImg" src= ${ src } />
 	                                        </div> 
 	                                        <div>                                
 	                                            <img src="./image/product/${product.getImg()}">                                        
@@ -193,9 +185,7 @@
 	                                    </div>
                                     </a>
                                     <div class="pro_i">
-                                    	
                                         	<p class="ti_brand">${ product.getName()}</p>
-                                      
                                         	<p class="tx_ex goosNm">${ product.getContext()}</p>
                                     </div>
                                 </li>
@@ -207,6 +197,5 @@
             </article>
             <!-- 상품 목록 END -->
         </main>
-
     </div>
 <%@ include file="footer.jsp" %>    
