@@ -16,19 +16,18 @@
     <script src="https://cdn.hddfs.com/front/js/KO/jquery.lazyloadxt.min.js?ver=18"></script>
     <script src="https://cdn.hddfs.com/front/js/KO/common.ui.js?ver=18"></script>
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/crew.source.js?ver=18"></script>
-    <script type="text/javascript"
-        src="https://cdn.hddfs.com/front/js/KO/crew/form/form.source.js?ver=18"></script>
+    <script type="text/javascript"src="https://cdn.hddfs.com/front/js/KO/crew/form/form.source.js?ver=18"></script>
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/common.js?ver=18"></script>
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/SsoAjax.js?ver=18"></script>
     <script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/SsoHttpRequest.js?ver=18"></script>
+    
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/jquery-ui.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/swiper.min.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/common.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/member.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/popup.css?ver=18">
     <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/common.css?ver=18">
-    <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/layout.css?ver=18">
-    
+    <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/layout.css?ver=18">   
 	<link rel="icon" type="image/png" sizes="96x96" href="${action}/hdmall/image/favicon-96x96.png">
     <link rel="stylesheet" href="/inc/user/css/V2Join.css?20210420">
     <link rel="stylesheet" href="/assets/app/css/swiper.min.css">
