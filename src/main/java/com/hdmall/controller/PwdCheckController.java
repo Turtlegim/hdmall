@@ -37,6 +37,7 @@ public class PwdCheckController extends HttpServlet {
 	    try {
 	        UserVO user = userDAO.loginUser(userId, userPwd); // 로그인 함수를 통해 비밀번호를 제대로 입력했는지 확인
 	        if (user != null) { // 존재하는 회원 
+	        	request.setAttribute("userPwd", userPwd);
 	        	out.print("{\"result\": 1}"); // json문법은 객체 표현할때 프라퍼티 앞에 백슬러시 큰따옴표가 필요 
 	        } else { // 존재하지 않는 회원, 비밀번호 다시 입력 
 	        	out.print("{\"result\": 0}");

@@ -238,7 +238,7 @@
 					<div class="content_wrap">
 						<h3 class="h3_type line">회원정보 수정</h3>
 						<ul class="dot_list mgts">
-                        	<li>수정하고 싶은 정보를 입력한 후 확인 버튼을 눌러주세요.</li><br>
+                        	<li>필수 사항(*)은 꼭 입력하셔야합니다.&nbsp;</li><br>
                     	</ul>
 						<form name="userManage" method="post" action="${contextPath}/userManage">
 							<table class="tb_write01 vm">
@@ -249,10 +249,10 @@
 								<tbody>
 									<tr>
 										<th scope="row" class="bt_no">아이디</th>
-										<td class="bt_no"><c:set value="${userId}"></c:set></td>
+										<td class="bt_no">${userId}</td>
 									</tr>
 									<tr>
-										<th scope="row">성명</th>
+										<th scope="row">성명&nbsp;*</th>
 										<td>
 											<span>
 												<input type="text" id="userName" name="userName" value="${userName}">
@@ -260,10 +260,10 @@
 										</td>
 									</tr>
 									<tr>
-										<th scope="row">비밀번호</th>
+										<th scope="row">비밀번호&nbsp;*</th>
 										<td>
 											<span>
-												<input type="password" id="userPwd" name="userPwd" onkeypress="javascript:noSpaceEvnt(event);">
+												<input type="password" id="userPwd" name="userPwd" onkeypress="javascript:noSpaceEvnt(event);" value="<%= (String) request.getAttribute("userPwd")%>">
 											</span>
 										</td>
 									</tr>
