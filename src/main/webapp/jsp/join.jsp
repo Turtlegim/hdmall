@@ -112,7 +112,6 @@
         		var email1 = document.getElementById('email1').value;
         		
         		// Controller에 저장한 세션 값들을 저장 
-        		var isPwdEqual = <%= session.getAttribute("isPwdEqual") %>;
         		var idCheckResult = <%= session.getAttribute("idCheckResult") %>;
         		var joinResult = <%= session.getAttribute("joinResult") %>;
         		
@@ -122,7 +121,7 @@
         		
         		if (pwd != rePwd) { // 비밀번호와 비밀번호 확인에 입력한 내용이 일치하지 않는 경우
         	   		alert("입력한 비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
-        	   	} 
+        	   	}
         		
         		if (idCheckResult == 1) { // 중복된 아이디를 입력한 후 회원가입을 누른 경우 
         			alert("중복된 아이디로 회원가입을 하실 수 없습니다. 다시 입력해주세요.");
