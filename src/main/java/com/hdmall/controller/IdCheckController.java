@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import com.hdmall.dao.*;
- 
+
 @WebServlet("/idCheck")
 public class IdCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -17,7 +17,8 @@ public class IdCheckController extends HttpServlet {
 	public void init() throws ServletException {
 		userDAO = UserDAO.getInstance();
 	}
-
+	
+	/* 경민영 : 아이디 중복 확인 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
