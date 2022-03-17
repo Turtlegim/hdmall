@@ -27,10 +27,11 @@
 	
 	<section class="box">
 			<a href="javascript:" class="btn_gnb">Navigation Drawer</a>
+			
 			<h1 onclick="goMainPage();" style="cursor: pointer; height: 48px"><img id="mainLogo" src="${action}/hdmall/image/logo.png">
 			</h1> <!-- 로고 이미지 src 변경 부분 -->
 
-			<div class="default_menu">
+		<div class="default_menu">
 			<!-- 경민영 : 로그인을 한 경우 (세션에 값이 존재하는 경우) @@@님 로그아웃 태그 보여주기 -->
 			<%if (userName != null) { %>
 				<a> <%=userName%>님 </a>
@@ -38,15 +39,15 @@
 			<%}else { %> <!-- 로그아웃을 하지 않은 경우 로그인 태그 보여주기 -->
 				<a href="${action}/hdmall/login" id="loginBtn">로그인</a>
 			<%} %>
-				<ul>
+			<ul>
                 <li class="like_item">
                     <a href="${contextPath}/like" id="like" onclick="clickMenuFunction();"><image src="${action}/hdmall/image/heart.png"/></a>
                 </li>
-                <li class="item_03">
-                    <a href="${contextPath}/QBoardList" id="mypage" onclick="clickMenuFunction();">마이현대</a>
-                </li>
                 <li class="item_04">
                     <a href="${contextPath}/QBoardIns" id="qna" onclick="clickMenuFunction();">고객센터</a>
+                </li>
+                <li class="item_03">
+                    <a href="${contextPath}/QBoardList" id="mypage" onclick="clickMenuFunction();">마이현대</a>
                 </li>
             </ul>
         </div>
@@ -139,7 +140,7 @@
                 });
             }
         </script>
-
+		
 		<nav class="navication">
 			<div id="gnb">
 				<h2>Global Navigation Bar</h2>
@@ -149,14 +150,20 @@
 							<li><a href="${contextPath}/best"> 베스트</a></li>
 							<li><a href="${contextPath}/productList?cate_no=신상품"> 신상품</a></li>
 							<li><a href="${contextPath}/QBoardIns"> 고객센터</a></li>
-						</ul></li>
+						</ul>
+					</li>
 					<li><strong>카테고리</strong>
 						<ul class="depth_02 serviceCtgList">
-							<li><a href="${contextPath}/productList?cate_no=여성캐쥬얼">
-									여성캐쥬얼</a></li>
-							<li><a href="${contextPath}/productList?cate_no=남성캐쥬얼">
-									남성캐쥬얼</a></li>
-						</ul></li>
+							<li>
+								<a href="${contextPath}/productList?cate_no=여성캐쥬얼">
+									여성캐쥬얼</a>
+							</li>
+							<li>
+								<a href="${contextPath}/productList?cate_no=남성캐쥬얼">
+									남성캐쥬얼</a>
+							</li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 			<button class="gnb_close">닫기</button>

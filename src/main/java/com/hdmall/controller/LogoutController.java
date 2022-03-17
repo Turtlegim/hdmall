@@ -28,7 +28,7 @@ public class LogoutController extends HttpServlet {
  		
  		// destPage
 		// 로그아웃 성공 시 메인 화면으로 이동
-        String destPage = "";
+        String destPage = "/hdmall/main.do";
 		 
  		// 세션에 존재하는 아이디 불러오기 
         HttpSession session = request.getSession();
@@ -44,14 +44,11 @@ public class LogoutController extends HttpServlet {
                 session.setAttribute("userId", null);
                 session.setAttribute("userName", null);
                 session.invalidate();
-                
-                destPage = "/main.do";
             } else { // 로그아웃 실패
             	System.out.println("로그아웃 실패");
             }
             
-            RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
-            dispatcher.forward(request, response);
+            response.sendRedirect(destPage);
         } catch (SQLException e) {
             throw new ServletException(e);
         }
