@@ -104,7 +104,7 @@
 			// 버튼 클릭시 로그인여부에 따라 처리 
 			$(document).on("click", ".likebtn", function () {
             	if ( userId == "null" ) {
-            		alert("찜하기는 로그인시 이용가능합니다.");
+            		alert("로그인 후 이용 가능한 서비스입니다.");
             	}
             	else {
             		

@@ -191,20 +191,19 @@ public class UserDAO {
 	}
 	
 	/* 경민영 : 회원정보관리 - 마이페이지에서 회원정보를 수정할 때 사용하는 함수 */
-	public int updateUser(String userPwd, String userName, String userHpno, String email1, String email2, String userId) throws SQLException { // 회원정보 수정 
+	public int updateUser(String userName, String userHpno, String email1, String email2, String userId) throws SQLException { // 회원정보 수정 
 		int check = 0; // 수정을 실패면 0 
 		
 		try {
 			conn = DBManager.getConnection();
 			
-			cstmt = conn.prepareCall("{call update_user_proc(?, ?, ?, ?, ?, ?)}");
+			cstmt = conn.prepareCall("{call update_user_proc(?, ?, ?, ?, ?)}");
 			
-			cstmt.setString(1, userPwd);
-			cstmt.setString(2, userName);
-			cstmt.setString(3, userHpno);
-			cstmt.setString(4, email1);
-			cstmt.setString(5, email2);
-			cstmt.setString(6, userId);
+			cstmt.setString(1, userName);
+			cstmt.setString(2, userHpno);
+			cstmt.setString(3, email1);
+			cstmt.setString(4, email2);
+			cstmt.setString(5, userId);
 			
 		    check = cstmt.executeUpdate();
 		    System.out.println("회원정보 수정 결과를 확인하는 check : " + check);

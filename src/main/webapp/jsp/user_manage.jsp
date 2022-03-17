@@ -90,7 +90,7 @@
 				delay: 4000,
 			},
 		});
-
+		
 		$(function () {
 			$(".btn_gnb").on("click", function () {
 				$("#gnb > ul > li").removeClass("open").css("display", "");
@@ -147,15 +147,6 @@
 			}
 		});
 		
-		/* 경민영 : 회원정보 수정 하단에 있는 취소 버튼을 눌렀을 때 동작하는 함수 */
-		$(document).on('click', '#btnCancel', function () {
-			alert("회원정보 수정을 취소하셨습니다.");
-			
-			document.getElementById("userPwd").value = ""; // 초기화
-			document.getElementById("headerSection").style.display = "";
-			document.getElementById("bottomSection").style.display = "none";
-		});
-		
 		/* 경민영 : 전화번호 중복 확인 버튼을 눌렀을 때 동작하는 함수 */
 		$(document).on('click', '#hpnoCheck', function () {
 			var userHpno = document.getElementById("userHpno").value;
@@ -182,6 +173,15 @@
 				});
 			}
    		});
+		
+		/* 경민영 : 회원정보 수정 하단에 있는 취소 버튼을 눌렀을 때 동작하는 함수 */
+		$(document).on('click', '#btnCancel', function () {
+			alert("회원정보 수정을 취소하셨습니다.");
+			
+			document.getElementById("userPwd").value = ""; // 초기화
+			document.getElementById("headerSection").style.display = "";
+			document.getElementById("bottomSection").style.display = "none";
+		});
 		
 		function email_change(form) {
             var value = form.emaildomain[form.emaildomain.selectedIndex].value;
@@ -248,11 +248,11 @@
 								</colgroup>
 								<tbody>
 									<tr>
-										<th scope="row" class="bt_no">아이디</th>
+										<th scope="row" class="bt_no">아이디&nbsp;*</th>
 										<td class="bt_no">${userId}</td>
 									</tr>
 									<tr>
-										<th scope="row">성명</th>
+										<th scope="row">성명&nbsp;*</th>
 										<td>
 											<span>
 												<input type="text" id="userName" name="userName" value="${userName}">
@@ -260,15 +260,9 @@
 										</td>
 									</tr>
 									<tr>
-										<th scope="row">비밀번호</th>
-										<td>
-											<span>
-												<input type="password" id="userPwd" name="userPwd" onkeypress="javascript:noSpaceEvnt(event);">
-											</span>
-										</td>
 									</tr>
 									<tr>
-										<th scope="row">전화번호</th>
+										<th scope="row">전화번호&nbsp;*</th>
 										<td>
 											<span class="phone_num">
 												<input type="text" id="userHpno" name="userHpno" style="height: 34px;" onkeypress="javascript:noSpaceEvnt(event);">

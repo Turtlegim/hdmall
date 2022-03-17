@@ -13,12 +13,6 @@ public class UserVO {
 	public UserVO() {
 		System.out.println("LoginVO 생성자 호출");
 	}
-	
-	public UserVO(String id, String pwd) { // 로그인
-		super();
-		this.id = id;
-		this.pwd = pwd;
-	}
 
 	public UserVO(String id, String pwd, String name, String hpNo, String email1, String email2, String userType) { // 회원가입 
 		super();
