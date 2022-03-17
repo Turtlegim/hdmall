@@ -55,6 +55,7 @@ public class UserManageController extends HttpServlet {
             if (name != "" && hpno != "" && email != "") { // 빈 문자열이 존재하지 않는 경우
             	result = userDAO.updateUser(name, hpno, email1, email2, id); // 회원정보 수정 성공 
             	
+            	session.setAttribute("userName", name);
             	destPage = "/QBoardList";
             	System.out.println("회원정보 수정 성공");
             } else {
