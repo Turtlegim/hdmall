@@ -40,7 +40,6 @@ public class JoinController extends HttpServlet {
 		String name = request.getParameter("userName");
 		String id = request.getParameter("userId");
 		String pwd = request.getParameter("userPwd");
-		String rePwd = request.getParameter("reUserPwd");
 		String hpno = request.getParameter("userHpno");
 		String email1 = request.getParameter("email1");
 		String email2 = request.getParameter("email2");   
@@ -54,9 +53,8 @@ public class JoinController extends HttpServlet {
         try {
     	    int checkHpno = userDAO.checkHpno(hpno); // 전화번호 중복 확인 
     	    
-    	    if (checkHpno == 0 && pwd == rePwd && email1 != null && email2 != null) { 
+    	    if (checkHpno == 0) { 
     	    	result = userDAO.joinUser(id, pwd, name, hpno, email1, email2); // 회원 가입 
-    	    	result = 0;
     	    }
     	    
             if (result == 1) { // 회원가입 성공
