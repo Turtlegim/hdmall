@@ -192,7 +192,6 @@
             }
 			
             form.email2.value = value;
-            alert(value);
             form.email2.focus();
             
             return;
@@ -238,7 +237,7 @@
 					<div class="content_wrap">
 						<h3 class="h3_type line">회원정보 수정</h3>
 						<ul class="dot_list mgts">
-                        	<li>수정하고 싶은 정보를 입력한 후 확인 버튼을 눌러주세요.</li><br>
+                        	<li>필수 사항들을 (*) 입력하여 정보를 수정해주세요.</li><br>
                     	</ul>
 						<form name="userManage" method="post" action="${contextPath}/userManage">
 							<table class="tb_write01 vm">

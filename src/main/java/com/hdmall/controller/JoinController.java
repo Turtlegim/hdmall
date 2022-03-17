@@ -33,7 +33,6 @@ public class JoinController extends HttpServlet {
  		// 2. 회원 탈퇴 실패 시 회원가입 화면으로 이동 
     	String destPage = "/main.do";
 
-        HttpSession session = request.getSession();  
         PrintWriter out = response.getWriter();
         
         // join.jsp 에 입력한 내용 요청 후 저장
@@ -50,10 +49,12 @@ public class JoinController extends HttpServlet {
 			email2 = request.getParameter("emaildomain"); // 도메인 콤보 박스에 있는 값으로 저장하기
 		}
 	    
+		String email = email1 + email2;
+		
         try {
     	    int checkHpno = userDAO.checkHpno(hpno); // 전화번호 중복 확인 
     	    
-    	    if (checkHpno == 0) { 
+    	    if (checkHpno == 0 && name != "" && hpno != "" && email != "") { // 빈 문자열이 존재하지 않는 경우
     	    	result = userDAO.joinUser(id, pwd, name, hpno, email1, email2); // 회원 가입 
     	    }
     	    
