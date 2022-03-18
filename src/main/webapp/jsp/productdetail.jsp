@@ -139,8 +139,7 @@
             	}
             })
         }); 
-		
-        </script>
+    </script>
     
     <style>
     	element.style {
