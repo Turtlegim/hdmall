@@ -231,6 +231,7 @@
         function sellerInfo() {
             $("#seller_information").dialog("open");
         }
+        
         // 햄버거 자동으로 내려주는 펑션
         $(document).ready(function () {
             // 다이얼로그 초기화
@@ -242,8 +243,5 @@
                 modal: true
             });
         });
-        function moveToMain() {
-            location.href = ctx_shop + '/dm/main.do';
-        }
     </script>
  <%@ include file="footer.jsp" %>  

@@ -80,8 +80,6 @@
 
 
 <div id="wrap">
-    <!-- 하단부 레이아웃을 위해서는 wrap 꼭 남겨두기 -->
-    <!-- container -->
     <main id="container" class="container">
         <style type="text/css">
             span.file_span:hover {
