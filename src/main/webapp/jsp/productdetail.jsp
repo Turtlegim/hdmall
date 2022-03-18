@@ -124,7 +124,7 @@
                         data: {"userId": userId, "prodId" : prodId, "isLike" : isLike},
                         success: function(result) { 
                         	if(result == 1) {
-                    			alert("상품을 찜을 취소하였습니다."); // 찜했던 상품을 누르면 찜을 취소하고, 찜을 안했던 상품을 누르면 찜하기 동작 실행
+                    			alert("찜하기 취소"); // 찜했던 상품을 누르면 찜을 취소하고, 찜을 안했던 상품을 누르면 찜하기 동작 실행
                     			isLike = 0;
                         	} else if(result == 2) {
                     			alert("상품을 찜하였습니다.");
