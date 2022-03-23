@@ -1,0 +1,24 @@
+.lnb_content {
+    width:1080px;
+    margin: 160px auto !important;
+            }
+
+.h3_type_ans{    
+    font-size: 30px;
+    margin-top: 16px;
+    margin-left: 5px;
+    color: #333333;
+    letter-spacing: -.1em;
+}
+
+.div_view .view_header {
+    padding: 25px 20px 28px 20px;
+    border-top: 2px solid #333333 !important;
+    border-radius: 5px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.content_wrap {
+    float: right;
+    width: 100% !important;
+}
